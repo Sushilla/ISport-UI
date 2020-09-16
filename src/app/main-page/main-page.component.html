@@ -1,1 +1,31 @@
-<div style="height: 100%;">landing page</div>
+<div style="height: 100%;">
+
+  <!-- <div>
+    <h1>
+      <span>R</span><span>oberto</span>
+      <span>K</span><span>ropos</span>
+      <span>B</span><span>akalauro</span>
+      <span>D</span><span>arbas</span>
+    </h1>
+  </div> -->
+  <div style="height: 50%; padding-bottom: 40px;">
+    <mat-card style="height: 100%; max-height: 300px;">
+                <div class="mall-slide">
+                    <div class="slid-content" style="height: 100%;">
+                    <div class="mall-show-slide fade" *ngFor="let item of Imagedata;" style="height: 100%;">
+                        <img src="{{item}}" style="display: block; margin-left: auto; margin-right: auto; height: 100%;">
+                    </div>
+                    <div class="mall-carousel-ind">
+                        <ul>
+                        <li *ngFor="let item of Imagedata; let i = index;" [class.mall-this]="startIndex - 1 === i"></li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+    </mat-card>
+  </div>
+  <!-- <div style="height: 100%;">
+    <mat-card style="height: 100%;">Random Shit</mat-card>
+  </div> -->
+
+</div>

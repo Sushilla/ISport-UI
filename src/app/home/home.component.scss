@@ -30,6 +30,10 @@
   header, footer {
     height: 10vh;
   }
-  header, footer, article, nav, aside {
+  header, footer  {
     padding: 1em;
+  }
+  
+  article, nav, aside{
+    padding: 1em 10em;
   }

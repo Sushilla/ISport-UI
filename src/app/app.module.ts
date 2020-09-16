@@ -10,6 +10,8 @@ import { HeaderComponent } from './header/header.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { LoginComponent } from './login/login.component';
 
+import {MatCardModule} from '@angular/material/card';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,8 @@ import { LoginComponent } from './login/login.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
