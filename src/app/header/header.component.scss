@@ -1,0 +1,31 @@
+.header_menu_left, .header_menu_right{
+  list-style: none;
+  margin: 0;
+}
+
+.header_menu_left .header_menu_item {
+  float: left;
+  padding: 10px;
+}
+.header_menu_right .header_menu_item {
+    float: right;
+    padding: 10px;
+  }
+
+ul {
+  color: #3498db;
+}
+
+li {
+  font-size: 18px;
+}
+
+a {
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+a:hover {
+  cursor: pointer;
+  color: #2ecc71;
+  text-decoration: underline;
+}
