@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as p5 from 'p5';
 import MyCircle from "./MyCircle";
+declare let ml5: any;
 
 @Component({
   selector: 'app-aimodelu',
@@ -13,7 +14,7 @@ export class AImodeluComponent implements OnInit {
 
   ngOnInit(): void {
     const sketch = (p5: p5) => {
-      let capture;
+      let camVideo;
       let poseNet;
 
       const canHeight = 200;
@@ -21,15 +22,19 @@ export class AImodeluComponent implements OnInit {
         let test = p5.select('.tttt');
         const canvas = p5.createCanvas(test.width, canHeight);
         canvas.parent("AIcomponent");
-        capture = p5.createCapture(p5.VIDEO);
-        poseNet = ml5.poseNet();
+        camVideo = p5.createCapture(p5.VIDEO);
+        poseNet = ml5.poseNet(camVideo, modelLoaded);
         // console.log(capture)
       };
+
+      function modelLoaded() {
+        console.log('posenet ready');
+      }
 
       p5.draw = () => {
         let test = p5.select('.tttt');
         p5.background(122);
-        p5.image(capture, 0, 0, test.width, canHeight);
+        p5.image(camVideo, 0, 0, test.width, canHeight);
       }
 
       p5.windowResized = () => {
