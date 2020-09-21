@@ -14,19 +14,22 @@ export class AImodeluComponent implements OnInit {
   ngOnInit(): void {
     const sketch = (p5: p5) => {
       let capture;
+      let poseNet;
+
       const canHeight = 200;
       p5.setup = () => {
         let test = p5.select('.tttt');
         const canvas = p5.createCanvas(test.width, canHeight);
         canvas.parent("AIcomponent");
-        // capture = p5.createCapture(p5.VIDEO);
+        capture = p5.createCapture(p5.VIDEO);
+        poseNet = ml5.poseNet();
         // console.log(capture)
       };
 
       p5.draw = () => {
-        
+        let test = p5.select('.tttt');
         p5.background(122);
-        // p5.image(capture, 0, 0, 390, 240);
+        p5.image(capture, 0, 0, test.width, canHeight);
       }
 
       p5.windowResized = () => {
