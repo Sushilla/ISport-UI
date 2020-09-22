@@ -15,7 +15,13 @@ import {SlideshowModule} from 'ng-simple-slideshow';
 
 // material angular
 import {MatCardModule} from '@angular/material/card';
+
+
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
+import { TrainerSelectorComponent } from './trainer-selector/trainer-selector.component';
+import { TrainerComponent } from './trainer/trainer.component';
+import { UserComponent } from './user/user.component';
+import { ExercisesSelectorComponent } from './exercises-selector/exercises-selector.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +31,11 @@ import { AImodeluComponent } from './aimodelu/aimodelu.component';
     HeaderComponent,
     MainPageComponent,
     LoginComponent,
-    AImodeluComponent
+    AImodeluComponent,
+    TrainerSelectorComponent,
+    TrainerComponent,
+    UserComponent,
+    ExercisesSelectorComponent
   ],
   imports: [
     BrowserModule,

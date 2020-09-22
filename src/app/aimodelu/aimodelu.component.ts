@@ -23,7 +23,7 @@ export class AImodeluComponent implements OnInit {
         const canvas = p5.createCanvas(test.width, canHeight);
         canvas.parent("AIcomponent");
         camVideo = p5.createCapture(p5.VIDEO);
-        poseNet = ml5.poseNet(camVideo, modelLoaded);
+        // poseNet = ml5.poseNet(camVideo, modelLoaded);
         // console.log(capture)
       };
 
