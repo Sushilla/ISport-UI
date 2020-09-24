@@ -16,6 +16,8 @@ import {SlideshowModule} from 'ng-simple-slideshow';
 // material angular
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSliderModule} from '@angular/material/slider';
 
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
 import { TrainerSelectorComponent } from './trainer-selector/trainer-selector.component';
@@ -43,7 +45,9 @@ import { ExercisesSelectorComponent } from './exercises-selector/exercises-selec
     BrowserAnimationsModule,
     MatCardModule,
     SlideshowModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
