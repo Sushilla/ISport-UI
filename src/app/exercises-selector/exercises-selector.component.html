@@ -1,25 +1,27 @@
-<mat-card
-  style="display: flex; justify-content: space-around; width: 100%; height: 95%; align-items: center; flex-wrap: wrap;" class="progress">
-  <div style="height: 100px; padding: 50px 0px;" *ngFor="let excercise of excercises;">
-    <mat-card class="example-card" style="padding: 0px 15px 0px 0px; display: flex; height: 100px;"
-      (click)='redirectToTrainerExcercise(excercise.id)'>
-      <mat-card-header
-        style="flex-direction: column; background-color: transparent; color: white; display: flex; justify-content: center; padding: 0px 10px; height: 100px; width: 100px;">
-        <mat-progress-spinner diameter="80" mode="determinate" value='{{excercise.progress}}' class="{{test(excercise.progress)}}">
-        </mat-progress-spinner>
-      </mat-card-header>
-      <div style="width: 100%;">
-        <mat-card-content style="padding: 10px; word-wrap: break-word;">
-          <p style="font-weight: 500;">
-            {{excercise.name}}
-          </p>
-        </mat-card-content>
-        <mat-card-content style="padding: 10px; border-top: 1px solid grey; margin: 0px ;">
-          <p>
-            Last done: YYYY-MM-DD
-          </p>
-        </mat-card-content>
-      </div>
-    </mat-card>
+  <div
+    style="display: flex; justify-content: space-around; width: 100%; height: 95%; align-items: center; flex-wrap: wrap;"
+    class="progress">
+    <div style="height: 100px; padding: 50px 0px;" *ngFor="let excercise of excercises;">
+      <mat-card class="example-card" style="padding: 0px 15px 0px 0px; display: flex; height: 100px;"
+        (click)='redirectToTrainerExcercise(excercise.id)'>
+        <mat-card-header
+          style="flex-direction: column; background-color: transparent; color: white; display: flex; justify-content: center; padding: 0px 10px; height: 100px; width: 100px;">
+          <mat-progress-spinner diameter="80" mode="determinate" value='{{excercise.progress}}'
+            class="{{setTypeBeProgress(excercise.progress)}}">
+          </mat-progress-spinner>
+        </mat-card-header>
+        <div style="width: 100%;">
+          <mat-card-content style="padding: 10px; word-wrap: break-word;">
+            <p style="font-weight: 500;">
+              {{excercise.name}}
+            </p>
+          </mat-card-content>
+          <mat-card-content style="padding: 10px; border-top: 1px solid grey; margin: 0px ;">
+            <p>
+              Last done: YYYY-MM-DD
+            </p>
+          </mat-card-content>
+        </div>
+      </mat-card>
+    </div>
   </div>
-</mat-card>

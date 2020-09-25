@@ -18,12 +18,18 @@ import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatIconModule} from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
 import { TrainerSelectorComponent } from './trainer-selector/trainer-selector.component';
 import { TrainerComponent } from './trainer/trainer.component';
 import { UserComponent } from './user/user.component';
 import { ExercisesSelectorComponent } from './exercises-selector/exercises-selector.component';
+import { TrainerMainComponent } from './trainer-main/trainer-main.component';
+import { HeaderTrainerComponent } from './header-trainer/header-trainer.component';
+import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +43,10 @@ import { ExercisesSelectorComponent } from './exercises-selector/exercises-selec
     TrainerSelectorComponent,
     TrainerComponent,
     UserComponent,
-    ExercisesSelectorComponent
+    ExercisesSelectorComponent,
+    TrainerMainComponent,
+    HeaderTrainerComponent,
+    TrainerSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +56,9 @@ import { ExercisesSelectorComponent } from './exercises-selector/exercises-selec
     SlideshowModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+    MatIconModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

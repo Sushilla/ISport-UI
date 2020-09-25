@@ -9,8 +9,15 @@ declare let ml5: any;
   styleUrls: ['./aimodelu.component.scss']
 })
 export class AImodeluComponent implements OnInit {
+  idOfTrainer: string;
+  idOfExcercise: string;
 
-  constructor() { }
+  constructor() { 
+    var trainerAndExcercise = window.location.pathname.split('user/')[1];
+    this.idOfTrainer = trainerAndExcercise.split('/')[0];
+    this.idOfExcercise = trainerAndExcercise.split('/')[1];
+    
+  }
 
   ngOnInit(): void {
     const sketch = (p5: p5) => {

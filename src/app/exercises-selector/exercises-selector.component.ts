@@ -9,8 +9,11 @@ import { ExcerciseSelectorModel } from '../models/ExcerciseSelectorModel';
 })
 export class ExercisesSelectorComponent implements OnInit {
   public excercises: ExcerciseSelectorModel[] = new Array<ExcerciseSelectorModel>();
-
-  constructor(private router: Router) { 
+  idOfTrainer: string;
+  constructor(private router: Router) {
+    this.idOfTrainer = window.location.pathname.split('user/')[1];
+    console.log(this.idOfTrainer)
+    
     this.excercises.push(new ExcerciseSelectorModel('id3', 'Treniruotes krutinems', 10));
     this.excercises.push(new ExcerciseSelectorModel('id1', 'Treniruote nugarai', 42));
     this.excercises.push(new ExcerciseSelectorModel('id2', 'Treniruotes kojoms', 73));
@@ -25,7 +28,7 @@ export class ExercisesSelectorComponent implements OnInit {
     this.router.navigateByUrl(`${window.location.pathname}/${id}`)
   }
 
-  test(progress: number){
+  setTypeBeProgress(progress: number){
     if(progress == 100){
       return "green";
     }else if(progress >= 75){
