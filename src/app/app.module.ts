@@ -20,6 +20,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
@@ -30,6 +31,7 @@ import { ExercisesSelectorComponent } from './exercises-selector/exercises-selec
 import { TrainerMainComponent } from './trainer-main/trainer-main.component';
 import { HeaderTrainerComponent } from './header-trainer/header-trainer.component';
 import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.component';
+import { userNotificationToTrainer } from './trainer/userNotificationToTrainer.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.co
     ExercisesSelectorComponent,
     TrainerMainComponent,
     HeaderTrainerComponent,
-    TrainerSettingsComponent
+    TrainerSettingsComponent,
+    userNotificationToTrainer
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.co
     MatProgressSpinnerModule,
     MatSliderModule,
     MatIconModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
