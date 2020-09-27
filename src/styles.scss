@@ -1,28 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; width: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #ecf0f1;}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #ecf0f1;
+}
 
 // .mat-progress-spinner circle {
 //     stroke: #3fb53f;
 // }
 
-.progress .green.mat-progress-spinner circle{
-    stroke: #2ecc71;
+.progress .green.mat-progress-spinner circle {
+  stroke: #2ecc71;
 }
-.progress .orange.mat-progress-spinner circle{
-    stroke: #f07a12;
+
+.progress .orange.mat-progress-spinner circle {
+  stroke: #f07a12;
 }
-.progress .red.mat-progress-spinner circle{
-    stroke: #db2222;
+
+.progress .red.mat-progress-spinner circle {
+  stroke: #db2222;
 }
-.progress .cyan.mat-progress-spinner circle{
-    stroke: #3bbbe2;
+
+.progress .cyan.mat-progress-spinner circle {
+  stroke: #3bbbe2;
 }
-.progress .yellow.mat-progress-spinner circle{
-    stroke: #f3d31c;
+
+.progress .yellow.mat-progress-spinner circle {
+  stroke: #f3d31c;
 }
 
 .AcceptUserSnackbar {
-    background: #1c2733;
+  background: #1c2733;
+}
+
+.mat-list-text {
+  padding: 0px !important;
+}
+
+.mat-chip-list-wrapper {
+  padding: 10px !important;
+}
+
+.mat-chip:focus {
+  background-color: #2ecc71 !important;
+  color: white;
+}
+
+.mat-standard-chip:focus::after {
+  opacity: 0 !important;
 }

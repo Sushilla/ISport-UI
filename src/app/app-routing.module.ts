@@ -9,6 +9,7 @@ import { TrainerMainComponent } from './trainer-main/trainer-main.component';
 import { TrainerRequestsComponent } from './trainer-requests/trainer-requests.component';
 import { TrainerSelectorComponent } from './trainer-selector/trainer-selector.component';
 import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.component';
+import { TrainerTrainingsComponent } from './trainer-trainings/trainer-trainings.component';
 import { TrainerComponent } from './trainer/trainer.component';
 import { UserComponent } from './user/user.component';
 
@@ -24,7 +25,8 @@ const routes: Routes = [
       { path: 'main', component: TrainerMainComponent },
       { path: 'settings', component: TrainerSettingsComponent },
       { path: 'requests', component: TrainerRequestsComponent },
-      { path: '**', redirectTo: '/trainer/main'}
+      { path: 'trainings', component: TrainerTrainingsComponent },
+      { path: '**', redirectTo: '/trainer/main' }
     ]
   },
   {

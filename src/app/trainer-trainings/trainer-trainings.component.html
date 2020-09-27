@@ -1,0 +1,34 @@
+<div style="width: 100%; height: 100%; display: flex; justify-content: center; min-width: 900px;">
+  <div style="width: 25%; height: 100%;">
+    <button mat-raised-button>Create new</button>
+    <div style=" height: 90%; overflow-y: auto;">
+      <mat-selection-list #shoes [multiple]="false" style=" width: 100%;">
+        <mat-list-option *ngFor="let treniruote of trainings" [value]="shoe" [disableRipple]="true">
+          <div style="display:flex; justify-content:space-between;align-items:center;">
+            <div style="width: 75%; word-wrap: break-word;">
+              {{treniruote.title}}
+            </div>
+            <div style="width: 25%; min-width: 80px;">
+              <button mat-icon-button (click)="editTraining(treniruote.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="removeTraining(treniruote.id)">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </div>
+  <div style="width: 75%; height: 100%; border: 1px solid black; display: flex; flex-direction: column;">
+    <div style="width: 100%; height: 20%; overflow-y: auto; overflow-x: hidden;">
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip *ngFor="let user of users">{{user.name}} {{user.surname}}</mat-chip>
+          </mat-chip-list>
+    </div>
+    <div style="width: 100%; height: 80%; background: red;">
+    statistika
+    </div>
+  </div>
+</div>

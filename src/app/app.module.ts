@@ -24,7 +24,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
-
+import {MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
@@ -37,6 +39,7 @@ import { HeaderTrainerComponent } from './header-trainer/header-trainer.componen
 import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.component';
 import { userNotificationToTrainer } from './trainer/userNotificationToTrainer.component';
 import { TrainerRequestsComponent } from './trainer-requests/trainer-requests.component';
+import { TrainerTrainingsComponent } from './trainer-trainings/trainer-trainings.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,8 @@ import { TrainerRequestsComponent } from './trainer-requests/trainer-requests.co
     HeaderTrainerComponent,
     TrainerSettingsComponent,
     userNotificationToTrainer,
-    TrainerRequestsComponent
+    TrainerRequestsComponent,
+    TrainerTrainingsComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,10 @@ import { TrainerRequestsComponent } from './trainer-requests/trainer-requests.co
     MatSnackBarModule,
     MatBadgeModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatListModule,
+    MatMenuModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

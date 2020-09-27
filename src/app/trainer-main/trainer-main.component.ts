@@ -1,3 +1,4 @@
+import { StickyDirection } from '@angular/cdk/table';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,4 +13,6 @@ export class TrainerMainComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
 }
+
