@@ -21,6 +21,10 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatTableModule} from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
+
 
 
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
@@ -32,6 +36,7 @@ import { TrainerMainComponent } from './trainer-main/trainer-main.component';
 import { HeaderTrainerComponent } from './header-trainer/header-trainer.component';
 import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.component';
 import { userNotificationToTrainer } from './trainer/userNotificationToTrainer.component';
+import { TrainerRequestsComponent } from './trainer-requests/trainer-requests.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +54,8 @@ import { userNotificationToTrainer } from './trainer/userNotificationToTrainer.c
     TrainerMainComponent,
     HeaderTrainerComponent,
     TrainerSettingsComponent,
-    userNotificationToTrainer
+    userNotificationToTrainer,
+    TrainerRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +68,10 @@ import { userNotificationToTrainer } from './trainer/userNotificationToTrainer.c
     MatSliderModule,
     MatIconModule,
     MatGridListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatBadgeModule,
+    MatTableModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

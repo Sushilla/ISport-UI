@@ -8,13 +8,16 @@
     <nav style="display: flex; align-items: center; justify-content: space-between;">
       <ul class="header_menu_left">
         <li class="header_menu_item">
-          <a href="/home/ai">AIsss</a>
+          <a href="/home/ai">.AIsss</a>
         </li>
         <li class="header_menu_item">
-          <a href="/trainer/main">Trainer</a>
+          <a href="/trainer/main">Home</a>
         </li>
-        <li class="header_menu_item">
-          <a href="/user/selector">USer</a>
+        <li class="header_menu_item" *ngIf="!isThereAnyRequests(Requests)">
+          <a href="/trainer/requests">Requests</a>
+        </li>
+        <li class="header_menu_item" matBadge="{{Requests}}" matBadgeSize="small" *ngIf="isThereAnyRequests(Requests)">
+          <a href="/trainer/requests">Requests</a>
         </li>
       </ul>
       <ul class="header_menu_right">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header-trainer',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderTrainerComponent implements OnInit {
 
+  @Input() Requests: string;
+  
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  isThereAnyRequests(num:any){
+    if(num == 0){
+      return false;
+    }else{
+      return true;
+    }
   }
 
 }

@@ -9,7 +9,7 @@ import { userNotificationToTrainer } from './userNotificationToTrainer.component
 })
 export class TrainerComponent implements OnInit {
   durationInSeconds = 5;
-  needToaprove = 5;
+  needToaprove = 0;
   constructor(private _snackBar: MatSnackBar) {
     if (this.needToaprove != 0) {
       this.openSnackBar();
@@ -30,3 +30,4 @@ export class TrainerComponent implements OnInit {
   }
 
 }
+

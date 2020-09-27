@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { TrainerMainComponent } from './trainer-main/trainer-main.component';
+import { TrainerRequestsComponent } from './trainer-requests/trainer-requests.component';
 import { TrainerSelectorComponent } from './trainer-selector/trainer-selector.component';
 import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.component';
 import { TrainerComponent } from './trainer/trainer.component';
@@ -21,7 +22,9 @@ const routes: Routes = [
   {
     path: 'trainer', component: TrainerComponent, children: [
       { path: 'main', component: TrainerMainComponent },
-      { path: 'settings', component: TrainerSettingsComponent }
+      { path: 'settings', component: TrainerSettingsComponent },
+      { path: 'requests', component: TrainerRequestsComponent },
+      { path: '**', redirectTo: '/trainer/main'}
     ]
   },
   {
