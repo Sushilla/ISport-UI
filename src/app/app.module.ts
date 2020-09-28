@@ -28,7 +28,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
@@ -91,7 +91,8 @@ import { WorkoutSelector } from './header-user/workoutSelector.component';
     MatListModule,
     MatMenuModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
