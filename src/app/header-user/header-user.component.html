@@ -11,16 +11,13 @@
           <a href="/home/landing">.Main Page</a>
         </li>
         <li class="header_menu_item">
-          <a href="/trainer/main">Home</a>
-        </li>
-        <li class="header_menu_item" *ngIf="!isThereAnyRequests(Requests)">
-          <a href="/trainer/requests">Requests</a>
-        </li>
-        <li class="header_menu_item" matBadge="{{Requests}}" matBadgeSize="small" *ngIf="isThereAnyRequests(Requests)">
-          <a href="/trainer/requests">Requests</a>
+          <a href="/user/main">Home</a>
         </li>
         <li class="header_menu_item">
-          <a href="/trainer/trainings">Workout Plans</a>
+          <a (click)="openDialog()">Workout</a>
+        </li>
+        <li class="header_menu_item">
+          <a href="/user/statistics">Statistics</a>
         </li>
       </ul>
       <ul class="header_menu_right">

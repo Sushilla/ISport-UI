@@ -11,7 +11,10 @@ import { TrainerSelectorComponent } from './trainer-selector/trainer-selector.co
 import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.component';
 import { TrainerTrainingsComponent } from './trainer-trainings/trainer-trainings.component';
 import { TrainerComponent } from './trainer/trainer.component';
+import { UserMainComponent } from './user-main/user-main.component';
 import { UserComponent } from './user/user.component';
+import { UserStatisticsComponent } from './user-statistics/user-statistics.component'
+import { UserFreemodeComponent } from './user-freemode/user-freemode.component';
 
 const routes: Routes = [
   {
@@ -31,9 +34,13 @@ const routes: Routes = [
   },
   {
     path: 'user', component: UserComponent, children: [
+      { path: 'main', component: UserMainComponent },
       { path: 'selector', component: TrainerSelectorComponent },
+      { path: 'statistics', component: UserStatisticsComponent },
+      { path: 'freemode', component: UserFreemodeComponent },
       { path: ':id', component: ExercisesSelectorComponent },
-      { path: ':id/:id', component: AImodeluComponent }
+      { path: ':id/:id', component: AImodeluComponent },
+      { path: '**', redirectTo: '/user/main' }
     ]
   },
   { path: '**', redirectTo: '/home/landing' }

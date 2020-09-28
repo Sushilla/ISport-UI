@@ -27,6 +27,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
@@ -40,6 +42,11 @@ import { TrainerSettingsComponent } from './trainer-settings/trainer-settings.co
 import { userNotificationToTrainer } from './trainer/userNotificationToTrainer.component';
 import { TrainerRequestsComponent } from './trainer-requests/trainer-requests.component';
 import { TrainerTrainingsComponent } from './trainer-trainings/trainer-trainings.component';
+import { HeaderUserComponent } from './header-user/header-user.component';
+import { UserMainComponent } from './user-main/user-main.component';
+import { UserStatisticsComponent } from './user-statistics/user-statistics.component';
+import { UserFreemodeComponent } from './user-freemode/user-freemode.component';
+import { WorkoutSelector } from './header-user/workoutSelector.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +66,12 @@ import { TrainerTrainingsComponent } from './trainer-trainings/trainer-trainings
     TrainerSettingsComponent,
     userNotificationToTrainer,
     TrainerRequestsComponent,
-    TrainerTrainingsComponent
+    TrainerTrainingsComponent,
+    HeaderUserComponent,
+    UserMainComponent,
+    UserStatisticsComponent,
+    UserFreemodeComponent,
+    WorkoutSelector
   ],
   imports: [
     BrowserModule,
@@ -78,7 +90,8 @@ import { TrainerTrainingsComponent } from './trainer-trainings/trainer-trainings
     MatButtonModule,
     MatListModule,
     MatMenuModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
