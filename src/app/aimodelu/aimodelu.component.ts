@@ -1,3 +1,4 @@
+import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 import { Component, OnInit } from '@angular/core';
 import * as p5 from 'p5';
 import MyCircle from "./MyCircle";
@@ -12,42 +13,90 @@ export class AImodeluComponent implements OnInit {
   idOfTrainer: string;
   idOfExcercise: string;
 
-  constructor() { 
+  constructor() {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
     this.idOfTrainer = trainerAndExcercise.split('/')[0];
     this.idOfExcercise = trainerAndExcercise.split('/')[1];
-    
+
   }
 
   ngOnInit(): void {
     const sketch = (p5: p5) => {
       let camVideo;
       let poseNet;
+      let pose;
+      let skeleton;
 
-      const canHeight = 200;
+      let brain;
+
+      const canHeight = 480;
+      const canWidth = 640;
       p5.setup = () => {
-        let test = p5.select('.tttt');
-        const canvas = p5.createCanvas(test.width, canHeight);
+        // let test = p5.select('.tttt');
+        // const canvas = p5.createCanvas(test.width, canHeight);
+        const canvas = p5.createCanvas(canWidth, canHeight);
         canvas.parent("AIcomponent");
         camVideo = p5.createCapture(p5.VIDEO);
-        // poseNet = ml5.poseNet(camVideo, modelLoaded);
-        // console.log(capture)
+        camVideo.hide();
+        poseNet = ml5.poseNet(camVideo, modelLoaded);
+        poseNet.on('pose', gotPoses)
+
+        let options = {
+          inputs: 34,
+          outputs: 4,
+          task: 'classification',
+          debug: true
+        }
+        brain = ml5.neuralNetwork(options);
+
       };
+
+      function gotPoses(poses) {
+        if (poses.length > 0) {
+          pose = poses[0].pose;
+          skeleton = poses[0].skeleton;
+        }
+      }
 
       function modelLoaded() {
         console.log('posenet ready');
       }
 
       p5.draw = () => {
-        let test = p5.select('.tttt');
+        // let test = p5.select('.tttt');
+        p5.translate(camVideo.width, 0);
+        p5.scale(-1, 1);
         p5.background(122);
-        p5.image(camVideo, 0, 0, test.width, canHeight);
+        p5.image(camVideo, 0, 0);
+        if (pose) {
+          for (let i = 0; i < skeleton.length; i++) {
+            let a = skeleton[i][0];
+            let b = skeleton[i][1];
+            p5.strokeWeight(2);
+            p5.stroke(0);
+      
+            p5.line(a.position.x, a.position.y, b.position.x, b.position.y);
+          }
+          for (let i = 0; i < pose.keypoints.length; i++) {
+            let x = pose.keypoints[i].position.x;
+            let y = pose.keypoints[i].position.y;
+            p5.fill(0);
+            p5.stroke(255);
+            p5.ellipse(x, y, 16, 16);
+          }
+          // for (let i = 0; i < pose.keypoints.length; i++) {
+          //   let x = pose.keypoints[i].position.x;
+          //   let y = pose.keypoints[i].position.y;
+          //   p5.fill(0, 255, 0);
+          //   p5.ellipse(x, y, 10, 10);
+          // }
+        }
       }
 
-      p5.windowResized = () => {
-        let test = p5.select('.tttt');
-        p5.resizeCanvas(test.width, canHeight);
-      }
+      // p5.windowResized = () => {
+      //   // let test = p5.select('.tttt');
+      //   p5.resizeCanvas(test.width, canHeight);
+      // }
     };
 
     new p5(sketch);
