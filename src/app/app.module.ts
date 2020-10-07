@@ -11,24 +11,29 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { LoginComponent } from './login/login.component';
 
 //instaled
-import {SlideshowModule} from 'ng-simple-slideshow';
+import { SlideshowModule } from 'ng-simple-slideshow';
 
 // material angular
-import {MatCardModule} from '@angular/material/card';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatIconModule} from '@angular/material/icon';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatTableModule} from '@angular/material/table';
-import {MatButtonModule} from '@angular/material/button';
-import {MatListModule} from '@angular/material/list';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 
 import { AImodeluComponent } from './aimodelu/aimodelu.component';
@@ -48,6 +53,9 @@ import { UserStatisticsComponent } from './user-statistics/user-statistics.compo
 import { UserFreemodeComponent } from './user-freemode/user-freemode.component';
 import { WorkoutSelector } from './header-user/workoutSelector.component';
 import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.component';
+import { CreateNewWorkout } from './dialogs/createWorkout/createNewWorkout';
+import { AreYouSure } from './dialogs/AreYouSure/AreYouSure';
+import { EditWorkout } from './dialogs/editWorkout/editWorkout';
 
 @NgModule({
   declarations: [
@@ -73,7 +81,10 @@ import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.co
     UserStatisticsComponent,
     UserFreemodeComponent,
     WorkoutSelector,
-    AimoduleCollectComponent
+    AimoduleCollectComponent,
+    CreateNewWorkout,
+    AreYouSure,
+    EditWorkout
   ],
   imports: [
     BrowserModule,
@@ -94,7 +105,12 @@ import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.co
     MatMenuModule,
     MatChipsModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

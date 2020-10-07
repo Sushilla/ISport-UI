@@ -40,7 +40,7 @@ const routes: Routes = [
       { path: 'statistics', component: UserStatisticsComponent },
       { path: 'freemode', component: UserFreemodeComponent },
       { path: 'collect', component: AimoduleCollectComponent },
-      { path: ':id', component: ExercisesSelectorComponent },
+      { path: ':id', component: ExercisesSelectorComponent, },
       { path: ':id/:id', component: AImodeluComponent },
       { path: '**', redirectTo: '/user/main' }
     ]

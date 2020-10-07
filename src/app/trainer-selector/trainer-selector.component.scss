@@ -1,4 +1,14 @@
 .example-card:hover {
-    box-shadow: 3px 3px 5px grey;
-    cursor: pointer;
+  box-shadow: 3px 3px 5px grey;
+  cursor: pointer;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
 }

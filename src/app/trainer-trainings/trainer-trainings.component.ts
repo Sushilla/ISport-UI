@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MatDialog } from '@angular/material/dialog';
+import { from } from 'rxjs';
+import { AreYouSure } from '../dialogs/AreYouSure/AreYouSure';
+import { CreateNewWorkout } from '../dialogs/createWorkout/createNewWorkout';
+import { EditWorkout } from '../dialogs/editWorkout/editWorkout';
+import { UsersAddedToWorkout } from '../models/UsersAddedToWorkout';
+import { TrainersWorkoutPlans } from '../models/TrainersWorkoutPlans';
 @Component({
   selector: 'app-trainer-trainings',
   templateUrl: './trainer-trainings.component.html',
@@ -8,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
 export class TrainerTrainingsComponent implements OnInit {
   typesOfShoes: string[] = ['Treniruote nugarai', 'Treniruote kojoms', 'Treniruote krutinei'];
   displayedColumns: string[] = ['title', 'actions'];
-  trainings: tt[] = [
+  trainings: TrainersWorkoutPlans[] = [
     { id: '1', title: 'title1aasddddd title1aasddd dd' },
     { id: '2', title: 'title2' },
     { id: '3', title: 'title3' },
@@ -16,7 +22,7 @@ export class TrainerTrainingsComponent implements OnInit {
     { id: '5', title: 'title5' }
   ]
 
-  users: vart[] = [
+  users: UsersAddedToWorkout[] = [
     {id: '1', name: 'vardenis', surname: 'pavardenis'},
     {id: '2', name: 'Robertas', surname: 'pavardenis'},
     {id: '3', name: 'Alina', surname: 'pavardenis'},
@@ -25,7 +31,7 @@ export class TrainerTrainingsComponent implements OnInit {
     {id: '5', name: 'Aliona', surname: 'pavardenis'},
     {id: '6', name: 'Darius', surname: 'pavardenis'}
   ]
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -34,16 +40,56 @@ export class TrainerTrainingsComponent implements OnInit {
     console.log(id)
   }
 
-  removeTraining(id: any) {
-    console.log(id)
+
+
+
+
+
+
+
+
+
+
+  openCreateDialog(){
+    const dialogRef = this.dialog.open(CreateNewWorkout, {
+      // data: { toDialog, schema },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result) {
+        // this.reloadTableFromSelectedType();
+      }
+    });
   }
-}
-export class tt {
-  public id: string;
-  public title: string;
-}
-export class vart {
-  public id: string;
-  public name: string;
-  public surname: string;
+
+  openAreYouSureDialog(id: any){
+    const dialogRef = this.dialog.open(AreYouSure);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result) {
+        console.log('delete')
+        // this.reloadTableFromSelectedType();
+      }
+    });
+  }
+
+  openEditDialog(id: any){
+    const dialogRef = this.dialog.open(EditWorkout);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result) {
+        console.log('delete')
+        // this.reloadTableFromSelectedType();
+      }
+    });
+  }
+
+
+
+
+
+
 }
