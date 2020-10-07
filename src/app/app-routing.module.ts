@@ -15,6 +15,7 @@ import { UserMainComponent } from './user-main/user-main.component';
 import { UserComponent } from './user/user.component';
 import { UserStatisticsComponent } from './user-statistics/user-statistics.component'
 import { UserFreemodeComponent } from './user-freemode/user-freemode.component';
+import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
       { path: 'selector', component: TrainerSelectorComponent },
       { path: 'statistics', component: UserStatisticsComponent },
       { path: 'freemode', component: UserFreemodeComponent },
+      { path: 'collect', component: AimoduleCollectComponent },
       { path: ':id', component: ExercisesSelectorComponent },
       { path: ':id/:id', component: AImodeluComponent },
       { path: '**', redirectTo: '/user/main' }

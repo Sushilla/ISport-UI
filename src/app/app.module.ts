@@ -47,6 +47,7 @@ import { UserMainComponent } from './user-main/user-main.component';
 import { UserStatisticsComponent } from './user-statistics/user-statistics.component';
 import { UserFreemodeComponent } from './user-freemode/user-freemode.component';
 import { WorkoutSelector } from './header-user/workoutSelector.component';
+import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { WorkoutSelector } from './header-user/workoutSelector.component';
     UserMainComponent,
     UserStatisticsComponent,
     UserFreemodeComponent,
-    WorkoutSelector
+    WorkoutSelector,
+    AimoduleCollectComponent
   ],
   imports: [
     BrowserModule,

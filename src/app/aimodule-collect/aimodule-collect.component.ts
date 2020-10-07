@@ -1,45 +1,61 @@
-import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 import { Component, OnInit } from '@angular/core';
 import * as p5 from 'p5';
-import MyCircle from "./MyCircle";
 declare let ml5: any;
 
 @Component({
-  selector: 'app-aimodelu',
-  templateUrl: './aimodelu.component.html',
-  styleUrls: ['./aimodelu.component.scss']
+  selector: 'app-aimodule-collect',
+  templateUrl: './aimodule-collect.component.html',
+  styleUrls: ['./aimodule-collect.component.scss']
 })
-export class AImodeluComponent implements OnInit {
-  idOfTrainer: string;
-  idOfExcercise: string;
+export class AimoduleCollectComponent implements OnInit {
 
-  constructor() {
-    var trainerAndExcercise = window.location.pathname.split('user/')[1];
-    this.idOfTrainer = trainerAndExcercise.split('/')[0];
-    this.idOfExcercise = trainerAndExcercise.split('/')[1];
+  constructor() { }
 
+  asd(){
+    console.log(false)
   }
 
   ngOnInit(): void {
     const sketch = (p5: p5) => {
+      function asdd(){
+        console.log("clicked SAVE button");
+      }
       let camVideo;
       let poseNet;
       let pose;
       let skeleton;
 
       let brain;
+      let state = 'waiting';
+      let targetLabel;
+
+      // p5.keyPressed = () => {
+      //   if (p5.key == 's') {
+      //     brain.saveData();
+      //   } else {
+      //     targetLabel = p5.key;
+      //     setTimeout(() => {
+      //       state = 'collecting';
+      //       console.log(state);
+      //       setTimeout(() => {
+      //         console.log('not collecting');
+      //         state = 'waiting';
+      //       }, 10000);
+      //     }, 1000);
+      //   }
+      // }
 
       const canHeight = 480;
       const canWidth = 640;
+
       p5.setup = () => {
-        // let test = p5.select('.tttt');
-        // const canvas = p5.createCanvas(test.width, canHeight);
         const canvas = p5.createCanvas(canWidth, canHeight);
         canvas.parent("AIcomponent");
         camVideo = p5.createCapture(p5.VIDEO);
         camVideo.hide();
         poseNet = ml5.poseNet(camVideo, modelLoaded);
         poseNet.on('pose', gotPoses)
+        
 
         let options = {
           inputs: 34,
@@ -55,6 +71,17 @@ export class AImodeluComponent implements OnInit {
         if (poses.length > 0) {
           pose = poses[0].pose;
           skeleton = poses[0].skeleton;
+          if (state == 'collecting') {
+            let inputs = [];
+            for (let i = 0; i < pose.keypoints.length; i++) {
+              let x = pose.keypoints[i].position.x;
+              let y = pose.keypoints[i].position.y;
+              inputs.push(x);
+              inputs.push(y);
+            }
+            let target = [targetLabel];
+            brain.addData(inputs, target);
+          }
         }
       }
 
@@ -63,7 +90,7 @@ export class AImodeluComponent implements OnInit {
       }
 
       p5.draw = () => {
-        // let test = p5.select('.tttt');
+        
         p5.translate(camVideo.width, 0);
         p5.scale(-1, 1);
         p5.background(122);
@@ -74,7 +101,7 @@ export class AImodeluComponent implements OnInit {
             let b = skeleton[i][1];
             p5.strokeWeight(2);
             p5.stroke(0);
-      
+
             p5.line(a.position.x, a.position.y, b.position.x, b.position.y);
           }
           for (let i = 0; i < pose.keypoints.length; i++) {
@@ -86,49 +113,9 @@ export class AImodeluComponent implements OnInit {
           }
         }
       }
-
-      // p5.windowResized = () => {
-      //   // let test = p5.select('.tttt');
-      //   p5.resizeCanvas(test.width, canHeight);
-      // }
     };
 
     new p5(sketch);
 
   }
-
 }
-
-
-
-
-
-
-
-
-
-      // const myCircles: MyCircle[] = [];
-
-      // // The sketch setup method 
-      // p5.setup = () => {
-      //   // Creating and positioning the canvas
-      //   const canvas = p5.createCanvas(200, 200);
-      //   canvas.parent("app");
-
-      //   // Configuring the canvas
-      //   p5.background("red");
-
-      //   // DEMO: Create three circles in the center of the canvas
-      //   for (let i = 1; i < 4; i++) {
-      //     const p = p5.width / 4;
-      //     const circlePos = p5.createVector(p * i, p5.height / 2);
-      //     const size = i % 2 !== 0 ? 24 : 32;
-      //     myCircles.push(new MyCircle(p5, circlePos, size));
-      //   }
-      // };
-
-      // // The sketch draw method
-      // p5.draw = () => {
-      //   // DEMO: Let the circle instances draw themselves
-      //   myCircles.forEach(circle => circle.draw());
-      // };
