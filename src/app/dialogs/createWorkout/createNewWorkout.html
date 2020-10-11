@@ -21,9 +21,30 @@
   <mat-step [stepControl]="secondFormGroup" [optional]="true">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Add excercises</ng-template>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+      <mat-form-field style="width: 100%;">
+        <mat-chip-list #chipListExercise>
+          <mat-chip
+            *ngFor="let exercises of exercises"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="removeExercise(exercises)">
+            {{exercises}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Add exercise to your workout"
+            #exerciseInput
+            [formControl]="exerciseCtrl"
+            [matAutocomplete]="autoExercise"
+            [matChipInputFor]="chipListExercise"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="addExercise($event)">
+        </mat-chip-list>
+        <mat-autocomplete #autoExercise="matAutocomplete" (optionSelected)="selectedExercise($event)">
+          <mat-option *ngFor="let fExercise of filteredExercise | async" [value]="fExercise">
+            {{fExercise}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -36,12 +57,12 @@
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Add users</ng-template>
       <mat-form-field style="width: 100%;">
-        <mat-chip-list #chipList>
+        <mat-chip-list #chipListUsers>
           <mat-chip
             *ngFor="let user of users"
             [selectable]="selectable"
             [removable]="removable"
-            (removed)="remove(user)">
+            (removed)="removeUser(user)">
             {{user}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
@@ -50,13 +71,13 @@
             #fruitInput
             [formControl]="fruitCtrl"
             [matAutocomplete]="auto"
-            [matChipInputFor]="chipList"
+            [matChipInputFor]="chipListUsers"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="add($event)">
+            (matChipInputTokenEnd)="addUser($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-          <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-            {{fruit}}
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedUser($event)">
+          <mat-option *ngFor="let fUser of filteredUsers | async" [value]="fUser">
+            {{fUser}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

@@ -25,19 +25,28 @@ export class CreateNewWorkout {
     selectable = true;
     removable = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
-    fruitCtrl = new FormControl();
-    filteredFruits: Observable<string[]>;
-    users: string[] = ['Lemon'];
-    allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
+    fruitCtrl = new FormControl();
+    filteredUsers: Observable<string[]>;
+    users: string[] = [];
+    usersList: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+    
     @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
+    exerciseCtrl = new FormControl();
+    filteredExercise: Observable<string[]>;
+    exercises: string[] = [];
+    exercisesList: string[] = ['Nugara', 'Kojos', 'krutine', 'bicke', 'Tricepsas'];
+
+
+    @ViewChild('exerciseInput') exerciseInput: ElementRef<HTMLInputElement>;
+    @ViewChild('autoExercise') matAutocompleteExercise: MatAutocomplete;
+
 
     constructor(private _formBuilder: FormBuilder) {
-        this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-            startWith(null),
-            map((users: string | null) => users ? this._filter(users) : this.allFruits.slice()));
+        this.loadExexrcise();
+        this.loadUsers();
     }
 
 
@@ -53,12 +62,13 @@ export class CreateNewWorkout {
 
 
 
-    add(event: MatChipInputEvent): void {
+    addUser(event: MatChipInputEvent): void {
         const input = event.input;
         const value = event.value;
 
-        this.allFruits.forEach(rez => {
+        this.usersList.forEach(rez => {
             if (rez == value) {
+                this.usersList.splice(this.usersList.indexOf(value), 1)
                 // Add our fruit
                 if ((value || '').trim()) {
                     this.users.push(value.trim());
@@ -73,23 +83,80 @@ export class CreateNewWorkout {
         this.fruitCtrl.setValue(null);
     }
 
-    remove(fruit: string): void {
-        const index = this.users.indexOf(fruit);
+    addExercise(event: MatChipInputEvent): void {
+        const input = event.input;
+        const value = event.value;
 
+        this.exercisesList.forEach(rez => {
+            if (rez == value) {
+                this.exercisesList.splice(this.exercisesList.indexOf(value), 1)
+                // Add our fruit
+                if ((value || '').trim()) {
+                    this.exercises.push(value.trim());
+                }
+            }
+        })
+        // Reset the input value
+        if (input) {
+            input.value = '';
+        }
+
+        this.exerciseCtrl.setValue(null);
+    }
+
+    removeUser(fruit: string): void {
+        const index = this.users.indexOf(fruit);
         if (index >= 0) {
             this.users.splice(index, 1);
+            this.usersList.push(fruit);
+            this.loadUsers();
         }
     }
 
-    selected(event: MatAutocompleteSelectedEvent): void {
+    removeExercise(fruit: string): void {
+        const index = this.exercises.indexOf(fruit);
+        if (index >= 0) {
+            this.exercises.splice(index, 1);
+            this.exercisesList.push(fruit);
+            this.loadExexrcise();
+        }
+    }
+
+    selectedUser(event: MatAutocompleteSelectedEvent): void {
         this.users.push(event.option.viewValue);
+        this.usersList.splice(this.usersList.indexOf(event.option.viewValue), 1)
         this.fruitInput.nativeElement.value = '';
         this.fruitCtrl.setValue(null);
     }
 
-    private _filter(value: string): string[] {
+    selectedExercise(event: MatAutocompleteSelectedEvent): void {
+        this.exercises.push(event.option.viewValue);
+        this.exercisesList.splice(this.exercisesList.indexOf(event.option.viewValue), 1)
+        this.exerciseInput.nativeElement.value = '';
+        this.exerciseCtrl.setValue(null);
+    }
+
+    private _filterUSers(value: string): string[] {
         const filterValue = value.toLowerCase();
 
-        return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+        return this.usersList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    }
+
+    private _filterExercise(value: string): string[] {
+        const filterValue = value.toLowerCase();
+
+        return this.exercisesList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    }
+
+    loadUsers(){
+        this.filteredUsers = this.fruitCtrl.valueChanges.pipe(
+            startWith(null),
+            map((users: string | null) => users ? this._filterUSers(users) : this.usersList.slice()));
+    }
+    
+    loadExexrcise(){
+        this.filteredExercise = this.exerciseCtrl.valueChanges.pipe(
+            startWith(null),
+            map((exercises: string | null) => exercises ? this._filterExercise(exercises) : this.exercisesList.slice()));
     }
 }
