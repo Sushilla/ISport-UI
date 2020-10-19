@@ -45,6 +45,9 @@ const routes: Routes = [
       { path: '**', redirectTo: '/user/main' }
     ]
   },
+  // {
+  //   path: 'admin', component 
+  // },
   { path: '**', redirectTo: '/home/landing' }
 ];
 

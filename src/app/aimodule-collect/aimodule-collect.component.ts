@@ -8,18 +8,18 @@ declare let ml5: any;
   styleUrls: ['./aimodule-collect.component.scss']
 })
 export class AimoduleCollectComponent implements OnInit {
-
+  test: string;
+  temp: boolean;
+  temp2: boolean;
   constructor() { }
 
-  asd(){
+  asd() {
     console.log(false)
   }
 
   ngOnInit(): void {
     const sketch = (p5: p5) => {
-      function asdd(){
-        console.log("clicked SAVE button");
-      }
+
       let camVideo;
       let poseNet;
       let pose;
@@ -55,7 +55,7 @@ export class AimoduleCollectComponent implements OnInit {
         camVideo.hide();
         poseNet = ml5.poseNet(camVideo, modelLoaded);
         poseNet.on('pose', gotPoses)
-        
+
 
         let options = {
           inputs: 34,
@@ -88,9 +88,30 @@ export class AimoduleCollectComponent implements OnInit {
       function modelLoaded() {
         console.log('posenet ready');
       }
+      function gg(nameOfExercise) {
+        targetLabel = nameOfExercise;
+        setTimeout(() => {
+          state = 'collecting';
+          console.log(state);
+          setTimeout(() => {
+            console.log('not collecting');
+            state = 'waiting';
+          }, 5000);
+        }, 1000);
+      }
 
       p5.draw = () => {
-        
+        if (this.temp) {
+          this.temp = !this.temp;
+          gg(this.test);
+          console.log(this.test)
+          this.test = "";
+        }
+        if (this.temp2) { //only if collecting completed
+          this.temp2 = !this.temp2;
+          brain.saveData();
+        }
+
         p5.translate(camVideo.width, 0);
         p5.scale(-1, 1);
         p5.background(122);
@@ -118,4 +139,12 @@ export class AimoduleCollectComponent implements OnInit {
     new p5(sketch);
 
   }
+
+  startCollecting() {
+    this.temp = true;
+  }
+  saveCollectedDataToFile() {
+    this.temp2 = true;
+  }
+
 }
