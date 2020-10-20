@@ -61,6 +61,7 @@ import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.co
 import { CreateNewWorkout } from './dialogs/createWorkout/createNewWorkout';
 import { AreYouSure } from './dialogs/AreYouSure/AreYouSure';
 import { EditWorkout } from './dialogs/editWorkout/editWorkout';
+import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { EditWorkout } from './dialogs/editWorkout/editWorkout';
     AimoduleCollectComponent,
     CreateNewWorkout,
     AreYouSure,
-    EditWorkout
+    EditWorkout,
+    AimoduleTrainingComponent
   ],
   imports: [
     BrowserModule,

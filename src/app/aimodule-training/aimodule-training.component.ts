@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import * as p5 from 'p5';
 declare let ml5: any;
 
 @Component({
-  selector: 'app-aimodule-collect',
-  templateUrl: './aimodule-collect.component.html',
-  styleUrls: ['./aimodule-collect.component.scss']
+  selector: 'app-aimodule-training',
+  templateUrl: './aimodule-training.component.html',
+  styleUrls: ['./aimodule-training.component.scss']
 })
-export class AimoduleCollectComponent implements OnInit {
-  test: string;
-  temp: boolean;
-  temp2: boolean;
-  constructor(private router: Router) { }
+export class AimoduleTrainingComponent implements OnInit {
+
+  constructor() { }
 
   ngOnInit(): void {
     const sketch = (p5: p5) => {
@@ -61,8 +58,19 @@ export class AimoduleCollectComponent implements OnInit {
           debug: true
         }
         brain = ml5.neuralNetwork(options);
+        brain.loadData('assets/training/exerciseList.json', dataReady)
 
       };
+
+      function dataReady() {
+        brain.normalizeData();
+        brain.train({ epochs: 50 }, finished);
+      }
+
+      function finished() {
+        console.log('model trained');
+        brain.save();
+      }
 
       function gotPoses(poses) {
         if (poses.length > 0) {
@@ -94,21 +102,10 @@ export class AimoduleCollectComponent implements OnInit {
             console.log('not collecting');
             state = 'waiting';
           }, 5000);
-        }, 2000);
+        }, 1000);
       }
 
       p5.draw = () => {
-        if (this.temp) {
-          this.temp = !this.temp;
-          gg(this.test);
-          console.log(this.test)
-          this.test = "";
-        }
-        if (this.temp2) { //only if collecting completed
-          this.temp2 = !this.temp2;
-          brain.saveData('exerciseList');
-        }
-
         p5.translate(camVideo.width, 0);
         p5.scale(-1, 1);
         p5.background(122);
@@ -136,16 +133,5 @@ export class AimoduleCollectComponent implements OnInit {
     new p5(sketch);
 
   }
-
-  startCollecting() {
-    this.temp = true;
-  }
-  saveCollectedDataToFile() {
-    this.temp2 = true;
-  }
-
-  // redirecToTestModel(){
-  //   this.router.
-  // }
 
 }

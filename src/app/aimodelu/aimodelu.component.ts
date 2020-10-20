@@ -12,7 +12,6 @@ declare let ml5: any;
 export class AImodeluComponent implements OnInit {
   idOfTrainer: string;
   idOfExcercise: string;
-
   constructor() {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
     this.idOfTrainer = trainerAndExcercise.split('/')[0];
@@ -28,7 +27,7 @@ export class AImodeluComponent implements OnInit {
       let skeleton;
 
       let brain;
-
+      let poseLabel;
       const canHeight = 480;
       const canWidth = 640;
       p5.setup = () => {
@@ -49,7 +48,42 @@ export class AImodeluComponent implements OnInit {
         }
         brain = ml5.neuralNetwork(options);
 
+        const modelList = {
+          model: 'assets/training/model/model.json',
+          metadata: 'assets/training/model/model_meta.json',
+          weights: 'assets/training/model/model.weights.bin',
+        };
+        brain.load(modelList, brainReady);
       };
+
+      function brainReady() {
+        console.log('pose clasification ready');
+
+        classifyPose();
+      }
+
+      function gotResult(error, results) {
+        console.log(results[0].confidence)
+        if (results[0].confidence > 0.8) {
+          poseLabel = results[0].label;
+        }
+          classifyPose();
+      }
+
+      function classifyPose() {
+        if (pose) {
+          let inputs = [];
+          for (let i = 0; i < pose.keypoints.length; i++) {
+            let x = pose.keypoints[i].position.x;
+            let y = pose.keypoints[i].position.y;
+            inputs.push(x);
+            inputs.push(y);
+          }
+          brain.classify(inputs, gotResult);
+        } else {
+          setTimeout(classifyPose, 100);
+        }
+      }
 
       function gotPoses(poses) {
         if (poses.length > 0) {
@@ -64,6 +98,7 @@ export class AImodeluComponent implements OnInit {
 
       p5.draw = () => {
         // let test = p5.select('.tttt');
+        p5.push();
         p5.translate(camVideo.width, 0);
         p5.scale(-1, 1);
         p5.background(122);
@@ -74,7 +109,7 @@ export class AImodeluComponent implements OnInit {
             let b = skeleton[i][1];
             p5.strokeWeight(2);
             p5.stroke(0);
-      
+
             p5.line(a.position.x, a.position.y, b.position.x, b.position.y);
           }
           for (let i = 0; i < pose.keypoints.length; i++) {
@@ -85,6 +120,9 @@ export class AImodeluComponent implements OnInit {
             p5.ellipse(x, y, 16, 16);
           }
         }
+        p5.pop();
+        p5.textSize(70);
+        p5.text(poseLabel, 20, 400);
       }
 
       // p5.windowResized = () => {
