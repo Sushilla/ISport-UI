@@ -1,3 +1,4 @@
+import { compileNgModule } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as p5 from 'p5';
@@ -9,10 +10,16 @@ declare let ml5: any;
   styleUrls: ['./aimodule-collect.component.scss']
 })
 export class AimoduleCollectComponent implements OnInit {
-  test: string;
-  temp: boolean;
-  temp2: boolean;
-  constructor(private router: Router) { }
+  ExerciseName: string;
+
+  startCollectData: boolean = false;
+  saveDataToFile: boolean = false;
+  stopCollectData: boolean = false;
+  pause: boolean = true;
+
+  constructor(private router: Router) {
+
+  }
 
   ngOnInit(): void {
     const sketch = (p5: p5) => {
@@ -25,22 +32,6 @@ export class AimoduleCollectComponent implements OnInit {
       let brain;
       let state = 'waiting';
       let targetLabel;
-
-      // p5.keyPressed = () => {
-      //   if (p5.key == 's') {
-      //     brain.saveData();
-      //   } else {
-      //     targetLabel = p5.key;
-      //     setTimeout(() => {
-      //       state = 'collecting';
-      //       console.log(state);
-      //       setTimeout(() => {
-      //         console.log('not collecting');
-      //         state = 'waiting';
-      //       }, 10000);
-      //     }, 1000);
-      //   }
-      // }
 
       const canHeight = 480;
       const canWidth = 640;
@@ -69,6 +60,7 @@ export class AimoduleCollectComponent implements OnInit {
           pose = poses[0].pose;
           skeleton = poses[0].skeleton;
           if (state == 'collecting') {
+            console.log('collecting DATA of YOU')
             let inputs = [];
             for (let i = 0; i < pose.keypoints.length; i++) {
               let x = pose.keypoints[i].position.x;
@@ -85,30 +77,44 @@ export class AimoduleCollectComponent implements OnInit {
       function modelLoaded() {
         console.log('posenet ready');
       }
-      function gg(nameOfExercise) {
+
+      function startCollectingData(nameOfExercise) {
         targetLabel = nameOfExercise;
-        setTimeout(() => {
-          state = 'collecting';
-          console.log(state);
-          setTimeout(() => {
-            console.log('not collecting');
-            state = 'waiting';
-          }, 5000);
-        }, 2000);
+        state = 'collecting';
+
       }
 
-      p5.draw = () => {
-        if (this.temp) {
-          this.temp = !this.temp;
-          gg(this.test);
-          console.log(this.test)
-          this.test = "";
-        }
-        if (this.temp2) { //only if collecting completed
-          this.temp2 = !this.temp2;
-          brain.saveData('exerciseList');
-        }
 
+      p5.draw = () => {
+
+        
+        if (this.startCollectData) { //data colecting
+          if (!this.pause) { //collect if data collecting is not paused
+            startCollectingData(this.ExerciseName);
+          } else { //paused coolecting
+            state = 'waiting';
+          }
+        } else { //data not collecting
+          state = 'waiting';
+          if (this.stopCollectData) { //pres STOP Button (clear Input)
+            this.stopCollectData = !this.stopCollectData;
+            this.ExerciseName = "";
+          }
+        }
+        // console.log(state)
+        
+        
+        
+        
+        
+        if (this.saveDataToFile) { //save Data to file
+          this.saveDataToFile = !this.saveDataToFile;
+          if (!this.startCollectData) { //only if collecting completed
+            brain.saveData('exerciseList');
+          }
+        }
+        
+        p5.push();
         p5.translate(camVideo.width, 0);
         p5.scale(-1, 1);
         p5.background(122);
@@ -130,6 +136,20 @@ export class AimoduleCollectComponent implements OnInit {
             p5.ellipse(x, y, 16, 16);
           }
         }
+        p5.pop();
+        let a='';
+        if(!this.pause){
+          p5.fill('rgb(0,255,0)')
+          a='collect'
+        }else{
+          p5.fill('red')
+          a='not'
+        }
+
+
+          p5.textSize(100);
+          p5.text(a, 20, 400);
+
       }
     };
 
@@ -138,10 +158,27 @@ export class AimoduleCollectComponent implements OnInit {
   }
 
   startCollecting() {
-    this.temp = true;
+    this.startCollectData = true;
+    // this.pause = false;
+    this.pause = !this.pause;
+
+
   }
+
   saveCollectedDataToFile() {
-    this.temp2 = true;
+    this.saveDataToFile = true;
+  }
+
+  stopCollecting() {
+    this.startCollectData = false;
+    this.stopCollectData = true;
+    // this.pause = false; veliau i tai pakeisti
+    this.pause = true;
+
+  }
+
+  pauseCollecting() {
+    this.pause = true;
   }
 
   // redirecToTestModel(){

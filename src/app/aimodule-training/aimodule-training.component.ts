@@ -22,6 +22,7 @@ export class AimoduleTrainingComponent implements OnInit {
       let brain;
       let state = 'waiting';
       let targetLabel;
+      let epochsCount = 30;
 
       // p5.keyPressed = () => {
       //   if (p5.key == 's') {
@@ -64,7 +65,7 @@ export class AimoduleTrainingComponent implements OnInit {
 
       function dataReady() {
         brain.normalizeData();
-        brain.train({ epochs: 50 }, finished);
+        brain.train({ epochs: epochsCount }, finished);
       }
 
       function finished() {
@@ -93,17 +94,18 @@ export class AimoduleTrainingComponent implements OnInit {
       function modelLoaded() {
         console.log('posenet ready');
       }
-      function gg(nameOfExercise) {
-        targetLabel = nameOfExercise;
-        setTimeout(() => {
-          state = 'collecting';
-          console.log(state);
-          setTimeout(() => {
-            console.log('not collecting');
-            state = 'waiting';
-          }, 5000);
-        }, 1000);
-      }
+
+      // function gg(nameOfExercise) {
+      //   targetLabel = nameOfExercise;
+      //   setTimeout(() => {
+      //     state = 'collecting';
+      //     console.log(state);
+      //     setTimeout(() => {
+      //       console.log('not collecting');
+      //       state = 'waiting';
+      //     }, 5000);
+      //   }, 1000);
+      // }
 
       p5.draw = () => {
         p5.translate(camVideo.width, 0);

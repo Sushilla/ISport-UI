@@ -8,12 +8,15 @@
       <p>Give name to exercise</p>
       <mat-form-field>
         <mat-label>Exercise name</mat-label>
-        <input matInput [(ngModel)]='test'>
+        <input matInput [(ngModel)]='ExerciseName'>
       </mat-form-field>
       <br>
-      <button mat-raised-button (click)='startCollecting()'>Start collecting</button>
+      <!-- <button mat-raised-button (click)='nextStep()' >Next step</button> -->
+      <button mat-raised-button (click)='startCollecting()' >Start collecting exercise</button>
+      <button mat-raised-button (click)='pauseCollecting()'>Pause collecting this exercise</button>
+      <button mat-raised-button (click)='stopCollecting()' color='warn'>STOP collecting exercise</button>
     </div>
-    <button mat-raised-button (click)='saveCollectedDataToFile()' style="background:#2ecc71; color: white; margin-bottom: 20px;">Save</button>
-    <button mat-raised-button style="background:#2ecc71; color: white;"><a href="/user/training">Test model</a></button>
+    <button mat-raised-button (click)='saveCollectedDataToFile()' style="background:#2ecc71; color: white; margin-bottom: 20px;">Save To File</button>
+    <button mat-raised-button style="background:#2ecc71; color: white;"><a href="/user/training">Train model</a></button>
   </div>
 </div>
