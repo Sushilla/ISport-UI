@@ -62,6 +62,8 @@ import { CreateNewWorkout } from './dialogs/createWorkout/createNewWorkout';
 import { AreYouSure } from './dialogs/AreYouSure/AreYouSure';
 import { EditWorkout } from './dialogs/editWorkout/editWorkout';
 import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training.component';
+import { BackEndService } from './.Services/BackEnd-service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -119,9 +121,10 @@ import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training
     FormsModule,
     ReactiveFormsModule,
     MatTabsModule,
-    MatStepperModule
+    MatStepperModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [BackEndService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
