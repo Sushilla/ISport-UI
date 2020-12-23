@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { TrainerListForAdding } from '../models/TrainerListForAdding';
 import { RequestToAddTrainerKvietimas } from '../models/RequestToAddTrainerKvietimas';
+import {KvietimaiToTrainer} from '../models/KvietimaiToTrainer'
 
 @Injectable()
 export class BackEndService {
@@ -28,5 +29,15 @@ export class BackEndService {
             headers: new HttpHeaders(header),
         };
         return this.http.put("http://localhost:5000/api/v1/models/kvietimai", body, requestOptions);
+    }
+
+    public getKvietimaiToTrainer(id: string): Observable<KvietimaiToTrainer[]> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<KvietimaiToTrainer[]>("http://localhost:5000/api/v1/models/kvietimai/" + id, requestOptions);
     }
 }
