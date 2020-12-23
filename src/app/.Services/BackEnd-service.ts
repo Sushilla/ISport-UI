@@ -40,4 +40,33 @@ export class BackEndService {
         };
         return this.http.get<KvietimaiToTrainer[]>("http://localhost:5000/api/v1/models/kvietimai/" + id, requestOptions);
     }
+
+    public deleteTrainerRequest(id: string): Observable<any>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.delete("http://localhost:5000/api/v1/models/kvietimai/"+id, requestOptions);
+    }
+
+    public acceptTrainerRequest(){
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+    }
+
+    public getNumberOfRequestsToTrainer(id: string): Observable<any>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<any>("http://localhost:5000/api/v1/models/kvietimaiSkaicius/"+id, requestOptions);
+    }
 }

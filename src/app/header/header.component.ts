@@ -1,5 +1,7 @@
+import { ResourceLoader } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { BackEndService } from '../.Services/BackEnd-service';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +10,12 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private cookieService: CookieService) { }
+  constructor(private cookieService: CookieService, private backEndServide: BackEndService) {
+  }
 
   ngOnInit(): void {
   }
+
+
 
 }

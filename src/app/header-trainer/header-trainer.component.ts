@@ -1,25 +1,40 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Injectable, Input, NgZone, OnInit } from '@angular/core';
+import { BackEndService } from '../.Services/BackEnd-service';
 
 @Component({
   selector: 'app-header-trainer',
   templateUrl: './header-trainer.component.html',
   styleUrls: ['./header-trainer.component.scss']
 })
+
 export class HeaderTrainerComponent implements OnInit {
 
-  @Input() Requests: string;
-  
-  constructor() { }
+  // @Input()
+   Requests: number;
 
-  ngOnInit(): void {
+  constructor(private backEndServide: BackEndService) {
   }
 
-  isThereAnyRequests(num:any){
-    if(num == 0){
+  ngOnInit(): void {
+    this.getNumberOfInvites();
+  }
+
+  isThereAnyRequests(num: any) {
+    if (num == 0) {
       return false;
-    }else{
+    } else {
       return true;
     }
+  }
+
+  getNumberOfInvites() {
+    this.backEndServide.getNumberOfRequestsToTrainer("a82029c4-58ff-45e0-8036-4e36a437637b").subscribe(result => {
+      this.Requests = result[0].yra;
+      console.log(this.Requests);
+    }, error => {
+      console.log(error);
+
+    })
   }
 
 }
