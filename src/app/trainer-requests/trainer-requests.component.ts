@@ -26,6 +26,12 @@ export class TrainerRequestsComponent implements OnInit {
   acceptButton(id: any) {
     // console.log(id)       
     // this.backEndService.changeRequestNumber(this.requestForTrainer);
+    this.backEndService.acceptTrainerRequest(id).subscribe(result =>{
+      console.log(result);
+      this.getNumberOfInvites();
+    }, error =>{
+      console.log(error);
+    })
   }
 
   rejectButton(id: string) {
