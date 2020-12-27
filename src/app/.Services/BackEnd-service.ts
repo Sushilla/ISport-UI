@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { TrainerListForAdding } from '../models/TrainerListForAdding';
 import { RequestToAddTrainerKvietimas } from '../models/RequestToAddTrainerKvietimas';
 import {KvietimaiToTrainer} from '../models/KvietimaiToTrainer'
@@ -8,8 +8,19 @@ import {KvietimaiToTrainer} from '../models/KvietimaiToTrainer'
 @Injectable()
 export class BackEndService {
 
+    private requestNumberSource  = new BehaviorSubject(0);
+    currentRequestNumber  = this.requestNumberSource.asObservable();
+
     constructor(private http: HttpClient) {
     }
+
+    changeRequestNumber(message: number) {
+        console.log(message);
+        
+        this.requestNumberSource.next(message)
+      }
+
+    
 
     public getTrainerListForAddingTrainer(): Observable<TrainerListForAdding[]> {
         const header = {

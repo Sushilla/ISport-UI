@@ -1,18 +1,16 @@
-<!-- <div id="app"></div> -->
-
 <body>
-  <header style="z-index: 999; background-color: #1c2733;">
-    <app-header-trainer [Requests]="needToaprove"></app-header-trainer>
-  </header>
-  <div id="main">
-    <article>
-      <mat-card style="width: 100%; height: 95%;">
-        <router-outlet></router-outlet>
-      </mat-card>
+    <header style="z-index: 999; background-color: #1c2733;">
+        <app-header-trainer [Requests]="needToaprove"></app-header-trainer>
+    </header>
+    <div id="main">
+        <article>
+            <mat-card style="width: 100%; height: 95%;">
+                <router-outlet></router-outlet>
+            </mat-card>
 
-    </article>
-  </div>
-  <!-- <footer style="z-index: 999; background-color: #1c2733;">
+        </article>
+    </div>
+    <!-- <footer style="z-index: 999; background-color: #1c2733;">
         <app-footer></app-footer>
     </footer> -->
 </body>

@@ -1,4 +1,4 @@
-import { Component, Injectable, Input, NgZone, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BackEndService } from '../.Services/BackEnd-service';
 
 @Component({
@@ -9,14 +9,15 @@ import { BackEndService } from '../.Services/BackEnd-service';
 
 export class HeaderTrainerComponent implements OnInit {
 
-  // @Input()
-   Requests: number;
+  @Input() Requests: number;
 
-  constructor(private backEndServide: BackEndService) {
+  constructor(private backEndService: BackEndService) {
   }
 
   ngOnInit(): void {
-    this.getNumberOfInvites();
+    // this.getNumberOfInvites();
+    this.backEndService.currentRequestNumber.subscribe(m => this.Requests = m)
+
   }
 
   isThereAnyRequests(num: any) {
@@ -28,7 +29,7 @@ export class HeaderTrainerComponent implements OnInit {
   }
 
   getNumberOfInvites() {
-    this.backEndServide.getNumberOfRequestsToTrainer("a82029c4-58ff-45e0-8036-4e36a437637b").subscribe(result => {
+    this.backEndService.getNumberOfRequestsToTrainer("a82029c4-58ff-45e0-8036-4e36a437637b").subscribe(result => {
       this.Requests = result[0].yra;
       console.log(this.Requests);
     }, error => {

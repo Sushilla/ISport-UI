@@ -16,6 +16,6 @@ export class userNotificationToTrainer {
 
   goToAcceptUsers() {
     this._snackBar.dismiss();
-    this.router.navigateByUrl(`/trainer/settings`)
+    this.router.navigateByUrl(`/trainer/requests`)
   }
 }
