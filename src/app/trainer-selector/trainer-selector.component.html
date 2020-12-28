@@ -19,20 +19,20 @@
         <h3>Or select from your trainers list</h3>
     </div>
     <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
-        <div style="height: 100px; padding: 50px 0px;" *ngFor="let trainer of trainers;">
+        <div style="height: 100px; padding: 50px 0px;" *ngFor="let trainer of acceptedTrainerList;">
             <mat-card class="example-card" style="padding: 0px 15px 0px 0px; display: flex; height: 100px;" (click)='redirectToTrainerExcercise(trainer.id)'>
                 <mat-card-header style="flex-direction: column; background-color: transparent; color: white; display: flex; justify-content: center; padding: 0px 10px 0px 0px; height: 100px;">
-                    <img src="{{trainer.image}}" style="height: 100px; border-radius: 5px;">
+                    <img src="assets/img/selfie1.jpeg" style="height: 100px; border-radius: 5px;">
                 </mat-card-header>
                 <div style="width: 100%;">
                     <mat-card-content style="padding: 10px; word-wrap: break-word;">
                         <p style="font-weight: 500;">
-                            {{trainer.name}} {{trainer.surname}}
+                            {{trainer.vardas}} {{trainer.pavarde}}
                         </p>
                     </mat-card-content>
                     <mat-card-content style="padding: 10px; border-top: 1px solid grey; margin: 0px ;">
                         <p>
-                            Done: MB NO :D
+                            {{trainer.email}}
                         </p>
                     </mat-card-content>
                 </div>

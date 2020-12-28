@@ -3,24 +3,25 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { TrainerListForAdding } from '../models/TrainerListForAdding';
 import { RequestToAddTrainerKvietimas } from '../models/RequestToAddTrainerKvietimas';
-import {KvietimaiToTrainer} from '../models/KvietimaiToTrainer'
+import { KvietimaiToTrainer } from '../models/KvietimaiToTrainer'
+import { AcceptedTrainersList } from '../models/AcceptedTrainersList';
 
 @Injectable()
 export class BackEndService {
 
-    private requestNumberSource  = new BehaviorSubject(0);
-    currentRequestNumber  = this.requestNumberSource.asObservable();
+    private requestNumberSource = new BehaviorSubject(0);
+    currentRequestNumber = this.requestNumberSource.asObservable();
 
     constructor(private http: HttpClient) {
     }
 
     changeRequestNumber(message: number) {
         console.log(message);
-        
-        this.requestNumberSource.next(message)
-      }
 
-    
+        this.requestNumberSource.next(message)
+    }
+
+
 
     public getTrainerListForAddingTrainer(): Observable<TrainerListForAdding[]> {
         const header = {
@@ -52,33 +53,43 @@ export class BackEndService {
         return this.http.get<KvietimaiToTrainer[]>("http://localhost:5000/api/v1/models/kvietimai/" + id, requestOptions);
     }
 
-    public deleteTrainerRequest(id: string): Observable<any>{
+    public deleteTrainerRequest(id: string): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.delete("http://localhost:5000/api/v1/models/kvietimai/"+id, requestOptions);
+        return this.http.delete("http://localhost:5000/api/v1/models/kvietimai/" + id, requestOptions);
     }
 
-    public acceptTrainerRequest(id :string): Observable<any>{
+    public acceptTrainerRequest(id: string): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.put("http://localhost:5000/api/v1/models/pakviestiTreneriaiAcceptReuqest/"+id, requestOptions);
+        return this.http.put("http://localhost:5000/api/v1/models/pakviestiTreneriaiAcceptReuqest/" + id, requestOptions);
     }
 
-    public getNumberOfRequestsToTrainer(id: string): Observable<any>{
+    public getNumberOfRequestsToTrainer(id: string): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<any>("http://localhost:5000/api/v1/models/kvietimaiSkaicius/"+id, requestOptions);
+        return this.http.get<any>("http://localhost:5000/api/v1/models/kvietimaiSkaicius/" + id, requestOptions);
+    }
+
+    public getTrainerWhoAcceptedMyInvite(id: string): Observable<AcceptedTrainersList> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<AcceptedTrainersList>("http://localhost:5000/api/v1/models/pakviestiTreneriai/" + id, requestOptions);
     }
 }
