@@ -9,6 +9,7 @@ import { BackEndService } from '../.Services/BackEnd-service';
 import { TrainerListForAdding } from '../models/TrainerListForAdding';
 import { RequestToAddTrainerKvietimas } from '../models/RequestToAddTrainerKvietimas';
 import { AcceptedTrainersList } from '../models/AcceptedTrainersList';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-trainer-selector',
@@ -26,9 +27,7 @@ export class TrainerSelectorComponent implements OnInit {
   canSendRequestToTrainer = false;
   acceptedTrainerList: AcceptedTrainersList;
 
-  constructor(private router: Router, public backend: BackEndService) {
-    // this.trainers.push(new TrainerSelectorModel('id1', 'Tomas', 'Pavardenis', 'assets/img/selfie1.jpeg'));
-    // this.trainers.push(new TrainerSelectorModel('id2', 'Jonas', 'Kazkurislavas', 'assets/img/selfie2.jpg'));
+  constructor(private router: Router, public backend: BackEndService, public cookieService: CookieService) {
     this.getListOfTrainers();
   }
 
@@ -90,7 +89,7 @@ export class TrainerSelectorComponent implements OnInit {
 
   getListOfTrainers(){
     this.backend.getTrainerWhoAcceptedMyInvite("40c0f599-a2a4-4727-9e5f-d941ba9ec063").subscribe(result => {
-      this.acceptedTrainerList = result;
+      this.acceptedTrainerList = result;      
       console.log(this.acceptedTrainerList); 
     }, error => {
       console.log(error);
