@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UIService } from '../.Services/UIService';
 
 @Component({
   selector: 'app-trainer-settings',
@@ -9,8 +10,9 @@ export class TrainerSettingsComponent implements OnInit {
   public trainer: test[] = [
     { name: 'vardas', surname: 'pavarde', email: 'asd@asd.asd', registerDate: '2020-02-10', image: 'selfie1.jpeg' }
   ]
-  constructor() {
-    // this.trainer.push(new TrainerSelectorModel('id1', 'Tomas', 'Pavardenis', 'assets/img/selfie1.jpeg'));
+  constructor(public uiService: UIService) {
+    // console.log(this.uiService.checkWhatRole());
+    
   }
 
   ngOnInit(): void {
@@ -24,7 +26,22 @@ export class TrainerSettingsComponent implements OnInit {
     }
   }
 
+  checkWithUIServiceRole(role: string){
+    if(role == this.uiService.checkWhatRole()){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 }
+
+
+
+
+
+
+
 export class test {
   public name;
   public surname;

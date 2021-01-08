@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { BackEndService } from '../.Services/BackEnd-service';
+import { UIService } from '../.Services/UIService';
+import { StoreLogedInUserDataToCookie } from '../models/StoreLogedInUserDataToCookie';
 
 @Component({
   selector: 'app-login',
@@ -9,22 +13,26 @@ import { BackEndService } from '../.Services/BackEnd-service';
 export class LoginComponent implements OnInit {
   email: string;
   password: string;
+  userInfo: StoreLogedInUserDataToCookie;
 
-  constructor(public backEndService: BackEndService) { }
+  constructor(public backEndService: BackEndService, public cookieService: CookieService, public router: Router, public uiService: UIService) {
+    this.uiService.checkIfUserLoggedIn();
+   }
 
   ngOnInit(): void {
   }
 
-  loginUser(){
-    console.log(this.email);
-    console.log(this.password);
-    
+  loginUser(){    
     this.backEndService.loginUser(this.email, this.password).subscribe(result=>{
       console.log(result);
+      this.cookieService.set("UserCookie", JSON.stringify(result), 3600);
+      this.uiService.checkIfUserLoggedIn();
     }, error =>{
       console.log(error);
       
     })
   }
+
+
 
 }

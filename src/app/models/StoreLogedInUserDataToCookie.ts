@@ -1,8 +1,8 @@
 export class StoreLogedInUserDataToCookie{
-    public Id: string;
-    public Vardas: string;
-    public Pavarde: string;
-    public Email: string;
-    public Pavadinimas: string;
+    public id: string;
+    public vardas: string;
+    public pavarde: string;
+    public email: string;
+    public pavadinimas: string;
 
 }

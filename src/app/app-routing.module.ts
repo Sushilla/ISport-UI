@@ -17,6 +17,7 @@ import { UserStatisticsComponent } from './user-statistics/user-statistics.compo
 import { UserFreemodeComponent } from './user-freemode/user-freemode.component';
 import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.component';
 import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training.component';
+import { UIService } from './.Services/UIService';
 
 const routes: Routes = [
   {
@@ -26,7 +27,9 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'trainer', component: TrainerComponent, children: [
+    path: 'trainer', component: TrainerComponent,
+    //  canActivate: [UIService], data: {role: ['Trainer']},
+      children: [
       { path: 'main', component: TrainerMainComponent },
       { path: 'settings', component: TrainerSettingsComponent },
       { path: 'requests', component: TrainerRequestsComponent },
@@ -35,13 +38,16 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'user', component: UserComponent, children: [
+    path: 'user', component: UserComponent, 
+    // canActivate: [UIService], data: {role: ['User']}, 
+    children: [
       { path: 'main', component: UserMainComponent },
       { path: 'selector', component: TrainerSelectorComponent },
       { path: 'statistics', component: UserStatisticsComponent },
       { path: 'freemode', component: UserFreemodeComponent },
       { path: 'collect', component: AimoduleCollectComponent },
       { path: 'training', component: AimoduleTrainingComponent },
+      { path: 'settings', component: TrainerSettingsComponent },
       { path: ':id', component: ExercisesSelectorComponent, },
       { path: ':id/:id', component: AImodeluComponent },
       { path: '**', redirectTo: '/user/main' }

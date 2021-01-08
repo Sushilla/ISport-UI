@@ -63,6 +63,7 @@ import { AreYouSure } from './dialogs/AreYouSure/AreYouSure';
 import { EditWorkout } from './dialogs/editWorkout/editWorkout';
 import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training.component';
 import { BackEndService } from './.Services/BackEnd-service';
+import { UIService } from './.Services/UIService';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -124,7 +125,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatStepperModule,
     HttpClientModule
   ],
-  providers: [BackEndService],
+  providers: [BackEndService,
+    UIService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

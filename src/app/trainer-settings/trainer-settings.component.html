@@ -1,27 +1,45 @@
 <mat-grid-list cols="4" rowHeight="100%">
-  <mat-grid-tile colspan=1>
-    <div
-      style="display: flex; flex-direction: column; width: 99%; height: 95%; justify-content: space-around; border: 1px solid black; border-radius: 5px;">
-      <div style="display: flex; width: 100%; height: 45%; align-items: center; justify-content: center;">
-        <!-- <mat-icon class="image">person</mat-icon> -->
-        <img class="avatar" src="assets/img/{{trainer[0].image}}" *ngIf="checkIfThereIsImage(trainer[0].image)">
-        <img class="avatar" src="assets/img/empty_person.jpg" *ngIf="!checkIfThereIsImage(trainer[0].image)">
-      </div>
-      <div style=" width: 100%; height: 45%; display: flex; flex-direction: column; justify-content:space-between; align-items: center;">
-        <div
-          style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50%; width: 100%;">
-          <span style="padding-bottom: 10px; font-size: 20px; font-weight: 600;">Name: {{trainer[0].name}}
+    <mat-grid-tile colspan=1>
+        <div style="display: flex; flex-direction: column; width: 99%; height: 95%; justify-content: space-around; border: 1px solid black; border-radius: 5px;">
+            <div style="display: flex; width: 100%; height: 45%; align-items: center; justify-content: center;">
+                <img class="avatar" src="assets/img/{{trainer[0].image}}" *ngIf="checkIfThereIsImage(trainer[0].image)">
+                <img class="avatar" src="assets/img/empty_person.jpg" *ngIf="!checkIfThereIsImage(trainer[0].image)">
+            </div>
+            <div style=" width: 100%; height: 45%; display: flex; flex-direction: column; justify-content:space-between; align-items: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50%; width: 100%;">
+                    <span style="padding-bottom: 10px; font-size: 20px; font-weight: 600;">Name: {{trainer[0].name}}
             {{trainer[0].surname}}</span>
-          <span style="padding-bottom: 10px; font-size: 20px; font-weight: 500;">Email: {{trainer[0].email}}</span>
-          <span style="font-size: 20px; font-weight: 500;">Register date: {{trainer[0].registerDate}}</span>
+                    <span style="padding-bottom: 10px; font-size: 20px; font-weight: 500;">Email: {{trainer[0].email}}</span>
+                    <span style="font-size: 20px; font-weight: 500;">Register date: {{trainer[0].registerDate}}</span>
+                </div>
+                <button mat-raised-button style="width: 50%; margin-bottom: 20px;">Back</button>
+            </div>
         </div>
-        <button mat-raised-button style="width: 50%; margin-bottom: 20px;">Back</button>
-      </div>
-    </div>
-  </mat-grid-tile>
-  <mat-grid-tile colspan=3>
-    <div style="width: 99%; height: 95%; border: 1px solid black; border-radius: 5px;">
-    password resset
-    </div>
-  </mat-grid-tile>
+    </mat-grid-tile>
+    <mat-grid-tile colspan=3>
+        <div style="width: 99%; height: 95%; border: 1px solid black; border-radius: 5px;">
+            <mat-tab-group style="height: 100%;">
+                <mat-tab label="Access">
+                    <div style="height: 100%;">
+                        asdasd
+                    </div>
+                </mat-tab>
+                <mat-tab label="Second">
+                    <div style="height: 100%;">
+                        asxxxxxxx
+                    </div>
+                </mat-tab>
+                <mat-tab label="Become a trainer">
+                    <div style="height: 100%;">
+                        wow trainer
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <!-- <ng-container *ngIf="checkWithUIServiceRole('Admin')">
+            <div style="width: 99%; height: 95%; border: 1px solid black; border-radius: 5px;">
+                Admin
+            </div>
+        </ng-container> -->
+    </mat-grid-tile>
 </mat-grid-list>
