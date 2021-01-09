@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { UIService } from '../.Services/UIService';
 import { WorkoutSelector } from '../header-user/workoutSelector.component'
 @Component({
   selector: 'app-header-user',
@@ -8,7 +9,7 @@ import { WorkoutSelector } from '../header-user/workoutSelector.component'
 })
 export class HeaderUserComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public uiService: UIService) { }
 
   ngOnInit(): void {
   }
@@ -19,6 +20,10 @@ export class HeaderUserComponent implements OnInit {
     // dialogRef.afterClosed().subscribe(result => {
     //   console.log(`Dialog result: ${result}`);
     // });
+  }
+
+  logoff(){
+    this.uiService.logOffFromAccount();
   }
 
 }

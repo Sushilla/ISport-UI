@@ -10,7 +10,7 @@ import { BackEndService } from '../.Services/BackEnd-service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private cookieService: CookieService, private backEndServide: BackEndService) {
+  constructor() {
   }
 
   ngOnInit(): void {

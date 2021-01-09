@@ -64,6 +64,7 @@ import { EditWorkout } from './dialogs/editWorkout/editWorkout';
 import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training.component';
 import { BackEndService } from './.Services/BackEnd-service';
 import { UIService } from './.Services/UIService';
+import { Authguard } from './.Services/auth-guard';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -126,7 +127,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [BackEndService,
-    UIService],
+    UIService,
+    Authguard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { StoreLogedInUserDataToCookie } from "../models/StoreLogedInUserDataToCookie";
 
@@ -9,7 +9,7 @@ export class UIService {
   }
 
 
-  public checkIfUserLoggedIn() {
+  public checkIfUserLoggedIn() {    
     if (this.cookieService.check("UserCookie")) {
       var cookie: StoreLogedInUserDataToCookie;
       cookie = JSON.parse(this.cookieService.get("UserCookie"));
@@ -23,23 +23,17 @@ export class UIService {
     }
   }
 
-  canActivate(val: any): boolean {
-    if (this.cookieService.check("UserCookie")) {
-      var cookie: StoreLogedInUserDataToCookie;
-      cookie = JSON.parse(this.cookieService.get("UserCookie"));
-      if (cookie[0].pavadinimas == val.data.role[0]) {
-        return true;
-      }
-    }
-    this.router.navigateByUrl('/home/login');
-    return true;
-  }
-
   public checkWhatRole(): string {
     if (this.cookieService.check("UserCookie")) {
       var cookie: StoreLogedInUserDataToCookie;
-      cookie = JSON.parse(this.cookieService.get("UserCookie"));
+      cookie = JSON.parse(this.cookieService.get("UserCookie"));       
       return cookie[0].pavadinimas;
     }
+  }
+
+  public logOffFromAccount(){
+    this.cookieService.delete("UserCookie");
+    this.router.navigateByUrl('/home/landing');
+
   }
 }

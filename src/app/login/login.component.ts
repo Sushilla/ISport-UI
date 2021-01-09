@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   loginUser(){    
     this.backEndService.loginUser(this.email, this.password).subscribe(result=>{
       console.log(result);
-      this.cookieService.set("UserCookie", JSON.stringify(result), 3600);
+      this.cookieService.set("UserCookie", JSON.stringify(result), {expires: 7, path: "/"});
       this.uiService.checkIfUserLoggedIn();
     }, error =>{
       console.log(error);

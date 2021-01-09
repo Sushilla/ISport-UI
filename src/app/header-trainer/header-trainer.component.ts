@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BackEndService } from '../.Services/BackEnd-service';
+import { UIService } from '../.Services/UIService';
 
 @Component({
   selector: 'app-header-trainer',
@@ -11,13 +12,17 @@ export class HeaderTrainerComponent implements OnInit {
 
   @Input() Requests: number;
 
-  constructor(private backEndService: BackEndService) {
+  constructor(private backEndService: BackEndService, public uiService:UIService) {
   }
 
   ngOnInit(): void {
     // this.getNumberOfInvites();
     this.backEndService.currentRequestNumber.subscribe(m => this.Requests = m)
 
+  }
+
+  logoff(){
+    this.uiService.logOffFromAccount();
   }
 
   isThereAnyRequests(num: any) {

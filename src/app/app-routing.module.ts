@@ -18,6 +18,7 @@ import { UserFreemodeComponent } from './user-freemode/user-freemode.component';
 import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.component';
 import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training.component';
 import { UIService } from './.Services/UIService';
+import { Authguard } from './.Services/auth-guard';
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'trainer', component: TrainerComponent,
-    //  canActivate: [UIService], data: {role: ['Trainer']},
+    //  canActivate: [Authguard], data: {role: ['Trainer']},
       children: [
       { path: 'main', component: TrainerMainComponent },
       { path: 'settings', component: TrainerSettingsComponent },
@@ -39,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: 'user', component: UserComponent, 
-    // canActivate: [UIService], data: {role: ['User']}, 
+    // canActivate: [Authguard], data: {role: ['User']}, 
     children: [
       { path: 'main', component: UserMainComponent },
       { path: 'selector', component: TrainerSelectorComponent },
