@@ -5,6 +5,7 @@ import { TrainerListForAdding } from '../models/TrainerListForAdding';
 import { RequestToAddTrainerKvietimas } from '../models/RequestToAddTrainerKvietimas';
 import { KvietimaiToTrainer } from '../models/KvietimaiToTrainer'
 import { AcceptedTrainersList } from '../models/AcceptedTrainersList';
+import { PakeistiRoleListForAdmin } from '../models/PakeistiRoleListForAdmin'
 import { StoreLogedInUserDataToCookie } from '../models/StoreLogedInUserDataToCookie';
 
 @Injectable()
@@ -94,13 +95,32 @@ export class BackEndService {
         return this.http.get<AcceptedTrainersList>("http://localhost:5000/api/v1/models/pakviestiTreneriai/" + id, requestOptions);
     }
 
-    public loginUser(email: string, pass: string): Observable<StoreLogedInUserDataToCookie>{
+    public loginUser(email: string, pass: string): Observable<StoreLogedInUserDataToCookie> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<StoreLogedInUserDataToCookie>("http://localhost:5000/api/v1/models/vartotojasLogin/"+email+"/"+pass, requestOptions);
+        return this.http.get<StoreLogedInUserDataToCookie>("http://localhost:5000/api/v1/models/vartotojasLogin/" + email + "/" + pass, requestOptions);
+    }
+
+    public getListForChangingRole(): Observable<PakeistiRoleListForAdmin[]> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<PakeistiRoleListForAdmin[]>("http://localhost:5000/api/v1/models/PrasymaiPakeistRole", requestOptions);
+    }
+    public sendrequestToAdminForChangingRole(id: string): Observable<any> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.put<any>("http://localhost:5000/api/v1/models/PrasymaiPakeistRole/" + id, requestOptions);
     }
 }

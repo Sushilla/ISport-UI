@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BackEndService } from '../.Services/BackEnd-service';
 import { UIService } from '../.Services/UIService';
 
 @Component({
@@ -16,7 +17,7 @@ export class TrainerSettingsComponent implements OnInit {
     { text: 'Three', cols: 1, rows: 1, color: 'lightpink' },
     { text: 'Four', cols: 2, rows: 1, color: '#DDBDF1' },
   ];
-  constructor(public uiService: UIService) {
+  constructor(public uiService: UIService, public backEndService: BackEndService) {
     // console.log(this.uiService.checkWhatRole());
 
   }
@@ -38,6 +39,16 @@ export class TrainerSettingsComponent implements OnInit {
     }
     return false;
 
+  }
+
+  sendRequestToAdmin(){
+    console.log('send');
+    this.backEndService.sendrequestToAdminForChangingRole("40c0f599-a2a4-4727-9e5f-d941ba9ec063").subscribe(result =>{
+      console.log(result);
+    }, error =>{
+      console.log(error);
+      
+    });
   }
 
 }
