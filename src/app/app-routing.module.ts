@@ -19,6 +19,8 @@ import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.co
 import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training.component';
 import { UIService } from './.Services/UIService';
 import { Authguard } from './.Services/auth-guard';
+import { AdminComponent } from './admin/admin.component';
+import { AdminMainComponent } from './admin-main/admin-main.component';
 
 const routes: Routes = [
   {
@@ -29,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'trainer', component: TrainerComponent,
-    //  canActivate: [Authguard], data: {role: ['Trainer']},
+     canActivate: [Authguard], data: {role: ['Trainer']},
       children: [
       { path: 'main', component: TrainerMainComponent },
       { path: 'settings', component: TrainerSettingsComponent },
@@ -40,7 +42,7 @@ const routes: Routes = [
   },
   {
     path: 'user', component: UserComponent, 
-    // canActivate: [Authguard], data: {role: ['User']}, 
+    canActivate: [Authguard], data: {role: ['User']}, 
     children: [
       { path: 'main', component: UserMainComponent },
       { path: 'selector', component: TrainerSelectorComponent },
@@ -52,6 +54,17 @@ const routes: Routes = [
       { path: ':id', component: ExercisesSelectorComponent, },
       { path: ':id/:id', component: AImodeluComponent },
       { path: '**', redirectTo: '/user/main' }
+    ]
+  },
+  {
+    path: 'admin', component: AdminComponent,
+     canActivate: [Authguard], data: {role: ['Admin']},
+      children: [
+      { path: 'main', component: AdminMainComponent },
+      { path: 'settings', component: TrainerSettingsComponent },
+      { path: 'requests', component: TrainerRequestsComponent },
+      { path: 'trainings', component: TrainerTrainingsComponent },
+      { path: '**', redirectTo: '/admin/main' }
     ]
   },
   // {

@@ -1,0 +1,17 @@
+<div style="background-color: chartreuse;height: 100%; width: 100%;">
+    <mat-table [dataSource]="req" class="mat-elevation-z8" style="word-break: break-word; height: 100%; overflow-y: auto;">
+        <ng-container matColumnDef="nameSurname">
+            <mat-cell *matCellDef="let element" style="padding: 10px 10px 10px 50px;"> {{element.vardas}} {{element.pavarde}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="createionDate">
+            <mat-cell *matCellDef="let element" style="padding: 10px; display: flex; justify-content: space-around;"> {{element.sukurimoData}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-cell *matCellDef="let element" style="padding: 10px; display: flex; justify-content: space-around;">
+                <button mat-raised-button style="background: #2ecc71; color: white;" (click)="acceptButton(element.pakvietimoId)">Accept</button>
+                <button mat-raised-button style="background: #e74c3c; color: white;" (click)="rejectButton(element.pakvietimoId)">Reject</button>
+            </mat-cell>
+        </ng-container>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

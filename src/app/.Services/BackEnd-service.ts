@@ -114,6 +114,7 @@ export class BackEndService {
         };
         return this.http.get<PakeistiRoleListForAdmin[]>("http://localhost:5000/api/v1/models/PrasymaiPakeistRole", requestOptions);
     }
+    
     public sendrequestToAdminForChangingRole(id: string): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
@@ -123,4 +124,25 @@ export class BackEndService {
         };
         return this.http.put<any>("http://localhost:5000/api/v1/models/PrasymaiPakeistRole/" + id, requestOptions);
     }
+
+    public adminRejectUserFromBecomingTrainer(id: string): Observable<any> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.delete("http://localhost:5000/api/v1/models/PrasymaiPakeistRole/" + id, requestOptions);
+    }
+
+    public adminApproveUserToBecomeTrainer(id: string): Observable<any> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.put("http://localhost:5000/api/v1/models/ApprovePakeistRole/" + id, requestOptions);
+    }
+
 }

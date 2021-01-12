@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackEndService } from '../.Services/BackEnd-service';
+import { UIService } from '../.Services/UIService';
 import { HeaderTrainerComponent } from '../header-trainer/header-trainer.component';
 import { KvietimaiToTrainer } from '../models/KvietimaiToTrainer';
 
@@ -15,17 +16,14 @@ export class TrainerRequestsComponent implements OnInit {
   requestForTrainer: number = 10;
 
 
-  constructor(private backEndService: BackEndService) {
+  constructor(private backEndService: BackEndService, private uiService: UIService) {
     this.getDataForTable();
   }
 
   ngOnInit(): void {
-    // this.backEndService.currentMessage.subscribe(m => this.message = m)
   }
 
   acceptButton(id: any) {
-    // console.log(id)       
-    // this.backEndService.changeRequestNumber(this.requestForTrainer);
     this.backEndService.acceptTrainerRequest(id).subscribe(result =>{
       console.log(result);
       this.getNumberOfInvites();
@@ -44,7 +42,7 @@ export class TrainerRequestsComponent implements OnInit {
   }
 
   getDataForTable() {
-    this.backEndService.getKvietimaiToTrainer("a82029c4-58ff-45e0-8036-4e36a437637b").subscribe(result => {
+    this.backEndService.getKvietimaiToTrainer(this.uiService.getUserIdFromCookie()).subscribe(result => {
       this.req = result;
     }, error => {
       console.log(error);
@@ -57,8 +55,9 @@ export class TrainerRequestsComponent implements OnInit {
   }
 
   getNumberOfInvites() {
-    this.backEndService.getNumberOfRequestsToTrainer("a82029c4-58ff-45e0-8036-4e36a437637b").subscribe(result => {
+    this.backEndService.getNumberOfRequestsToTrainer(this.uiService.getUserIdFromCookie()).subscribe(result => {
       this.requestForTrainer = result[0].yra;
+      
       this.backEndService.changeRequestNumber(this.requestForTrainer);
     }, error => {
       console.log(error);

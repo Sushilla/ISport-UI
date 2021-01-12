@@ -9,14 +9,14 @@ export class UIService {
   }
 
 
-  public checkIfUserLoggedIn() {    
+  public checkIfUserLoggedIn() {
     if (this.cookieService.check("UserCookie")) {
       var cookie: StoreLogedInUserDataToCookie;
       cookie = JSON.parse(this.cookieService.get("UserCookie"));
       if (cookie[0].pavadinimas == "Trainer") {
         this.router.navigateByUrl("/trainer/main");
       } else if (cookie[0].pavadinimas == "Admin") {
-        // this.router.navigateByUrl();
+        this.router.navigateByUrl("/admin/main");
       } else {
         this.router.navigateByUrl("/user/main");
       }
@@ -26,14 +26,19 @@ export class UIService {
   public checkWhatRole(): string {
     if (this.cookieService.check("UserCookie")) {
       var cookie: StoreLogedInUserDataToCookie;
-      cookie = JSON.parse(this.cookieService.get("UserCookie"));       
+      cookie = JSON.parse(this.cookieService.get("UserCookie"));
       return cookie[0].pavadinimas;
     }
   }
 
-  public logOffFromAccount(){
-    this.cookieService.delete("UserCookie");
+  public logOffFromAccount() {
+    this.cookieService.delete("UserCookie", '/')
     this.router.navigateByUrl('/home/landing');
+  }
 
+  public getUserIdFromCookie(): string {
+    var cookie: StoreLogedInUserDataToCookie;
+    cookie = JSON.parse(this.cookieService.get("UserCookie"));
+    return cookie[0].id;
   }
 }

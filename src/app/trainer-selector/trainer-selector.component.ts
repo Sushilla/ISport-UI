@@ -10,6 +10,7 @@ import { TrainerListForAdding } from '../models/TrainerListForAdding';
 import { RequestToAddTrainerKvietimas } from '../models/RequestToAddTrainerKvietimas';
 import { AcceptedTrainersList } from '../models/AcceptedTrainersList';
 import { CookieService } from 'ngx-cookie-service';
+import { UIService } from '../.Services/UIService';
 
 @Component({
   selector: 'app-trainer-selector',
@@ -27,7 +28,7 @@ export class TrainerSelectorComponent implements OnInit {
   canSendRequestToTrainer = false;
   acceptedTrainerList: AcceptedTrainersList;
 
-  constructor(private router: Router, public backend: BackEndService, public cookieService: CookieService) {
+  constructor(private router: Router, public backend: BackEndService, public cookieService: CookieService, private uiService: UIService) {
     this.getListOfTrainers();
   }
 
@@ -71,7 +72,7 @@ export class TrainerSelectorComponent implements OnInit {
       var sendRequest = new Array<RequestToAddTrainerKvietimas>();
       var req = new RequestToAddTrainerKvietimas();
       req.trenerioID = this.trId;
-      req.vartotojoId = "40c0f599-a2a4-4727-9e5f-d941ba9ec063";
+      req.vartotojoId = this.uiService.getUserIdFromCookie();
       sendRequest.push(req)
       console.log(sendRequest);
       this.backend.putKvietimasTreneriIDraugus(req).subscribe(result => {
@@ -88,7 +89,7 @@ export class TrainerSelectorComponent implements OnInit {
   }
 
   getListOfTrainers(){
-    this.backend.getTrainerWhoAcceptedMyInvite("40c0f599-a2a4-4727-9e5f-d941ba9ec063").subscribe(result => {
+    this.backend.getTrainerWhoAcceptedMyInvite(this.uiService.getUserIdFromCookie()).subscribe(result => {
       this.acceptedTrainerList = result;      
       console.log(this.acceptedTrainerList); 
     }, error => {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BackEndService } from '../.Services/BackEnd-service';
+import { UIService } from '../.Services/UIService';
 import { userNotificationToTrainer } from './userNotificationToTrainer.component';
 
 @Component({
@@ -12,7 +13,7 @@ export class TrainerComponent implements OnInit {
   durationInSeconds = 5;
   needToaprove = 0;
   
-  constructor(private _snackBar: MatSnackBar, private backEndServide: BackEndService) {
+  constructor(private _snackBar: MatSnackBar, private backEndServide: BackEndService, private uiService: UIService) {
     this.getNumberOfInvites();
   }
 
@@ -29,7 +30,7 @@ export class TrainerComponent implements OnInit {
   }
 
   getNumberOfInvites() {
-    this.backEndServide.getNumberOfRequestsToTrainer("a82029c4-58ff-45e0-8036-4e36a437637b").subscribe(result => {
+    this.backEndServide.getNumberOfRequestsToTrainer(this.uiService.getUserIdFromCookie()).subscribe(result => {
       this.needToaprove = result[0].yra;
       console.log(this.needToaprove);
       if (this.needToaprove != 0) {

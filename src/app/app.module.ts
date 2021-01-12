@@ -66,6 +66,8 @@ import { BackEndService } from './.Services/BackEnd-service';
 import { UIService } from './.Services/UIService';
 import { Authguard } from './.Services/auth-guard';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './admin/admin.component';
+import { AdminMainComponent } from './admin-main/admin-main.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,9 @@ import { HttpClientModule } from '@angular/common/http';
     CreateNewWorkout,
     AreYouSure,
     EditWorkout,
-    AimoduleTrainingComponent
+    AimoduleTrainingComponent,
+    AdminComponent,
+    AdminMainComponent
   ],
   imports: [
     BrowserModule,

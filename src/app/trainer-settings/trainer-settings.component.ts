@@ -43,7 +43,7 @@ export class TrainerSettingsComponent implements OnInit {
 
   sendRequestToAdmin(){
     console.log('send');
-    this.backEndService.sendrequestToAdminForChangingRole("40c0f599-a2a4-4727-9e5f-d941ba9ec063").subscribe(result =>{
+    this.backEndService.sendrequestToAdminForChangingRole(this.uiService.getUserIdFromCookie()).subscribe(result =>{
       console.log(result);
     }, error =>{
       console.log(error);
