@@ -1,100 +1,78 @@
 <mat-horizontal-stepper linear #stepper labelPosition="bottom">
-  <mat-step [stepControl]="firstFormGroup" [optional]="true">
-    <form [formGroup]="firstFormGroup" style="display: flex; flex-direction: column;">
-      <ng-template matStepLabel>Give name</ng-template>
-      <mat-form-field class="example-full-width">
-        <mat-label>Give title to workout</mat-label>
-        <input matInput placeholder="Title" formControlName="titleCtrl" required>
-      </mat-form-field>
+    <mat-step [stepControl]="firstFormGroup" [optional]="true">
+        <form [formGroup]="firstFormGroup" style="display: flex; flex-direction: column;">
+            <ng-template matStepLabel>Give name</ng-template>
+            <mat-form-field class="example-full-width">
+                <mat-label>Give title to workout</mat-label>
+                <input matInput placeholder="Title" formControlName="titleCtrl" required [(ngModel)]='treniruotesInfo.pavadinimas'>
+            </mat-form-field>
 
-      <mat-form-field class="example-full-width">
-        <mat-label>Give description to workout</mat-label>
-        <textarea matInput placeholder="Description" formControlName="descCtrl" required></textarea>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-
-
-  <mat-step [stepControl]="secondFormGroup" [optional]="true">
-    <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Add excercises</ng-template>
-      <mat-form-field style="width: 100%;">
-        <mat-chip-list #chipListExercise>
-          <mat-chip
-            *ngFor="let exercises of exercises"
-            [selectable]="selectable"
-            [removable]="removable"
-            (removed)="removeExercise(exercises)">
-            {{exercises}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-          </mat-chip>
-          <input
-            placeholder="Add exercise to your workout"
-            #exerciseInput
-            [formControl]="exerciseCtrl"
-            [matAutocomplete]="autoExercise"
-            [matChipInputFor]="chipListExercise"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="addExercise($event)">
-        </mat-chip-list>
-        <mat-autocomplete #autoExercise="matAutocomplete" (optionSelected)="selectedExercise($event)">
-          <mat-option *ngFor="let fExercise of filteredExercise | async" [value]="fExercise">
-            {{fExercise}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-
-  <mat-step [stepControl]="secondFormGroup" [optional]="true">
-    <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Add users</ng-template>
-      <mat-form-field style="width: 100%;">
-        <mat-chip-list #chipListUsers>
-          <mat-chip
-            *ngFor="let user of users"
-            [selectable]="selectable"
-            [removable]="removable"
-            (removed)="removeUser(user)">
-            {{user}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-          </mat-chip>
-          <input
-            placeholder="Add users to your workout"
-            #fruitInput
-            [formControl]="fruitCtrl"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="chipListUsers"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="addUser($event)">
-        </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedUser($event)">
-          <mat-option *ngFor="let fUser of filteredUsers | async" [value]="fUser">
-            {{fUser}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
+            <mat-form-field class="example-full-width">
+                <mat-label>Give description to workout</mat-label>
+                <textarea matInput placeholder="Description" formControlName="descCtrl" required [(ngModel)]='treniruotesInfo.aprasymas'></textarea>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext (click)='sendRequest()'>Next</button>
+            </div>
+        </form>
+    </mat-step>
 
 
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button [mat-dialog-close]>Create</button>
-      <button mat-button (click)="stepper.reset()" color='warn' [mat-dialog-close]>Discard</button>
-    </div>
-  </mat-step>
+    <mat-step [stepControl]="secondFormGroup" [optional]="true">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Add excercises</ng-template>
+            <mat-form-field style="width: 50%;">
+                <mat-chip-list #chipListExercise>
+                    <mat-chip *ngFor="let exercises of exercises" [selectable]="selectable" [removable]="removable" (removed)="removeExercise(exercises)">
+                        {{exercises}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Add exercise to your workout" #exerciseInput [formControl]="exerciseCtrl" [matAutocomplete]="autoExercise" [matChipInputFor]="chipListExercise" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addExercise($event)">
+                </mat-chip-list>
+                <mat-autocomplete #autoExercise="matAutocomplete" (optionSelected)="selectedExercise($event)">
+                    <mat-option *ngFor="let fExercise of filteredExercise | async" [value]="fExercise">
+                        {{fExercise}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" [optional]="true">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Add users</ng-template>
+            <mat-form-field style="width: 100%;">
+                <mat-chip-list #chipListUsers>
+                    <mat-chip *ngFor="let user of users" [selectable]="selectable" [removable]="removable" (removed)="removeUser(user)">
+                        {{user}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Add users to your workout" #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipListUsers" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addUser($event)">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedUser($event)">
+                    <mat-option *ngFor="let fUser of filteredUsers | async" [value]="fUser">
+                        {{fUser}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button [mat-dialog-close]>Create</button>
+            <button mat-button (click)="stepper.reset()" color='warn' [mat-dialog-close]>Discard</button>
+        </div>
+    </mat-step>
 </mat-horizontal-stepper>

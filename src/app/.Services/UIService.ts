@@ -38,7 +38,7 @@ export class UIService {
 
   public getUserIdFromCookie(): string {
     var cookie: StoreLogedInUserDataToCookie;
-    cookie = JSON.parse(this.cookieService.get("UserCookie"));
+    cookie = JSON.parse(this.cookieService.get("UserCookie"));  
     return cookie[0].id;
   }
 }

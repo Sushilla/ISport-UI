@@ -6,6 +6,9 @@ import { CreateNewWorkout } from '../dialogs/createWorkout/createNewWorkout';
 import { EditWorkout } from '../dialogs/editWorkout/editWorkout';
 import { UsersAddedToWorkout } from '../models/UsersAddedToWorkout';
 import { TrainersWorkoutPlans } from '../models/TrainersWorkoutPlans';
+import { BackEndService } from '../.Services/BackEnd-service';
+import { UIService } from '../.Services/UIService';
+import { TreniruoteTreneris } from '../models/TreniruoteTreneris';
 @Component({
   selector: 'app-trainer-trainings',
   templateUrl: './trainer-trainings.component.html',
@@ -31,9 +34,13 @@ export class TrainerTrainingsComponent implements OnInit {
     {id: '5', name: 'Aliona', surname: 'pavardenis'},
     {id: '6', name: 'Darius', surname: 'pavardenis'}
   ]
-  constructor(public dialog: MatDialog) { }
+
+  treniruotes: TreniruoteTreneris[];
+
+  constructor(public dialog: MatDialog, private backendService: BackEndService, private uiService: UIService) { }
 
   ngOnInit(): void {
+    this.getTreniruotesForShowing();
   }
 
   editTraining(id: any) {
@@ -85,6 +92,17 @@ export class TrainerTrainingsComponent implements OnInit {
         // this.reloadTableFromSelectedType();
       }
     });
+  }
+
+  getTreniruotesForShowing(){
+    this.backendService.getTrainerCreatedExercises(this.uiService.getUserIdFromCookie()).subscribe(result=>{
+      this.treniruotes = result;
+      console.log(this.treniruotes);
+      
+    }, error=>{
+      console.log(error);
+      
+    })
   }
 
 

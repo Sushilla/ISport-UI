@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, from, Observable } from "rxjs";
 import { TrainerListForAdding } from '../models/TrainerListForAdding';
 import { RequestToAddTrainerKvietimas } from '../models/RequestToAddTrainerKvietimas';
 import { KvietimaiToTrainer } from '../models/KvietimaiToTrainer'
 import { AcceptedTrainersList } from '../models/AcceptedTrainersList';
 import { PakeistiRoleListForAdmin } from '../models/PakeistiRoleListForAdmin'
 import { StoreLogedInUserDataToCookie } from '../models/StoreLogedInUserDataToCookie';
+import { CreateTreniruote } from '../models/CreateTreniruote';
+import { TreniruoteTreneris } from '../models/TreniruoteTreneris';
 
 @Injectable()
 export class BackEndService {
@@ -143,6 +145,26 @@ export class BackEndService {
             headers: new HttpHeaders(header),
         };
         return this.http.put("http://localhost:5000/api/v1/models/ApprovePakeistRole/" + id, requestOptions);
+    }
+
+    public createTreinuorte(treniruoteAP: CreateTreniruote): Observable<any>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.put("http://localhost:5000/api/v1/models/treniruote", JSON.stringify(treniruoteAP), requestOptions);
+    }
+
+    public getTrainerCreatedExercises(id: string): Observable<TreniruoteTreneris[]>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<TreniruoteTreneris[]>("http://localhost:5000/api/v1/models/treniruote/"+id, requestOptions);
     }
 
 }

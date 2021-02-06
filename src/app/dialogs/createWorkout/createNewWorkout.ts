@@ -9,6 +9,9 @@ import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material
 import { map, startWith } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
+import { BackEndService } from 'src/app/.Services/BackEnd-service';
+import { CreateTreniruote } from 'src/app/models/CreateTreniruote';
+import { UIService } from 'src/app/.Services/UIService';
 
 
 @Component({
@@ -19,7 +22,7 @@ export class CreateNewWorkout {
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
 
-
+    treniruotesInfo = new CreateTreniruote();
 
     visible = true;
     selectable = true;
@@ -44,7 +47,7 @@ export class CreateNewWorkout {
     @ViewChild('autoExercise') matAutocompleteExercise: MatAutocomplete;
 
 
-    constructor(private _formBuilder: FormBuilder) {
+    constructor(private _formBuilder: FormBuilder, private backendServide: BackEndService, private uiService: UIService) {
         this.loadExexrcise();
         this.loadUsers();
     }
@@ -158,5 +161,17 @@ export class CreateNewWorkout {
         this.filteredExercise = this.exerciseCtrl.valueChanges.pipe(
             startWith(null),
             map((exercises: string | null) => exercises ? this._filterExercise(exercises) : this.exercisesList.slice()));
+    }
+
+    sendRequest(){      
+        this.treniruotesInfo.trenerioId = this.uiService.getUserIdFromCookie();
+        console.log(JSON.stringify(this.treniruotesInfo));
+        
+        this.backendServide.createTreinuorte(this.treniruotesInfo).subscribe(result=>{
+            console.log(result);
+            
+        }, error=>{
+            console.log(error);
+        })
     }
 }
