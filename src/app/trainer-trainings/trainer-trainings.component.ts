@@ -97,7 +97,7 @@ export class TrainerTrainingsComponent implements OnInit {
   getTreniruotesForShowing(){
     this.backendService.getTrainerCreatedExercises(this.uiService.getUserIdFromCookie()).subscribe(result=>{
       this.treniruotes = result;
-      console.log(this.treniruotes);
+      // console.log(this.treniruotes);
       
     }, error=>{
       console.log(error);

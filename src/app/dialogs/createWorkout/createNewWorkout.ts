@@ -1,6 +1,4 @@
-import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
-import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -8,10 +6,12 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { map, startWith } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
 import { BackEndService } from 'src/app/.Services/BackEnd-service';
-import { CreateTreniruote } from 'src/app/models/CreateTreniruote';
+import { CreateTreniruote, exerciseList } from 'src/app/models/CreateTreniruote';
 import { UIService } from 'src/app/.Services/UIService';
+import { Pratymai } from 'src/app/models/Pratymai';
+import { TrainerUsers } from 'src/app/models/TrainerUsers';
+import { CreateWorkoutUserList } from 'src/app/models/CreateWorkoutUserList';
 
 
 @Component({
@@ -32,15 +32,20 @@ export class CreateNewWorkout {
     fruitCtrl = new FormControl();
     filteredUsers: Observable<string[]>;
     users: string[] = [];
-    usersList: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-    
+    usersIDs: string[] = [];
+    usersList: string[] = [];
+    userListFromBack: TrainerUsers[] = new Array<TrainerUsers>();
+    sendlistOfUsers: CreateWorkoutUserList[] = new Array<CreateWorkoutUserList>();
+
     @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
     exerciseCtrl = new FormControl();
     filteredExercise: Observable<string[]>;
     exercises: string[] = [];
-    exercisesList: string[] = ['Nugara', 'Kojos', 'krutine', 'bicke', 'Tricepsas'];
+    exercisesListas: string[] = [];
+    exerciseList: Pratymai[] = new Array<Pratymai>();
+    selectedExerciseList: exerciseList[] = new Array<exerciseList>();
 
 
     @ViewChild('exerciseInput') exerciseInput: ElementRef<HTMLInputElement>;
@@ -48,8 +53,8 @@ export class CreateNewWorkout {
 
 
     constructor(private _formBuilder: FormBuilder, private backendServide: BackEndService, private uiService: UIService) {
-        this.loadExexrcise();
-        this.loadUsers();
+        this.getExerciseList();
+        this.getUserList();
     }
 
 
@@ -63,6 +68,35 @@ export class CreateNewWorkout {
         });
     }
 
+    getExerciseList() {
+        this.backendServide.getAllExerciseList().subscribe(result => {
+            this.exerciseList = result;
+            
+            result.forEach(res=>{
+                this.exercisesListas.push(res.pavadinimas);        
+            })
+        }, error => {
+            console.log(error);
+
+        }, ()=>{
+            this.loadExexrcise();
+        })
+    }
+
+    getUserList(){
+        this.backendServide.getAllTrainersUsers(this.uiService.getUserIdFromCookie()).subscribe(result=>{
+            this.userListFromBack = result;
+            result.forEach(res=>{
+                this.usersList.push(res.email);                              
+            })
+        }, error=>{
+            console.log(error);
+            
+        }, ()=>{
+            this.loadUsers();
+        })
+    }
+
 
 
     addUser(event: MatChipInputEvent): void {
@@ -70,7 +104,7 @@ export class CreateNewWorkout {
         const value = event.value;
 
         this.usersList.forEach(rez => {
-            if (rez == value) {
+            if (rez == value) {                
                 this.usersList.splice(this.usersList.indexOf(value), 1)
                 // Add our fruit
                 if ((value || '').trim()) {
@@ -90,9 +124,9 @@ export class CreateNewWorkout {
         const input = event.input;
         const value = event.value;
 
-        this.exercisesList.forEach(rez => {
+        this.exercisesListas.forEach(rez => {
             if (rez == value) {
-                this.exercisesList.splice(this.exercisesList.indexOf(value), 1)
+                this.exercisesListas.splice(this.exercisesListas.indexOf(value), 1)
                 // Add our fruit
                 if ((value || '').trim()) {
                     this.exercises.push(value.trim());
@@ -107,25 +141,33 @@ export class CreateNewWorkout {
         this.exerciseCtrl.setValue(null);
     }
 
-    removeUser(fruit: string): void {
-        const index = this.users.indexOf(fruit);
+    removeUser(email: string): void {
+        const index = this.users.indexOf(email);
         if (index >= 0) {
+            let selectedUserData = this.userListFromBack.find(c=> c.email == email).id;
+            this.usersIDs.splice(this.usersIDs.indexOf(selectedUserData), 1);
+            console.log(this.usersIDs);
             this.users.splice(index, 1);
-            this.usersList.push(fruit);
+            this.usersList.push(email);
             this.loadUsers();
         }
     }
 
-    removeExercise(fruit: string): void {
-        const index = this.exercises.indexOf(fruit);
+    removeExercise(name: string): void {
+        const index = this.exercises.indexOf(name);
         if (index >= 0) {
+            let selectedExercise = this.exerciseList.find(c=> c.pavadinimas == name).pratimoId;
+            let indexOfselectedExercise = this.selectedExerciseList.find(c=> c.id == selectedExercise)
+            this.selectedExerciseList.splice(this.selectedExerciseList.indexOf(indexOfselectedExercise) ,1);
             this.exercises.splice(index, 1);
-            this.exercisesList.push(fruit);
+            this.exercisesListas.push(name);
             this.loadExexrcise();
         }
     }
 
-    selectedUser(event: MatAutocompleteSelectedEvent): void {
+    selectedUser(event: MatAutocompleteSelectedEvent): void {       
+        let selectedUserData = this.userListFromBack.find(c=> c.email == event.option.viewValue).id;
+        this.usersIDs.push(selectedUserData);      
         this.users.push(event.option.viewValue);
         this.usersList.splice(this.usersList.indexOf(event.option.viewValue), 1)
         this.fruitInput.nativeElement.value = '';
@@ -133,8 +175,13 @@ export class CreateNewWorkout {
     }
 
     selectedExercise(event: MatAutocompleteSelectedEvent): void {
+        let exercise = new exerciseList();
+        exercise.id = this.exerciseList.find(c=> c.pavadinimas == event.option.viewValue).pratimoId;
+        exercise.priej = 1;
+        exercise.skaic = 1;
+        this.selectedExerciseList.push(exercise)        
         this.exercises.push(event.option.viewValue);
-        this.exercisesList.splice(this.exercisesList.indexOf(event.option.viewValue), 1)
+        this.exercisesListas.splice(this.exercisesListas.indexOf(event.option.viewValue), 1)
         this.exerciseInput.nativeElement.value = '';
         this.exerciseCtrl.setValue(null);
     }
@@ -145,33 +192,41 @@ export class CreateNewWorkout {
         return this.usersList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
     }
 
-    private _filterExercise(value: string): string[] {
-        const filterValue = value.toLowerCase();
-
-        return this.exercisesList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
-    }
-
-    loadUsers(){
+    loadUsers() {
         this.filteredUsers = this.fruitCtrl.valueChanges.pipe(
             startWith(null),
             map((users: string | null) => users ? this._filterUSers(users) : this.usersList.slice()));
     }
-    
-    loadExexrcise(){
-        this.filteredExercise = this.exerciseCtrl.valueChanges.pipe(
-            startWith(null),
-            map((exercises: string | null) => exercises ? this._filterExercise(exercises) : this.exercisesList.slice()));
+
+    private _filterExercise(value: string): string[] {
+        const filterValue = value.toLowerCase();
+
+        return this.exercisesListas.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
     }
 
-    sendRequest(){      
+    loadExexrcise() {
+        this.filteredExercise = this.exerciseCtrl.valueChanges.pipe(
+            startWith(null),
+            map((exercises: string | null) => exercises ? this._filterExercise(exercises) : this.exercisesListas.slice()));
+    }
+
+    sendRequest() {
         this.treniruotesInfo.trenerioId = this.uiService.getUserIdFromCookie();
+        this.treniruotesInfo.vartId = this.usersIDs;        
+        this.treniruotesInfo.prat = this.selectedExerciseList;
+        console.log(this.treniruotesInfo);
         console.log(JSON.stringify(this.treniruotesInfo));
-        
-        this.backendServide.createTreinuorte(this.treniruotesInfo).subscribe(result=>{
+
+        this.backendServide.createTreinuorte(this.treniruotesInfo).subscribe(result => {
             console.log(result);
-            
-        }, error=>{
+
+        }, error => {
             console.log(error);
         })
+    }
+
+    aaa(){
+        console.log(this.selectedExerciseList);
+        
     }
 }

@@ -9,6 +9,9 @@ import { PakeistiRoleListForAdmin } from '../models/PakeistiRoleListForAdmin'
 import { StoreLogedInUserDataToCookie } from '../models/StoreLogedInUserDataToCookie';
 import { CreateTreniruote } from '../models/CreateTreniruote';
 import { TreniruoteTreneris } from '../models/TreniruoteTreneris';
+import { Pratymai } from '../models/Pratymai';
+import { TrainerUsers } from '../models/TrainerUsers'
+import { CreateWorkoutUserList } from '../models/CreateWorkoutUserList';
 
 @Injectable()
 export class BackEndService {
@@ -116,7 +119,7 @@ export class BackEndService {
         };
         return this.http.get<PakeistiRoleListForAdmin[]>("http://localhost:5000/api/v1/models/PrasymaiPakeistRole", requestOptions);
     }
-    
+
     public sendrequestToAdminForChangingRole(id: string): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
@@ -147,7 +150,39 @@ export class BackEndService {
         return this.http.put("http://localhost:5000/api/v1/models/ApprovePakeistRole/" + id, requestOptions);
     }
 
-    public createTreinuorte(treniruoteAP: CreateTreniruote): Observable<any>{
+    public getTrainerCreatedExercises(id: string): Observable<TreniruoteTreneris[]> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<TreniruoteTreneris[]>("http://localhost:5000/api/v1/models/treniruote/" + id, requestOptions);
+    }
+
+    public getAllExerciseList(): Observable<Pratymai[]> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<Pratymai[]>("http://localhost:5000/api/v1/models/pratymai", requestOptions);
+    }
+
+    public getAllTrainersUsers(id: string): Observable<TrainerUsers[]> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<TrainerUsers[]>("http://localhost:5000/api/v1/models/pakviestiTreneriaiUsers/" + id, requestOptions);
+    }
+
+    //create workout
+
+    public createTreinuorte(treniruoteAP: CreateTreniruote): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
@@ -157,14 +192,19 @@ export class BackEndService {
         return this.http.put("http://localhost:5000/api/v1/models/treniruote", JSON.stringify(treniruoteAP), requestOptions);
     }
 
-    public getTrainerCreatedExercises(id: string): Observable<TreniruoteTreneris[]>{
+    public addUsersToAccessWorkout(userList: CreateWorkoutUserList[]) {
+        console.log(JSON.stringify(userList));
+        
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<TreniruoteTreneris[]>("http://localhost:5000/api/v1/models/treniruote/"+id, requestOptions);
+        // return this.http.put("http://localhost:5000/api/v1/models/vartotojai", JSON.stringify(userList), requestOptions);
     }
+
+
+    //
 
 }

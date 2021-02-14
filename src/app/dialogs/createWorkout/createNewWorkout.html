@@ -12,7 +12,7 @@
                 <textarea matInput placeholder="Description" formControlName="descCtrl" required [(ngModel)]='treniruotesInfo.aprasymas'></textarea>
             </mat-form-field>
             <div>
-                <button mat-button matStepperNext (click)='sendRequest()'>Next</button>
+                <button mat-button matStepperNext>Next</button>
             </div>
         </form>
     </mat-step>
@@ -20,22 +20,44 @@
 
     <mat-step [stepControl]="secondFormGroup" [optional]="true">
         <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Add excercises</ng-template>
-            <mat-form-field style="width: 50%;">
-                <mat-chip-list #chipListExercise>
-                    <mat-chip *ngFor="let exercises of exercises" [selectable]="selectable" [removable]="removable" (removed)="removeExercise(exercises)">
-                        {{exercises}}
-                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                    </mat-chip>
-                    <input placeholder="Add exercise to your workout" #exerciseInput [formControl]="exerciseCtrl" [matAutocomplete]="autoExercise" [matChipInputFor]="chipListExercise" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addExercise($event)">
-                </mat-chip-list>
-                <mat-autocomplete #autoExercise="matAutocomplete" (optionSelected)="selectedExercise($event)">
-                    <mat-option *ngFor="let fExercise of filteredExercise | async" [value]="fExercise">
-                        {{fExercise}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
+            <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between;">
+                <ng-template matStepLabel>Add excercises</ng-template>
+                <mat-form-field style="width: 45%;">
+                    <mat-chip-list #chipListExercise>
+                        <mat-chip *ngFor="let exercises of exercises" [selectable]="selectable" [removable]="removable" (removed)="removeExercise(exercises)">
+                            {{exercises}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="Add exercise to your workout" #exerciseInput [formControl]="exerciseCtrl" [matAutocomplete]="autoExercise" [matChipInputFor]="chipListExercise" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addExercise($event)">
+                    </mat-chip-list>
+                    <mat-autocomplete #autoExercise="matAutocomplete" (optionSelected)="selectedExercise($event)">
+                        <mat-option *ngFor="let fExercise of filteredExercise | async" [value]="fExercise">
+                            {{fExercise}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <div style="width: 50%; max-height: 300px;  overflow-y: auto;">
+                    <div style="width: calc(95% - 20px); margin-bottom: 10px; border: solid black 1px; border-radius: 5px; padding: 10px;  background-color: rgb(248, 248, 248);" *ngFor='let exercise of selectedExerciseList; let i=index'>
+                        <p style="font-weight: bold; font-style: italic;">
+                            {{exercises[i]}}
+                        </p>
+                        <div style="width: 100%;">
+                            <p style="margin: 0;">Sets:</p>
+                            <mat-form-field style="width: 100%;">
+                                <input matInput type="number" min="1" max="10" value="1" [(ngModel)]="exercise.priej" [ngModelOptions]="{standalone: true}">
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <p style="margin: 0;">Count per set:</p>
+                            <mat-form-field style="width: 100%;">
+                                <input matInput type="number" min="1" max="30" value="1" [(ngModel)]="exercise.skaic" [ngModelOptions]="{standalone: true}">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div>
+                <button (click)=aaa()>as</button>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
             </div>
@@ -71,8 +93,8 @@
         <ng-template matStepLabel>Done</ng-template>
         <p>You are now done.</p>
         <div>
-            <button mat-button [mat-dialog-close]>Create</button>
             <button mat-button (click)="stepper.reset()" color='warn' [mat-dialog-close]>Discard</button>
+            <button mat-button [mat-dialog-close] (click)='sendRequest()'>Create</button>
         </div>
     </mat-step>
 </mat-horizontal-stepper>

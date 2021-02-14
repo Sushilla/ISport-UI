@@ -14,6 +14,8 @@ export class TrainerRequestsComponent implements OnInit {
   displayedColumns: string[] = ['nameSurname', 'createionDate', 'actions'];
   req: KvietimaiToTrainer[];
   requestForTrainer: number = 10;
+  isLoaded:boolean = false;
+  notEmptyReq:boolean;
 
 
   constructor(private backEndService: BackEndService, private uiService: UIService) {
@@ -44,6 +46,13 @@ export class TrainerRequestsComponent implements OnInit {
   getDataForTable() {
     this.backEndService.getKvietimaiToTrainer(this.uiService.getUserIdFromCookie()).subscribe(result => {
       this.req = result;
+      if(result.length == 0){
+        this.notEmptyReq = true;
+      }else{
+        this.notEmptyReq = false;
+      }
+      
+      this.isLoaded = true;
     }, error => {
       console.log(error);
 
