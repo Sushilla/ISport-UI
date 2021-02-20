@@ -180,7 +180,7 @@ export class BackEndService {
         return this.http.get<TrainerUsers[]>("http://localhost:5000/api/v1/models/pakviestiTreneriaiUsers/" + id, requestOptions);
     }
 
-    //create workout
+    //workout
 
     public createTreinuorte(treniruoteAP: CreateTreniruote): Observable<any> {
         const header = {
@@ -192,16 +192,26 @@ export class BackEndService {
         return this.http.put("http://localhost:5000/api/v1/models/treniruote", JSON.stringify(treniruoteAP), requestOptions);
     }
 
-    public addUsersToAccessWorkout(userList: CreateWorkoutUserList[]) {
-        console.log(JSON.stringify(userList));
+    // public addUsersToAccessWorkout(userList: CreateWorkoutUserList[]) {
+    //     console.log(JSON.stringify(userList));
         
+    //     const header = {
+    //         'Content-Type': 'application/json'
+    //     }
+    //     const requestOptions = {
+    //         headers: new HttpHeaders(header),
+    //     };
+    //     // return this.http.put("http://localhost:5000/api/v1/models/vartotojai", JSON.stringify(userList), requestOptions);
+    // }
+
+    public getEditDataForWorkout(id:string): Observable<any>{       
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        // return this.http.put("http://localhost:5000/api/v1/models/vartotojai", JSON.stringify(userList), requestOptions);
+        return this.http.get<any>('http://localhost:5000/api/v1/models/treniruoteEditData/'+id, requestOptions);
     }
 
 

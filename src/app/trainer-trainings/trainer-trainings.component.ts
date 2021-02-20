@@ -82,15 +82,15 @@ export class TrainerTrainingsComponent implements OnInit {
     });
   }
 
-  openEditDialog(id: any){
-    const dialogRef = this.dialog.open(EditWorkout);
+  openEditDialog(id: any){    
+    const dialogRef = this.dialog.open(EditWorkout, {data: {id: id}});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
-      if (result) {
-        console.log('delete')
-        // this.reloadTableFromSelectedType();
-      }
+      // if (result) {
+      //   console.log('delete')
+      //   // this.reloadTableFromSelectedType();
+      // }
     });
   }
 
