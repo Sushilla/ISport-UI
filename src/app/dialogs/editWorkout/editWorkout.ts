@@ -80,10 +80,10 @@ export class EditWorkout {
         this.backendService.getAllTrainersUsers(this.uiService.getUserIdFromCookie()).subscribe(result => {
             this.userListFromBack = result;
             console.log(this.usersList);
-            
+
             result.forEach(res => {
                 let ifNotExist: boolean = true;
-                this.editData[0].usersIds.forEach(element => {                    
+                this.editData[0].usersIds.forEach(element => {
                     if (element == res.id)
                         ifNotExist = false;
                 });
@@ -161,7 +161,7 @@ export class EditWorkout {
         const index = this.editData[0].usersIds.indexOf(id);
         if (index >= 0) {
             this.editData[0].usersIds.splice(index, 1);
-            let userEmail = this.userListFromBack.find(a=> a.id == id).email;
+            let userEmail = this.userListFromBack.find(a => a.id == id).email;
             this.usersList.push(userEmail);
             this.loadUsers();
         }
@@ -172,9 +172,15 @@ export class EditWorkout {
         const value = event.value;
         this.exercisesListas.forEach(rez => {
             if (rez == value) {
-                this.exercisesListas.splice(this.exercisesListas.indexOf(value), 1)
+                this.exercisesListas.splice(this.exercisesListas.indexOf(value), 1);
+                let exercise = new treniPrat();
+                exercise.treniruotesId = this.editData[0].treniruotesId;
+                exercise.pratymoId = this.exerciseList.find(c => c.pavadinimas == value).pratimoId;
+                exercise.priejimai = 1;
+                exercise.skaicius = 1;
+                exercise.pavadinimas = value;
+                this.editData[0].treniruotesPratymai.push(exercise);
                 if ((value || '').trim()) {
-                    console.log(true);
                     // this.exercises.push(value.trim());
                 }
             }
@@ -187,7 +193,26 @@ export class EditWorkout {
         this.exerciseCtrl.setValue(null);
     }
 
+    addUser(event: MatChipInputEvent): void {
+        const input = event.input;
+        const value = event.value;
+        this.usersList.forEach(rez => {
+            if (rez == value) {
+                this.usersList.splice(this.usersList.indexOf(value), 1)
+                this.editData[0].usersIds.push(this.userListFromBack.find(a => a.email == value).id);
 
+                if ((value || '').trim()) {
+                    // this.users.push(value.trim());
+                }
+            }
+        })
+        // Reset the input value
+        if (input) {
+            input.value = '';
+        }
+
+        this.fruitCtrl.setValue(null);
+    }
 
     selectedExercise(event: MatAutocompleteSelectedEvent): void {
         let exercise = new treniPrat();
@@ -203,8 +228,8 @@ export class EditWorkout {
         this.loadExexrcise();
     }
 
-    selectedUser(event: MatAutocompleteSelectedEvent): void {       
-        let selectedUserData = this.userListFromBack.find(c=> c.email == event.option.viewValue).id;
+    selectedUser(event: MatAutocompleteSelectedEvent): void {
+        let selectedUserData = this.userListFromBack.find(c => c.email == event.option.viewValue).id;
         this.editData[0].usersIds.push(selectedUserData);
         this.usersList.splice(this.usersList.indexOf(event.option.viewValue), 1)
         this.fruitInput.nativeElement.value = '';
@@ -217,7 +242,7 @@ export class EditWorkout {
 
     }
 
-    idToUserEmail(id:any){
-        return this.userListFromBack.find(a=> a.id == id).email;
+    idToUserEmail(id: any) {
+        return this.userListFromBack.find(a => a.id == id).email;
     }
 }
