@@ -40,6 +40,7 @@ export class CreateNewWorkout {
     @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
+    
     exerciseCtrl = new FormControl();
     filteredExercise: Observable<string[]>;
     exercises: string[] = [];
@@ -124,11 +125,11 @@ export class CreateNewWorkout {
         const input = event.input;
         const value = event.value;
 
-        this.exercisesListas.forEach(rez => {
+        this.exercisesListas.forEach(rez => {            
             if (rez == value) {
                 this.exercisesListas.splice(this.exercisesListas.indexOf(value), 1)
                 // Add our fruit
-                if ((value || '').trim()) {
+                if ((value || '').trim()) {                    
                     this.exercises.push(value.trim());
                 }
             }
