@@ -3,7 +3,7 @@ export class WorkoutEditData{
     public pavadinimas:string;
     public aprasymas:string;
     public treniruotesPratymai: treniPrat[];
-    public pratIds: string[];
+    // public pratIds: string[];
     public usersIds: string[];
 }
 

@@ -234,18 +234,12 @@ export class EditWorkout {
         this.fruitCtrl.setValue(null);
     }
 
-
-    aa() {
-        console.log(this.editData);
-
-    }
-
     idToUserEmail(id: any) {
         return this.userListFromBack.find(a => a.id == id).email;
     }
 
     sendRequest(){
-        this.backendService.updateWorkout(this.editData).subscribe(result=>{
+        this.backendService.updateWorkout(this.editData[0]).subscribe(result=>{
             console.log(result);
         }, error=>{
             console.log(error);

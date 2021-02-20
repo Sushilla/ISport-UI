@@ -215,16 +215,14 @@ export class BackEndService {
         return this.http.get<WorkoutEditData>('http://localhost:5000/api/v1/models/treniruoteEditData/'+id, requestOptions);
     }
 
-    public updateWorkout( updateQuery: WorkoutEditData): Observable<any>{
-        console.log(JSON.stringify(updateQuery));
-        
+    public updateWorkout(updateQuery: WorkoutEditData): Observable<any>{        
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.post<any>('', JSON.stringify(updateQuery), requestOptions);
+        return this.http.post<any>('http://localhost:5000/api/v1/models/treniruote', JSON.stringify(updateQuery), requestOptions);
     }
 
 
