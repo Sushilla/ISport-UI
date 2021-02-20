@@ -65,7 +65,7 @@ export class TrainerTrainingsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       if (result) {
-        // this.reloadTableFromSelectedType();
+        this.getTreniruotesForShowing();
       }
     });
   }
@@ -77,7 +77,12 @@ export class TrainerTrainingsComponent implements OnInit {
       console.log(result)
       if (result) {
         console.log('delete')
-        // this.reloadTableFromSelectedType();
+        this.backendService.deleteWorkout(id).subscribe(result=>{
+          console.log(result);
+          this.getTreniruotesForShowing();
+        }, error=>{
+          console.log(error);
+        })
       }
     });
   }
@@ -87,10 +92,10 @@ export class TrainerTrainingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
-      // if (result) {
-      //   console.log('delete')
-      //   // this.reloadTableFromSelectedType();
-      // }
+      if (result) {
+        this.getTreniruotesForShowing();
+        // this.reloadTableFromSelectedType();
+      }
     });
   }
 

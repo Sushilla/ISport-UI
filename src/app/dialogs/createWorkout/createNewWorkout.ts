@@ -215,9 +215,6 @@ export class CreateNewWorkout {
         this.treniruotesInfo.trenerioId = this.uiService.getUserIdFromCookie();
         this.treniruotesInfo.vartId = this.usersIDs;        
         this.treniruotesInfo.prat = this.selectedExerciseList;
-        console.log(this.treniruotesInfo);
-        console.log(JSON.stringify(this.treniruotesInfo));
-
         this.backendServide.createTreinuorte(this.treniruotesInfo).subscribe(result => {
             console.log(result);
 

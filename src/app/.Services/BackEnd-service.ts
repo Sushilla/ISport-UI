@@ -225,6 +225,16 @@ export class BackEndService {
         return this.http.post<any>('http://localhost:5000/api/v1/models/treniruote', JSON.stringify(updateQuery), requestOptions);
     }
 
+    public deleteWorkout(id: string): Observable<any>{ //dar reik padeletin ir atliktas treniruotes
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.delete('http://localhost:5000/api/v1/models/treniruote/'+id, requestOptions);
+    }
+
 
     //
 
