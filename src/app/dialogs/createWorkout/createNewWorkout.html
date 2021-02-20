@@ -96,8 +96,8 @@
         <ng-template matStepLabel>Done</ng-template>
         <p>You are now done.</p>
         <div>
-            <button mat-button (click)="stepper.reset()" color='warn' [mat-dialog-close]>Discard</button>
-            <button mat-button [mat-dialog-close] (click)='sendRequest()'>Create</button>
+            <button mat-button color='warn' [mat-dialog-close]>Discard</button>
+            <button mat-button [mat-dialog-close]='true' (click)='sendRequest()'>Create</button>
         </div>
     </mat-step>
 </mat-horizontal-stepper>

@@ -79,8 +79,6 @@ export class EditWorkout {
     getUserList() {
         this.backendService.getAllTrainersUsers(this.uiService.getUserIdFromCookie()).subscribe(result => {
             this.userListFromBack = result;
-            console.log(this.usersList);
-
             result.forEach(res => {
                 let ifNotExist: boolean = true;
                 this.editData[0].usersIds.forEach(element => {
@@ -244,5 +242,14 @@ export class EditWorkout {
 
     idToUserEmail(id: any) {
         return this.userListFromBack.find(a => a.id == id).email;
+    }
+
+    sendRequest(){
+        this.backendService.updateWorkout(this.editData).subscribe(result=>{
+            console.log(result);
+        }, error=>{
+            console.log(error);
+            
+        })
     }
 }

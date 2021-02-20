@@ -12,6 +12,7 @@ import { TreniruoteTreneris } from '../models/TreniruoteTreneris';
 import { Pratymai } from '../models/Pratymai';
 import { TrainerUsers } from '../models/TrainerUsers'
 import { CreateWorkoutUserList } from '../models/CreateWorkoutUserList';
+import { WorkoutEditData } from "../models/Workout/WorkoutEditData";
 
 @Injectable()
 export class BackEndService {
@@ -204,14 +205,26 @@ export class BackEndService {
     //     // return this.http.put("http://localhost:5000/api/v1/models/vartotojai", JSON.stringify(userList), requestOptions);
     // }
 
-    public getEditDataForWorkout(id:string): Observable<any>{       
+    public getEditDataForWorkout(id:string): Observable<WorkoutEditData>{       
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<any>('http://localhost:5000/api/v1/models/treniruoteEditData/'+id, requestOptions);
+        return this.http.get<WorkoutEditData>('http://localhost:5000/api/v1/models/treniruoteEditData/'+id, requestOptions);
+    }
+
+    public updateWorkout( updateQuery: WorkoutEditData): Observable<any>{
+        console.log(JSON.stringify(updateQuery));
+        
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.post<any>('', JSON.stringify(updateQuery), requestOptions);
     }
 
 

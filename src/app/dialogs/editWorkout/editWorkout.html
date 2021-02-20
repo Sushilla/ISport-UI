@@ -98,7 +98,7 @@
         <p>You are now done.</p>
         <div>
             <button mat-button color='warn' [mat-dialog-close]>Discard</button>
-            <button mat-button [mat-dialog-close]>Create</button>
+            <button mat-button [mat-dialog-close]='true' (click)='sendRequest()'>Create</button>
             <button (click)="aa()">asd</button>
         </div>
     </mat-step>
