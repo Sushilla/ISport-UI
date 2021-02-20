@@ -11,6 +11,8 @@ import { exerciseList } from 'src/app/models/CreateTreniruote';
 import { Pratymai } from 'src/app/models/Pratymai';
 import { treniPrat, WorkoutEditData } from '../../models/Workout/WorkoutEditData';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { UIService } from 'src/app/.Services/UIService';
+import { TrainerUsers } from 'src/app/models/TrainerUsers';
 
 @Component({
     selector: 'editWorkout-dialog',
@@ -19,9 +21,10 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 export class EditWorkout {
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
-    
+
     editData = new WorkoutEditData();
     isLoaded: boolean = false;
+    loadedUserList: boolean = false;
     separatorKeysCodes: number[] = [ENTER, COMMA];
 
     removable = true;
@@ -36,7 +39,17 @@ export class EditWorkout {
     @ViewChild('exerciseInput') exerciseInput: ElementRef<HTMLInputElement>;
     @ViewChild('autoExercise') matAutocompleteExercise: MatAutocomplete;
 
-    constructor(private _formBuilder: FormBuilder, private backendService: BackEndService, @Inject(MAT_DIALOG_DATA) public data: any) {
+
+    fruitCtrl = new FormControl();
+
+    filteredUsers: Observable<string[]>;
+    usersList: string[] = [];
+    userListFromBack: TrainerUsers[] = new Array<TrainerUsers>();
+
+    @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+    @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
+    constructor(private _formBuilder: FormBuilder, private backendService: BackEndService, @Inject(MAT_DIALOG_DATA) public data: any, private uiService: UIService) {
         this.getData();
     }
 
@@ -63,6 +76,29 @@ export class EditWorkout {
         })
     }
 
+    getUserList() {
+        this.backendService.getAllTrainersUsers(this.uiService.getUserIdFromCookie()).subscribe(result => {
+            this.userListFromBack = result;
+            console.log(this.usersList);
+            
+            result.forEach(res => {
+                let ifNotExist: boolean = true;
+                this.editData[0].usersIds.forEach(element => {                    
+                    if (element == res.id)
+                        ifNotExist = false;
+                });
+                if (ifNotExist)
+                    this.usersList.push(res.email);
+            })
+            this.loadedUserList = true;
+        }, error => {
+            console.log(error);
+
+        }, () => {
+            this.loadUsers();
+        })
+    }
+
     getExerciseList() {
         this.backendService.getAllExerciseList().subscribe(result => {
             this.exerciseList = result;
@@ -82,14 +118,21 @@ export class EditWorkout {
 
         }, () => {
             this.loadExexrcise();
+            this.getUserList();
         })
     }
-    
+
 
     loadExexrcise() {
         this.filteredExercise = this.exerciseCtrl.valueChanges.pipe(
             startWith(null),
             map((exercises: string | null) => exercises ? this._filterExercise(exercises) : this.exercisesListas.slice()));
+    }
+
+    loadUsers() {
+        this.filteredUsers = this.fruitCtrl.valueChanges.pipe(
+            startWith(null),
+            map((users: string | null) => users ? this._filterUSers(users) : this.usersList.slice()));
     }
 
     private _filterExercise(value: string): string[] {
@@ -98,19 +141,35 @@ export class EditWorkout {
         return this.exercisesListas.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
     }
 
+    private _filterUSers(value: string): string[] {
+        const filterValue = value.toLowerCase();
+
+        return this.usersList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    }
+
     removeExercise(pratId: string): void {
-        let searchForValues = this.editData[0].treniruotesPratymai.find(c=> c.pratymoId == pratId);
+        let searchForValues = this.editData[0].treniruotesPratymai.find(c => c.pratymoId == pratId);
         const index = this.editData[0].treniruotesPratymai.indexOf(searchForValues);
-        if (index >= 0) {            
+        if (index >= 0) {
             this.exercisesListas.push(searchForValues.pavadinimas);
             this.editData[0].treniruotesPratymai.splice(index, 1);
             this.loadExexrcise();
         }
     }
 
+    removeUser(id: string): void {
+        const index = this.editData[0].usersIds.indexOf(id);
+        if (index >= 0) {
+            this.editData[0].usersIds.splice(index, 1);
+            let userEmail = this.userListFromBack.find(a=> a.id == id).email;
+            this.usersList.push(userEmail);
+            this.loadUsers();
+        }
+    }
+
     addExercise(event: MatChipInputEvent): void {
         const input = event.input;
-        const value = event.value;       
+        const value = event.value;
         this.exercisesListas.forEach(rez => {
             if (rez == value) {
                 this.exercisesListas.splice(this.exercisesListas.indexOf(value), 1)
@@ -128,10 +187,12 @@ export class EditWorkout {
         this.exerciseCtrl.setValue(null);
     }
 
+
+
     selectedExercise(event: MatAutocompleteSelectedEvent): void {
         let exercise = new treniPrat();
         exercise.treniruotesId = this.editData[0].treniruotesId;
-        exercise.pratymoId = this.exerciseList.find(c=> c.pavadinimas == event.option.viewValue).pratimoId;
+        exercise.pratymoId = this.exerciseList.find(c => c.pavadinimas == event.option.viewValue).pratimoId;
         exercise.priejimai = 1;
         exercise.skaicius = 1;
         exercise.pavadinimas = event.option.viewValue;
@@ -142,8 +203,21 @@ export class EditWorkout {
         this.loadExexrcise();
     }
 
+    selectedUser(event: MatAutocompleteSelectedEvent): void {       
+        let selectedUserData = this.userListFromBack.find(c=> c.email == event.option.viewValue).id;
+        this.editData[0].usersIds.push(selectedUserData);
+        this.usersList.splice(this.usersList.indexOf(event.option.viewValue), 1)
+        this.fruitInput.nativeElement.value = '';
+        this.fruitCtrl.setValue(null);
+    }
+
+
     aa() {
         console.log(this.editData);
 
+    }
+
+    idToUserEmail(id:any){
+        return this.userListFromBack.find(a=> a.id == id).email;
     }
 }

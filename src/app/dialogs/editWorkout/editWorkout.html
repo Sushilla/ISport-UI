@@ -68,13 +68,13 @@
         </form>
     </mat-step>
 
-    <!-- <mat-step [stepControl]="secondFormGroup" [optional]="true">
+    <mat-step [stepControl]="secondFormGroup" [optional]="true">
         <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Add users</ng-template>
-            <mat-form-field style="width: 100%;">
+            <mat-form-field style="width: 100%;" *ngIf="loadedUserList">
                 <mat-chip-list #chipListUsers>
-                    <mat-chip *ngFor="let user of users" [selectable]="selectable" [removable]="removable" (removed)="removeUser(user)">
-                        {{user}}
+                    <mat-chip *ngFor="let user of editData[0].usersIds" [selectable]="selectable" [removable]="removable" (removed)="removeUser(user)">
+                        {{idToUserEmail(user)}}
                         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                     </mat-chip>
                     <input placeholder="Add users to your workout" #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipListUsers" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addUser($event)">
@@ -90,7 +90,7 @@
                 <button mat-button matStepperNext>Next</button>
             </div>
         </form>
-    </mat-step> -->
+    </mat-step>
 
 
     <mat-step>
