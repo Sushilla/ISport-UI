@@ -15,28 +15,7 @@ import { TreniruoteTreneris } from '../models/TreniruoteTreneris';
   styleUrls: ['./trainer-trainings.component.scss']
 })
 export class TrainerTrainingsComponent implements OnInit {
-  typesOfShoes: string[] = ['Treniruote nugarai', 'Treniruote kojoms', 'Treniruote krutinei'];
-  displayedColumns: string[] = ['title', 'actions'];
-  trainings: TrainersWorkoutPlans[] = [
-    { id: '1', title: 'title1aasddddd title1aasddd dd' },
-    { id: '2', title: 'title2' },
-    { id: '3', title: 'title3' },
-    { id: '4', title: 'Treniruote kazkam tokiam kad reikia' },
-    { id: '5', title: 'title5' }
-  ]
-  
   users: UsersAddedToWorkout[];
-
-  // users: UsersAddedToWorkout[] = [
-  //   {id: '1', name: 'vardenis', surname: 'pavardenis'},
-  //   {id: '2', name: 'Robertas', surname: 'pavardenis'},
-  //   {id: '3', name: 'Alina', surname: 'pavardenis'},
-  //   {id: '3', name: 'Danielius', surname: 'pavardenis'},
-  //   {id: '4', name: 'Karina', surname: 'pavardenis'},
-  //   {id: '5', name: 'Aliona', surname: 'pavardenis'},
-  //   {id: '6', name: 'Darius', surname: 'pavardenis'}
-  // ]
-
   treniruotes: TreniruoteTreneris[];
 
   constructor(public dialog: MatDialog, private backendService: BackEndService, private uiService: UIService) { }
@@ -48,28 +27,13 @@ export class TrainerTrainingsComponent implements OnInit {
   getSelectedWorkoutUsers(workId: string){
     this.backendService.getSelectedWorkoutUsers(workId).subscribe(result=>{
       this.users = result;
-      console.log(result);
     }, error=>{
       console.log(error);
     })
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
   openCreateDialog(){
-    const dialogRef = this.dialog.open(CreateNewWorkout, {
-      // data: { toDialog, schema },
-    });
+    const dialogRef = this.dialog.open(CreateNewWorkout);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
@@ -103,16 +67,13 @@ export class TrainerTrainingsComponent implements OnInit {
       console.log(result)
       if (result) {
         this.getTreniruotesForShowing();
-        // this.reloadTableFromSelectedType();
       }
     });
   }
 
   getTreniruotesForShowing(){
     this.backendService.getTrainerCreatedExercises(this.uiService.getUserIdFromCookie()).subscribe(result=>{
-      this.treniruotes = result;
-      // console.log(this.treniruotes);
-      
+      this.treniruotes = result;      
     }, error=>{
       console.log(error);
       

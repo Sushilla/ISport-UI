@@ -1,11 +1,7 @@
 export class ExcerciseSelectorModel {
-
-    constructor(id: string, name: string, progress: number) {
-      this.name = name;
-      this.id = id;
-      this.progress = progress;
-    }
-    public id: string;
-    public name: string;
+    public treniruotesId: string;
+    public pavadinimas: string;
+    public aprasymas: string;
+    public sukurimoData: string;
     public progress: number;
   }

@@ -5,7 +5,7 @@
             <mat-selection-list #shoes [multiple]="false" style=" width: 100%;">
                 <mat-list-option *ngFor="let treniruote of treniruotes" [value]="shoe" [disableRipple]="true" (click)='getSelectedWorkoutUsers(treniruote.treniruotesId)'>
                     <div style="display:flex; justify-content:space-between;align-items:center;">
-                        <div style="width: 75%; word-wrap: break-word;">
+                        <div style="width: 75%; word-wrap: break-word; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; " [matTooltip]="treniruote.pavadinimas">
                             {{treniruote.pavadinimas}}
                         </div>
                         <div style="width: 25%; min-width: 80px;">

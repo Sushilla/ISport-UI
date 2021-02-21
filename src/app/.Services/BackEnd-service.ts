@@ -231,7 +231,15 @@ export class BackEndService {
         };
         return this.http.get<UsersAddedToWorkout[]>('http://localhost:5000/api/v1/models/vartotojaiWorkout/'+id, requestOptions);
     }
-
     //
 
+    public getUserWorkouts(tid: string, uid: string): Observable<any>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<any[]>('http://localhost:5000/api/v1/models/userTreniruotes/'+tid+'/'+uid, requestOptions);
+    }
 }
