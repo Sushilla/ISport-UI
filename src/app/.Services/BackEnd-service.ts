@@ -13,6 +13,7 @@ import { Pratymai } from '../models/Pratymai';
 import { TrainerUsers } from '../models/TrainerUsers'
 import { CreateWorkoutUserList } from '../models/CreateWorkoutUserList';
 import { WorkoutEditData } from "../models/Workout/WorkoutEditData";
+import { UsersAddedToWorkout } from "../models/UsersAddedToWorkout";
 
 @Injectable()
 export class BackEndService {
@@ -28,8 +29,6 @@ export class BackEndService {
 
         this.requestNumberSource.next(message)
     }
-
-
 
     public getTrainerListForAddingTrainer(): Observable<TrainerListForAdding[]> {
         const header = {
@@ -193,18 +192,6 @@ export class BackEndService {
         return this.http.put("http://localhost:5000/api/v1/models/treniruote", JSON.stringify(treniruoteAP), requestOptions);
     }
 
-    // public addUsersToAccessWorkout(userList: CreateWorkoutUserList[]) {
-    //     console.log(JSON.stringify(userList));
-        
-    //     const header = {
-    //         'Content-Type': 'application/json'
-    //     }
-    //     const requestOptions = {
-    //         headers: new HttpHeaders(header),
-    //     };
-    //     // return this.http.put("http://localhost:5000/api/v1/models/vartotojai", JSON.stringify(userList), requestOptions);
-    // }
-
     public getEditDataForWorkout(id:string): Observable<WorkoutEditData>{       
         const header = {
             'Content-Type': 'application/json'
@@ -235,6 +222,15 @@ export class BackEndService {
         return this.http.delete('http://localhost:5000/api/v1/models/treniruote/'+id, requestOptions);
     }
 
+    public getSelectedWorkoutUsers(id: string): Observable<UsersAddedToWorkout[]>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<UsersAddedToWorkout[]>('http://localhost:5000/api/v1/models/vartotojaiWorkout/'+id, requestOptions);
+    }
 
     //
 

@@ -3,7 +3,7 @@
         <button mat-raised-button (click)='openCreateDialog()'>Create new</button>
         <div style=" height: 90%; overflow-y: auto;">
             <mat-selection-list #shoes [multiple]="false" style=" width: 100%;">
-                <mat-list-option *ngFor="let treniruote of treniruotes" [value]="shoe" [disableRipple]="true">
+                <mat-list-option *ngFor="let treniruote of treniruotes" [value]="shoe" [disableRipple]="true" (click)='getSelectedWorkoutUsers(treniruote.treniruotesId)'>
                     <div style="display:flex; justify-content:space-between;align-items:center;">
                         <div style="width: 75%; word-wrap: break-word;">
                             {{treniruote.pavadinimas}}
@@ -26,7 +26,7 @@
         <!-- ------- -->
         <div style="width: 100%; height: 20%; overflow-y: auto; overflow-x: hidden;">
             <mat-chip-list aria-label="Fish selection">
-                <mat-chip *ngFor="let user of users">{{user.name}} {{user.surname}}</mat-chip>
+                <mat-chip *ngFor="let user of users" [matTooltip]="user.email">{{user.vardas}} {{user.pavarde}}</mat-chip>
             </mat-chip-list>
         </div>
         <!-- ------- -->

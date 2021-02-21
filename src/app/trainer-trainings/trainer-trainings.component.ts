@@ -24,16 +24,18 @@ export class TrainerTrainingsComponent implements OnInit {
     { id: '4', title: 'Treniruote kazkam tokiam kad reikia' },
     { id: '5', title: 'title5' }
   ]
+  
+  users: UsersAddedToWorkout[];
 
-  users: UsersAddedToWorkout[] = [
-    {id: '1', name: 'vardenis', surname: 'pavardenis'},
-    {id: '2', name: 'Robertas', surname: 'pavardenis'},
-    {id: '3', name: 'Alina', surname: 'pavardenis'},
-    {id: '3', name: 'Danielius', surname: 'pavardenis'},
-    {id: '4', name: 'Karina', surname: 'pavardenis'},
-    {id: '5', name: 'Aliona', surname: 'pavardenis'},
-    {id: '6', name: 'Darius', surname: 'pavardenis'}
-  ]
+  // users: UsersAddedToWorkout[] = [
+  //   {id: '1', name: 'vardenis', surname: 'pavardenis'},
+  //   {id: '2', name: 'Robertas', surname: 'pavardenis'},
+  //   {id: '3', name: 'Alina', surname: 'pavardenis'},
+  //   {id: '3', name: 'Danielius', surname: 'pavardenis'},
+  //   {id: '4', name: 'Karina', surname: 'pavardenis'},
+  //   {id: '5', name: 'Aliona', surname: 'pavardenis'},
+  //   {id: '6', name: 'Darius', surname: 'pavardenis'}
+  // ]
 
   treniruotes: TreniruoteTreneris[];
 
@@ -43,9 +45,16 @@ export class TrainerTrainingsComponent implements OnInit {
     this.getTreniruotesForShowing();
   }
 
-  editTraining(id: any) {
-    console.log(id)
+  getSelectedWorkoutUsers(workId: string){
+    this.backendService.getSelectedWorkoutUsers(workId).subscribe(result=>{
+      this.users = result;
+      console.log(result);
+    }, error=>{
+      console.log(error);
+    })
   }
+
+
 
 
 
@@ -109,10 +118,5 @@ export class TrainerTrainingsComponent implements OnInit {
       
     })
   }
-
-
-
-
-
 
 }
