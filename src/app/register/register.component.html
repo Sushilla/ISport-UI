@@ -1,0 +1,39 @@
+<div class="box">
+    <form [formGroup]="registreFormControl" style="background-color: #2c3e50; width: 700px; padding: 40px; border-radius: 20px;">
+        <h1>Register</h1>
+
+        <div style="display: flex; flex-direction: row; align-items: center;">
+            <input type="text" name="Name" placeholder="Name" formControlName="vardas">
+            <div *ngIf="submitted && f.vardas.errors" style="position: absolute; color: rgb(255, 0, 0);">
+                {{getErrorMessage(f.vardas.errors)}}</div>
+        </div>
+
+        <div style="display: flex; flex-direction: row; align-items: center;">
+            <input type="text" name="Surname" placeholder="Surname" formControlName="pavarde">
+            <div *ngIf="submitted && f.pavarde.errors" style="position: absolute; color: rgb(255, 0, 0);">
+                {{getErrorMessage(f.pavarde.errors)}}</div>
+        </div>
+
+        <div style="display: flex; flex-direction: row; align-items: center;">
+            <input type="text" name="Email" placeholder="Email" formControlName="email">
+            <div *ngIf="submitted && f.email.errors" style="position: absolute; color: rgb(255, 0, 0);">{{getErrorMessage(f.email.errors)}}
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: row; align-items: center;">
+            <input type="password" name="Password" placeholder="Password" formControlName="password">
+            <div *ngIf="submitted && f.password.errors" style="position: absolute; color: rgb(255, 0, 0);">
+                {{getErrorMessage(f.password.errors)}}</div>
+        </div>
+
+        <div style="display: flex; flex-direction: row; align-items: center;">
+            <input type="password" name="RePassword" placeholder="Repeat password" formControlName="confirmPassword">
+            <div *ngIf="submitted && f.confirmPassword.errors" style="position: absolute; color: rgb(255, 0, 0);">
+                {{getErrorMessage(f.confirmPassword.errors)}}</div>
+        </div>
+
+        <!-- <input type="submit" name="" value="Login" (click)="loginUser()"> -->
+        <button mat-flat-button style="background-color: #2ecc71; color: white;" (click)="onSubmit()">Register</button>
+        <div *ngIf="accountAlreadyExist" style="padding-top: 20px; color: white;">Account alreday exist</div>
+    </form>
+</div>

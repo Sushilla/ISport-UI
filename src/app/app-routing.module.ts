@@ -17,16 +17,17 @@ import { UserStatisticsComponent } from './user-statistics/user-statistics.compo
 import { UserFreemodeComponent } from './user-freemode/user-freemode.component';
 import { AimoduleCollectComponent } from './aimodule-collect/aimodule-collect.component';
 import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training.component';
-import { UIService } from './.Services/UIService';
 import { Authguard } from './.Services/auth-guard';
 import { AdminComponent } from './admin/admin.component';
 import { AdminMainComponent } from './admin-main/admin-main.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
     path: 'home', component: HomeComponent, children: [
       { path: 'landing', component: MainPageComponent },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent }
     ]
   },
   {

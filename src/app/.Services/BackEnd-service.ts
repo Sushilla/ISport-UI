@@ -14,7 +14,7 @@ import { TrainerUsers } from '../models/TrainerUsers'
 import { CreateWorkoutUserList } from '../models/CreateWorkoutUserList';
 import { WorkoutEditData } from "../models/Workout/WorkoutEditData";
 import { UsersAddedToWorkout } from "../models/UsersAddedToWorkout";
-
+import { registerData } from "../models/registerData"
 @Injectable()
 export class BackEndService {
 
@@ -108,6 +108,16 @@ export class BackEndService {
             headers: new HttpHeaders(header),
         };
         return this.http.get<StoreLogedInUserDataToCookie>("http://localhost:5000/api/v1/models/vartotojasLogin/" + email + "/" + pass, requestOptions);
+    }
+
+    public registerUser(regData: registerData): Observable<any>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.put<any>("http://localhost:5000/api/v1/models/vartotojas/", JSON.stringify(regData), requestOptions)
     }
 
     public getListForChangingRole(): Observable<PakeistiRoleListForAdmin[]> {
@@ -242,4 +252,6 @@ export class BackEndService {
         };
         return this.http.get<any[]>('http://localhost:5000/api/v1/models/userTreniruotes/'+tid+'/'+uid, requestOptions);
     }
+
+    
 }

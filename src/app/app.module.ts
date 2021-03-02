@@ -68,6 +68,7 @@ import { Authguard } from './.Services/auth-guard';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { AdminMainComponent } from './admin-main/admin-main.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { AdminMainComponent } from './admin-main/admin-main.component';
     EditWorkout,
     AimoduleTrainingComponent,
     AdminComponent,
-    AdminMainComponent
+    AdminMainComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
