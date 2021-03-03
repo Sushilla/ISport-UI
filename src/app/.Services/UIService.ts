@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { StoreLogedInUserDataToCookie } from "../models/StoreLogedInUserDataToCookie";
+import isEmail from 'validator/lib/isEmail';
 
 @Injectable()
 export class UIService {
@@ -41,4 +42,9 @@ export class UIService {
     cookie = JSON.parse(this.cookieService.get("UserCookie"));  
     return cookie[0].id;
   }
+
+  public redirectToHome(){
+    this.router.navigateByUrl("/home/landing");
+  }
+
 }

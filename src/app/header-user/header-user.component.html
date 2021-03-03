@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: space-between;height: 100%; align-items: center; padding-left: 20px; padding-right: 20px;">
-    <div style="width: 200px;">
+    <div style="width: 200px;" (click)="uiService.redirectToHome()">
         <span style="color: white; font-weight: 500; font-size: 26px; font-style: italic;">I</span>
         <span style="color: greenyellow; font-weight: 500; font-size: 26px; font-style: italic;">Sportas</span>
     </div>
@@ -7,23 +7,20 @@
         <nav style="display: flex; align-items: center; justify-content: space-between;">
             <ul class="header_menu_left">
                 <li class="header_menu_item">
-                    <a href="/home/landing">.Main Page</a>
-                </li>
-                <li class="header_menu_item">
                     <a href="/user/main">Home</a>
                 </li>
-                <li class="header_menu_item">
+                <!-- <li class="header_menu_item">
                     <a (click)="openDialog()">Workout</a>
-                </li>
+                </li> -->
                 <li class="header_menu_item">
                     <a href="/user/statistics">Statistics</a>
                 </li>
-                <li class="header_menu_item">
+                <!-- <li class="header_menu_item">
                     <a href="/user/id2/id2">AI</a>
-                </li>
-                <li class="header_menu_item">
+                </li> -->
+                <!-- <li class="header_menu_item">
                     <a href="/user/collect">Collecting</a>
-                </li>
+                </li> -->
             </ul>
             <ul class="header_menu_right">
                 <li class="header_menu_item">

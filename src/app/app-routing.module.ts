@@ -21,6 +21,8 @@ import { Authguard } from './.Services/auth-guard';
 import { AdminComponent } from './admin/admin.component';
 import { AdminMainComponent } from './admin-main/admin-main.component';
 import { RegisterComponent } from './register/register.component';
+import { UIService } from './.Services/UIService';
+
 
 const routes: Routes = [
   {
@@ -34,10 +36,10 @@ const routes: Routes = [
     path: 'trainer', component: TrainerComponent,
      canActivate: [Authguard], data: {role: ['Trainer']},
       children: [
-      { path: 'main', component: TrainerMainComponent },
+      // { path: 'main', component: TrainerMainComponent },
       { path: 'settings', component: TrainerSettingsComponent },
       { path: 'requests', component: TrainerRequestsComponent },
-      { path: 'trainings', component: TrainerTrainingsComponent },
+      { path: 'main', component: TrainerTrainingsComponent },
       { path: '**', redirectTo: '/trainer/main' }
     ]
   },
@@ -45,14 +47,13 @@ const routes: Routes = [
     path: 'user', component: UserComponent, 
     canActivate: [Authguard], data: {role: ['User']}, 
     children: [
-      { path: 'main', component: UserMainComponent },
-      { path: 'selector', component: TrainerSelectorComponent },
+      // { path: 'main', component: UserMainComponent },
+      { path: 'main', component: TrainerSelectorComponent },
       { path: 'statistics', component: UserStatisticsComponent },
       { path: 'freemode', component: UserFreemodeComponent },
-      { path: 'collect', component: AimoduleCollectComponent },
       { path: 'training', component: AimoduleTrainingComponent },
       { path: 'settings', component: TrainerSettingsComponent },
-      { path: ':id', component: ExercisesSelectorComponent, },
+      { path: ':id', component: ExercisesSelectorComponent },
       { path: ':id/:id', component: AImodeluComponent },
       { path: '**', redirectTo: '/user/main' }
     ]
@@ -65,6 +66,7 @@ const routes: Routes = [
       { path: 'settings', component: TrainerSettingsComponent },
       { path: 'requests', component: TrainerRequestsComponent },
       { path: 'trainings', component: TrainerTrainingsComponent },
+      { path: 'collect', component: AimoduleCollectComponent },
       { path: '**', redirectTo: '/admin/main' }
     ]
   },
@@ -78,4 +80,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+ }

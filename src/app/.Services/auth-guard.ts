@@ -15,6 +15,7 @@ export class Authguard {
       cookie = JSON.parse(this.cookieService.get("UserCookie"));
       if (cookie[0].pavadinimas == route.data.role[0]) {
         return true;
+        this.router.navigateByUrl('/home/login');
       }
     }
     this.router.navigateByUrl('/home/login');
