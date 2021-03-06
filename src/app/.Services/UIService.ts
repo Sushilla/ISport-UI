@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { StoreLogedInUserDataToCookie } from "../models/StoreLogedInUserDataToCookie";
-import isEmail from 'validator/lib/isEmail';
 
 @Injectable()
 export class UIService {
