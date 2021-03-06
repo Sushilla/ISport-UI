@@ -10,9 +10,6 @@ import { HeaderComponent } from './header/header.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { LoginComponent } from './login/login.component';
 
-//instaled
-import { SlideshowModule } from 'ng-simple-slideshow';
-
 // material angular
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -35,9 +32,6 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatStepperModule} from '@angular/material/stepper';
-
-
-
 
 
 
@@ -69,6 +63,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { AdminMainComponent } from './admin-main/admin-main.component';
 import { RegisterComponent } from './register/register.component';
+
+
+//instaled
+import { SlideshowModule } from 'ng-simple-slideshow';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
 
 @NgModule({
   declarations: [
@@ -130,7 +130,10 @@ import { RegisterComponent } from './register/register.component';
     ReactiveFormsModule,
     MatTabsModule,
     MatStepperModule,
-    HttpClientModule
+    HttpClientModule,
+    MDBBootstrapModule,
+    ChartsModule,
+    WavesModule
   ],
   providers: [BackEndService,
     UIService,
