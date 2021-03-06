@@ -42,3 +42,9 @@ export class UserStatisticsComponent implements OnInit {
   public chartHovered(e: any): void { }
 
 }
+
+//Vidutinis sportavimo laikas
+//Vidutinis atliktų pratymų skaičius
+//pasirinkto pratimo statistika -> min/max priejimai, esama. Kazkur atvaizduot vid/min/maz reiksmes (tottal)
+//Bendra statisika min/max kartojimu (suma), (https://fitness-server.com/images/content/training-statistic-rus.jpg)
+//Siekiama busena, paskaiciuoja nuo pirmos treniruotes (kiekviena kart +1 iki paskutines) skirtuma, randa vidurki, manau tiktu kaip siekiama :D 
