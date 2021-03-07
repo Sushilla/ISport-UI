@@ -15,6 +15,10 @@ import { CreateWorkoutUserList } from '../models/CreateWorkoutUserList';
 import { WorkoutEditData } from "../models/Workout/WorkoutEditData";
 import { UsersAddedToWorkout } from "../models/UsersAddedToWorkout";
 import { registerData } from "../models/registerData"
+import { UserGeneralStat } from "../models/Statistics/UserGeneralStat";
+
+
+
 @Injectable()
 export class BackEndService {
 
@@ -251,6 +255,16 @@ export class BackEndService {
             headers: new HttpHeaders(header),
         };
         return this.http.get<any[]>('http://localhost:5000/api/v1/models/userTreniruotes/'+tid+'/'+uid, requestOptions);
+    }
+
+    public getUserGeneralStatistic(uid: string): Observable<UserGeneralStat>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<UserGeneralStat>('http://localhost:5000/api/v1/models/statistika/'+uid, requestOptions);
     }
 
     

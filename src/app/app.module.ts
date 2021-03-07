@@ -64,7 +64,6 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminMainComponent } from './admin-main/admin-main.component';
 import { RegisterComponent } from './register/register.component';
 
-
 //instaled
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';

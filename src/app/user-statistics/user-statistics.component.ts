@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BackEndService } from '../.Services/BackEnd-service';
+import { UIService } from '../.Services/UIService';
+import { UserGeneralStat } from '../models/Statistics/UserGeneralStat';
 
 @Component({
   selector: 'app-user-statistics',
@@ -6,21 +9,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-statistics.component.scss']
 })
 export class UserStatisticsComponent implements OnInit {
-
-  constructor() { }
+  isLoaded: boolean = false;
+  tblData = new UserGeneralStat();
+  constructor(private backendService: BackEndService, private uiService: UIService) { }
 
   ngOnInit(): void {
+    this.getData();
   }
 
 
   public chartType: string = 'line';
 
-  public chartDatasets: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
-  ];
-
-  public chartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public chartDatasets: Array<any> ;
+  // = [
+  //   { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' },
+  //   { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
+  // ];
+  public chartLabels: Array<any>;
+  // public chartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
   public chartColors: Array<any> = [
     {
@@ -32,6 +38,16 @@ export class UserStatisticsComponent implements OnInit {
       backgroundColor: 'rgba(0, 137, 132, .2)',
       borderColor: 'rgba(0, 10, 130, .7)',
       borderWidth: 2,
+    },
+    {
+      backgroundColor: 'rgba(205, 81, 230, .2)',
+      borderColor: 'rgba(0, 10, 130, .7)',
+      borderWidth: 2,
+    },
+    {
+      backgroundColor: 'rgba(133, 230, 114, .2)',
+      borderColor: 'rgba(0, 10, 130, .7)',
+      borderWidth: 2,
     }
   ];
 
@@ -40,6 +56,18 @@ export class UserStatisticsComponent implements OnInit {
   };
   public chartClicked(e: any): void { }
   public chartHovered(e: any): void { }
+
+  getData(){
+    this.backendService.getUserGeneralStatistic(this.uiService.getUserIdFromCookie()).subscribe(result=>{
+      console.log(result);
+      this.tblData = result;
+      this.chartLabels = result.chartLabels;
+      this.chartDatasets = result.dataForTable;
+      this.isLoaded = true;
+    }, error =>{
+      console.log(error);
+    })
+  }
 
 }
 
