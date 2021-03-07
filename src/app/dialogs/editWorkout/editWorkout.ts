@@ -234,7 +234,7 @@ export class EditWorkout {
         this.fruitCtrl.setValue(null);
     }
 
-    idToUserEmail(id: any) {
+    idToUserEmail(id: any) {        
         return this.userListFromBack.find(a => a.id == id).email;
     }
 
