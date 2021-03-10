@@ -9,3 +9,9 @@ export class tableDataa{
     public data: number[];
     public label: string;
 }
+
+export class UserGeneralStat2{
+    public chartLabels: string[];
+    public dataForTable: tableDataa[];
+    public dataForTable2: tableDataa[];
+}
