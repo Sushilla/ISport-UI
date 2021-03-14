@@ -12,11 +12,17 @@ declare let ml5: any;
 export class AImodeluComponent implements OnInit {
   idOfTrainer: string;
   idOfExcercise: string;
+  exerciseCount: number = 0;
+  
   constructor() {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
     this.idOfTrainer = trainerAndExcercise.split('/')[0];
     this.idOfExcercise = trainerAndExcercise.split('/')[1];
 
+  }
+
+  increaseCount(){
+    this.exerciseCount++;
   }
 
   ngOnInit(): void {
@@ -31,8 +37,6 @@ export class AImodeluComponent implements OnInit {
       const canHeight = 480;
       const canWidth = 640;
       p5.setup = () => {
-        // let test = p5.select('.tttt');
-        // const canvas = p5.createCanvas(test.width, canHeight);
         const canvas = p5.createCanvas(canWidth, canHeight);
         canvas.parent("AIcomponent");
         camVideo = p5.createCapture(p5.VIDEO);
@@ -63,7 +67,7 @@ export class AImodeluComponent implements OnInit {
       }
 
       function gotResult(error, results) {
-        if (results[0].confidence >= 0.2) {
+        if (results[0].confidence >= 0.8) {
           console.log(results[0].confidence)
           poseLabel = results[0].label;
         }
@@ -71,6 +75,7 @@ export class AImodeluComponent implements OnInit {
       }
 
       function classifyPose() {
+        
         if (pose) {
           let inputs = [];
           for (let i = 0; i < pose.keypoints.length; i++) {
@@ -97,7 +102,6 @@ export class AImodeluComponent implements OnInit {
       }
 
       p5.draw = () => {
-        // let test = p5.select('.tttt');
         p5.push();
         p5.translate(camVideo.width, 0);
         p5.scale(-1, 1);
@@ -109,7 +113,6 @@ export class AImodeluComponent implements OnInit {
             let b = skeleton[i][1];
             p5.strokeWeight(2);
             p5.stroke(0);
-
             p5.line(a.position.x, a.position.y, b.position.x, b.position.y);
           }
           for (let i = 0; i < pose.keypoints.length; i++) {
@@ -123,12 +126,12 @@ export class AImodeluComponent implements OnInit {
         p5.pop();
         p5.textSize(70);
         p5.text(poseLabel, 20, 400);
+        
+        p5.text(poseLabel, 20, 400);
+        // if(p5.frameCount >=20){
+        //   p5.frameCount=0;
+        // }
       }
-
-      // p5.windowResized = () => {
-      //   // let test = p5.select('.tttt');
-      //   p5.resizeCanvas(test.width, canHeight);
-      // }
     };
 
     new p5(sketch);

@@ -22,7 +22,7 @@ export class AimoduleTrainingComponent implements OnInit {
       let brain;
       let state = 'waiting';
       let targetLabel;
-      let epochsCount = 30;
+      let epochsCount = 60;
 
       // p5.keyPressed = () => {
       //   if (p5.key == 's') {
@@ -56,7 +56,23 @@ export class AimoduleTrainingComponent implements OnInit {
           inputs: 34,
           outputs: 4,
           task: 'classification',
-          debug: true
+          debug: true,
+          layers: [ //gal nereik :D
+            {
+              type: 'dense',
+              units: 32,
+              activation: 'relu'
+            },
+            {
+              type: 'dense',
+              units: 16,
+              activation: 'relu'
+            },
+            {
+              type: 'dense',
+              activation: 'sigmoid'
+            }
+          ] //
         }
         brain = ml5.neuralNetwork(options);
         brain.loadData('assets/training/exerciseList.json', dataReady)
@@ -94,18 +110,6 @@ export class AimoduleTrainingComponent implements OnInit {
       function modelLoaded() {
         console.log('posenet ready');
       }
-
-      // function gg(nameOfExercise) {
-      //   targetLabel = nameOfExercise;
-      //   setTimeout(() => {
-      //     state = 'collecting';
-      //     console.log(state);
-      //     setTimeout(() => {
-      //       console.log('not collecting');
-      //       state = 'waiting';
-      //     }, 5000);
-      //   }, 1000);
-      // }
 
       p5.draw = () => {
         p5.translate(camVideo.width, 0);

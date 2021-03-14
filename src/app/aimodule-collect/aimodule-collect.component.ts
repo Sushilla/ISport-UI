@@ -16,6 +16,7 @@ export class AimoduleCollectComponent implements OnInit {
   saveDataToFile: boolean = false;
   stopCollectData: boolean = false;
   pause: boolean = true;
+  stateofexercise: boolean = false;
 
   constructor(private router: Router) {
 
@@ -78,19 +79,22 @@ export class AimoduleCollectComponent implements OnInit {
         console.log('posenet ready');
       }
 
-      function startCollectingData(nameOfExercise) {
-        targetLabel = nameOfExercise;
+      function startCollectingData(nameOfExercise, a) {
+        if (a) {
+          targetLabel = nameOfExercise + "_up";
+        } else {
+          targetLabel = nameOfExercise + "_down";
+        }
         state = 'collecting';
-
       }
 
 
       p5.draw = () => {
 
-        
+
         if (this.startCollectData) { //data colecting
           if (!this.pause) { //collect if data collecting is not paused
-            startCollectingData(this.ExerciseName);
+            startCollectingData(this.ExerciseName, this.stateofexercise);
           } else { //paused coolecting
             state = 'waiting';
           }
@@ -102,18 +106,18 @@ export class AimoduleCollectComponent implements OnInit {
           }
         }
         // console.log(state)
-        
-        
-        
-        
-        
+
+
+
+
+
         if (this.saveDataToFile) { //save Data to file
           this.saveDataToFile = !this.saveDataToFile;
           if (!this.startCollectData) { //only if collecting completed
             brain.saveData('exerciseList');
           }
         }
-        
+
         p5.push();
         p5.translate(camVideo.width, 0);
         p5.scale(-1, 1);
@@ -137,18 +141,18 @@ export class AimoduleCollectComponent implements OnInit {
           }
         }
         p5.pop();
-        let a='';
-        if(!this.pause){
+        let a = '';
+        if (!this.pause) {
           p5.fill('rgb(0,255,0)')
-          a='collect'
-        }else{
+          a = 'collect'
+        } else {
           p5.fill('red')
-          a='not'
+          a = 'not'
         }
 
 
-          p5.textSize(100);
-          p5.text(a, 20, 400);
+        p5.textSize(100);
+        p5.text(a, 20, 400);
 
       }
     };
@@ -181,6 +185,9 @@ export class AimoduleCollectComponent implements OnInit {
     this.pause = true;
   }
 
+  updown() {
+    this.stateofexercise = !this.stateofexercise;
+  }
   // redirecToTestModel(){
   //   this.router.
   // }
