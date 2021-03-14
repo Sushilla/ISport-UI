@@ -13,16 +13,12 @@ export class AImodeluComponent implements OnInit {
   idOfTrainer: string;
   idOfExcercise: string;
   exerciseCount: number = 0;
-  
+
   constructor() {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
     this.idOfTrainer = trainerAndExcercise.split('/')[0];
     this.idOfExcercise = trainerAndExcercise.split('/')[1];
 
-  }
-
-  increaseCount(){
-    this.exerciseCount++;
   }
 
   ngOnInit(): void {
@@ -36,6 +32,10 @@ export class AImodeluComponent implements OnInit {
       let poseLabel;
       const canHeight = 480;
       const canWidth = 640;
+
+      let lastPose = "";
+      let countas = 0;
+
       p5.setup = () => {
         const canvas = p5.createCanvas(canWidth, canHeight);
         canvas.parent("AIcomponent");
@@ -68,14 +68,47 @@ export class AImodeluComponent implements OnInit {
 
       function gotResult(error, results) {
         if (results[0].confidence >= 0.8) {
-          console.log(results[0].confidence)
-          poseLabel = results[0].label;
+          
+          // console.log(results[0].confidence)
+          // poseLabel = results[0].label;
+          //tikrint kuris pratimas
+
+          let confidenceThreshold = 0.4;
+          let downHeightTolerance = 150;
+          let upHeightTolerance = 70;
+          let leftYDist;
+          let rightYDist;
+
+          function jointDistEvaluate(joint1, joint2, confidenceThreshold) {
+            let jointDist = null;
+            if (pose.keypoints[joint1].score >= confidenceThreshold && pose.keypoints[joint2].score >= confidenceThreshold) {
+              jointDist = pose.keypoints[joint1].position.y - pose.keypoints[joint2].position.y;;
+            }
+            return jointDist;
+          }
+
+          // distance between shoulders and wrists
+          leftYDist = jointDistEvaluate(5, 9, confidenceThreshold);
+          rightYDist = jointDistEvaluate(6, 10, confidenceThreshold);
+          
+          if ((Math.abs(leftYDist) >= downHeightTolerance) || (Math.abs(rightYDist) >= downHeightTolerance)) {
+            poseLabel = "DOWN";
+          }
+          else if ((Math.abs(leftYDist) <= upHeightTolerance) || (Math.abs(rightYDist) <= upHeightTolerance)) {
+            poseLabel = "UP";
+          }
+          if (lastPose == "DOWN" && poseLabel == "UP") {
+            // this.exerciseCount++;
+            countas++;
+
+          }
+          lastPose = poseLabel;
         }
-          classifyPose();
+        classifyPose();
       }
 
       function classifyPose() {
-        
+
         if (pose) {
           let inputs = [];
           for (let i = 0; i < pose.keypoints.length; i++) {
@@ -92,7 +125,7 @@ export class AImodeluComponent implements OnInit {
 
       function gotPoses(poses) {
         if (poses.length > 0) {
-          pose = poses[0].pose;
+          pose = poses[0].pose;          
           skeleton = poses[0].skeleton;
         }
       }
@@ -126,8 +159,9 @@ export class AImodeluComponent implements OnInit {
         p5.pop();
         p5.textSize(70);
         p5.text(poseLabel, 20, 400);
-        
+
         p5.text(poseLabel, 20, 400);
+        p5.text(countas, 20, 100);
         // if(p5.frameCount >=20){
         //   p5.frameCount=0;
         // }
