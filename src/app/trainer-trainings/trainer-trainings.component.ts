@@ -9,6 +9,7 @@ import { TrainersWorkoutPlans } from '../models/TrainersWorkoutPlans';
 import { BackEndService } from '../.Services/BackEnd-service';
 import { UIService } from '../.Services/UIService';
 import { TreniruoteTreneris } from '../models/TreniruoteTreneris';
+import { SnackBarService } from '../.Services/SnackBarService';
 @Component({
   selector: 'app-trainer-trainings',
   templateUrl: './trainer-trainings.component.html',
@@ -38,7 +39,7 @@ export class TrainerTrainingsComponent implements OnInit {
 
 
 
-  constructor(public dialog: MatDialog, private backendService: BackEndService, private uiService: UIService) { }
+  constructor(public dialog: MatDialog, private backendService: BackEndService, private uiService: UIService, private snackService: SnackBarService) { }
 
   ngOnInit(): void {
     this.getTreniruotesForShowing();
@@ -56,7 +57,6 @@ export class TrainerTrainingsComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateNewWorkout);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
         this.getTreniruotesForShowing();
       }
@@ -67,14 +67,12 @@ export class TrainerTrainingsComponent implements OnInit {
     const dialogRef = this.dialog.open(AreYouSure);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
-        console.log('delete')
         this.backendService.deleteWorkout(id).subscribe(result => {
-          console.log(result);
+          this.snackService.callSuccessSnackBar('Workout successfully removed');
           this.getTreniruotesForShowing();
         }, error => {
-          console.log(error);
+          this.snackService.callErrorSnackBar('Something went wrong');
         })
       }
     });
@@ -84,7 +82,6 @@ export class TrainerTrainingsComponent implements OnInit {
     const dialogRef = this.dialog.open(EditWorkout, { data: { id: id } });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
         this.getTreniruotesForShowing();
       }

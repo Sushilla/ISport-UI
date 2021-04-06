@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackEndService } from '../.Services/BackEnd-service';
+import { SnackBarService } from '../.Services/SnackBarService';
 import { UIService } from '../.Services/UIService';
 import { PakeistiRoleListForAdmin } from '../models/PakeistiRoleListForAdmin';
 
@@ -11,7 +12,7 @@ import { PakeistiRoleListForAdmin } from '../models/PakeistiRoleListForAdmin';
 export class AdminMainComponent implements OnInit {
   displayedColumns: string[] = ['nameSurname', 'createionDate', 'actions'];
   req: PakeistiRoleListForAdmin[];
-  constructor(private backEndService: BackEndService, private uiService: UIService) { }
+  constructor(private backEndService: BackEndService, private uiService: UIService, private snackService: SnackBarService) { }
 
   ngOnInit(): void {
     this.getListOfUsersWhoWnatToBecomeTrainer();

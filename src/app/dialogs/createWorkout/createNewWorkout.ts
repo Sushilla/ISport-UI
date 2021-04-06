@@ -12,6 +12,7 @@ import { UIService } from 'src/app/.Services/UIService';
 import { Pratymai } from 'src/app/models/Pratymai';
 import { TrainerUsers } from 'src/app/models/TrainerUsers';
 import { CreateWorkoutUserList } from 'src/app/models/CreateWorkoutUserList';
+import { SnackBarService } from 'src/app/.Services/SnackBarService';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class CreateNewWorkout {
     @ViewChild('autoExercise') matAutocompleteExercise: MatAutocomplete;
 
 
-    constructor(private _formBuilder: FormBuilder, private backendServide: BackEndService, private uiService: UIService) {
+    constructor(private _formBuilder: FormBuilder, private backendServide: BackEndService, private uiService: UIService, private snackService: SnackBarService) {
+        this.snackService.callWarningSnackBar('Please, don\'t close window, otherwise data won\'t save');
         this.getExerciseList();
         this.getUserList();
     }
@@ -216,15 +218,10 @@ export class CreateNewWorkout {
         this.treniruotesInfo.vartId = this.usersIDs;        
         this.treniruotesInfo.prat = this.selectedExerciseList;
         this.backendServide.createTreinuorte(this.treniruotesInfo).subscribe(result => {
-            console.log(result);
-
+            this.snackService.callSuccessSnackBar('Workout successfully created');
         }, error => {
-            console.log(error);
+            this.snackService.callErrorSnackBar('Something went wrong');
         })
     }
 
-    aaa(){
-        console.log(this.selectedExerciseList);
-        
-    }
 }

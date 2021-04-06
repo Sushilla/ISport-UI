@@ -13,6 +13,7 @@ import { treniPrat, WorkoutEditData } from '../../models/Workout/WorkoutEditData
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { UIService } from 'src/app/.Services/UIService';
 import { TrainerUsers } from 'src/app/models/TrainerUsers';
+import { SnackBarService } from 'src/app/.Services/SnackBarService';
 
 @Component({
     selector: 'editWorkout-dialog',
@@ -49,7 +50,7 @@ export class EditWorkout {
     @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
-    constructor(private _formBuilder: FormBuilder, private backendService: BackEndService, @Inject(MAT_DIALOG_DATA) public data: any, private uiService: UIService) {
+    constructor(private _formBuilder: FormBuilder, private backendService: BackEndService, @Inject(MAT_DIALOG_DATA) public data: any, private uiService: UIService, private snackService: SnackBarService) {
         this.getData();
     }
 
@@ -240,10 +241,9 @@ export class EditWorkout {
 
     sendRequest(){
         this.backendService.updateWorkout(this.editData[0]).subscribe(result=>{
-            console.log(result);
+            this.snackService.callSuccessSnackBar('Workout successfully updated');
         }, error=>{
-            console.log(error);
-            
+            this.snackService.callErrorSnackBar('Something went wrong');            
         })
     }
 }
