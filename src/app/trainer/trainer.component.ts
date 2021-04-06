@@ -32,7 +32,7 @@ export class TrainerComponent implements OnInit {
   getNumberOfInvites() {
     this.backEndServide.getNumberOfRequestsToTrainer(this.uiService.getUserIdFromCookie()).subscribe(result => {
       this.needToaprove = result[0].yra;
-      console.log(this.needToaprove);
+      // console.log(this.needToaprove);
       if (this.needToaprove != 0) {
         this.openSnackBar();
       }

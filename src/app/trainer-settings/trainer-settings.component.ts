@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackEndService } from '../.Services/BackEnd-service';
+import { SnackBarService } from '../.Services/SnackBarService';
 import { UIService } from '../.Services/UIService';
 
 @Component({
@@ -11,13 +12,7 @@ export class TrainerSettingsComponent implements OnInit {
   public trainer: test[] = [
     { name: 'vardas', surname: 'pavarde', email: 'asd@asd.asd', registerDate: '2020-02-10', image: 'selfie1.jpeg' }
   ]
-  tiles: Tile[] = [
-    { text: 'One', cols: 3, rows: 1, color: 'lightblue' },
-    { text: 'Two', cols: 1, rows: 2, color: 'lightgreen' },
-    { text: 'Three', cols: 1, rows: 1, color: 'lightpink' },
-    { text: 'Four', cols: 2, rows: 1, color: '#DDBDF1' },
-  ];
-  constructor(public uiService: UIService, public backEndService: BackEndService) {
+  constructor(public uiService: UIService, public backEndService: BackEndService, private snackService: SnackBarService) {
     // console.log(this.uiService.checkWhatRole());
 
   }
@@ -42,12 +37,10 @@ export class TrainerSettingsComponent implements OnInit {
   }
 
   sendRequestToAdmin(){
-    console.log('send');
     this.backEndService.sendrequestToAdminForChangingRole(this.uiService.getUserIdFromCookie()).subscribe(result =>{
-      console.log(result);
+      this.snackService.callSuccessSnackBar('Request sent successfully')
     }, error =>{
-      console.log(error);
-      
+      this.snackService.callErrorSnackBar('Something went wrong');      
     });
   }
 

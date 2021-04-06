@@ -11,6 +11,7 @@ import { RequestToAddTrainerKvietimas } from '../models/RequestToAddTrainerKviet
 import { AcceptedTrainersList } from '../models/AcceptedTrainersList';
 import { CookieService } from 'ngx-cookie-service';
 import { UIService } from '../.Services/UIService';
+import { SnackBarService } from '../.Services/SnackBarService';
 
 @Component({
   selector: 'app-trainer-selector',
@@ -28,7 +29,7 @@ export class TrainerSelectorComponent implements OnInit {
   canSendRequestToTrainer = false;
   acceptedTrainerList: AcceptedTrainersList;
 
-  constructor(private router: Router, public backend: BackEndService, public cookieService: CookieService, private uiService: UIService) {
+  constructor(private router: Router, public backend: BackEndService, public cookieService: CookieService, private uiService: UIService, private snackService: SnackBarService) {
     this.getListOfTrainers();
   }
 
@@ -74,15 +75,15 @@ export class TrainerSelectorComponent implements OnInit {
       req.trenerioID = this.trId;
       req.vartotojoId = this.uiService.getUserIdFromCookie();
       sendRequest.push(req)
-      console.log(sendRequest);
+      // console.log(sendRequest);
       this.backend.putKvietimasTreneriIDraugus(req).subscribe(result => {
-        console.log(result);
+        this.snackService.callSuccessSnackBar('Request send to trainer')
       }, error => {
-        console.log(error);
+        this.snackService.callErrorSnackBar('Something went wrong');
         
       })
     }else{
-      console.log("kazkas blogai");
+      this.snackService.callWarningSnackBar('This trainer email not exist');
       
     }
     

@@ -36,7 +36,6 @@ const routes: Routes = [
     path: 'trainer', component: TrainerComponent,
      canActivate: [Authguard], data: {role: ['Trainer']},
       children: [
-      // { path: 'main', component: TrainerMainComponent },
       { path: 'settings', component: TrainerSettingsComponent },
       { path: 'requests', component: TrainerRequestsComponent },
       { path: 'main', component: TrainerTrainingsComponent },
@@ -47,7 +46,6 @@ const routes: Routes = [
     path: 'user', component: UserComponent, 
     canActivate: [Authguard], data: {role: ['User']}, 
     children: [
-      // { path: 'main', component: UserMainComponent },
       { path: 'main', component: TrainerSelectorComponent },
       { path: 'statistics', component: UserStatisticsComponent },
       { path: 'freemode', component: UserFreemodeComponent },
