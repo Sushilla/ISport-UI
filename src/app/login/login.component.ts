@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { BackEndService } from '../.Services/BackEnd-service';
+import { SnackBarService } from '../.Services/SnackBarService';
 import { UIService } from '../.Services/UIService';
 import { StoreLogedInUserDataToCookie } from '../models/StoreLogedInUserDataToCookie';
 
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   password: string;
   userInfo: StoreLogedInUserDataToCookie;
 
-  constructor(public backEndService: BackEndService, public cookieService: CookieService, public router: Router, public uiService: UIService) {
+  constructor(public backEndService: BackEndService, public cookieService: CookieService, public router: Router, public uiService: UIService, private snackService: SnackBarService) {
     this.uiService.checkIfUserLoggedIn();
    }
 
@@ -24,12 +25,11 @@ export class LoginComponent implements OnInit {
 
   loginUser(){    
     this.backEndService.loginUser(this.email, this.password).subscribe(result=>{
-      // console.log(result);
       this.cookieService.set("UserCookie", JSON.stringify(result), {expires: 7, path: "/"});
       this.uiService.checkIfUserLoggedIn();
     }, error =>{
       console.log(error);
-      
+      this.snackService.callErrorSnackBar('Email or password is incorrect');
     })
   }
 
