@@ -59,6 +59,7 @@ import { AimoduleTrainingComponent } from './aimodule-training/aimodule-training
 import { BackEndService } from './.Services/BackEnd-service';
 import { UIService } from './.Services/UIService';
 import { Authguard } from './.Services/auth-guard';
+import { SnackBarService } from './.Services/SnackBarService';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { AdminMainComponent } from './admin-main/admin-main.component';
@@ -136,7 +137,8 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
   ],
   providers: [BackEndService,
     UIService,
-    Authguard],
+    Authguard,
+    SnackBarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
