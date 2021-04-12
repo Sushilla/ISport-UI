@@ -114,7 +114,7 @@ export class BackEndService {
         return this.http.get<StoreLogedInUserDataToCookie>("http://localhost:5000/api/v1/models/vartotojasLogin/" + email + "/" + pass, requestOptions);
     }
 
-    public registerUser(regData: registerData): Observable<any>{
+    public registerUser(regData: registerData): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
@@ -206,17 +206,17 @@ export class BackEndService {
         return this.http.put("http://localhost:5000/api/v1/models/treniruote", JSON.stringify(treniruoteAP), requestOptions);
     }
 
-    public getEditDataForWorkout(id:string): Observable<WorkoutEditData>{       
+    public getEditDataForWorkout(id: string): Observable<WorkoutEditData> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<WorkoutEditData>('http://localhost:5000/api/v1/models/treniruoteEditData/'+id, requestOptions);
+        return this.http.get<WorkoutEditData>('http://localhost:5000/api/v1/models/treniruoteEditData/' + id, requestOptions);
     }
 
-    public updateWorkout(updateQuery: WorkoutEditData): Observable<any>{        
+    public updateWorkout(updateQuery: WorkoutEditData): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
@@ -226,56 +226,56 @@ export class BackEndService {
         return this.http.post<any>('http://localhost:5000/api/v1/models/treniruote', JSON.stringify(updateQuery), requestOptions);
     }
 
-    public deleteWorkout(id: string): Observable<any>{ //dar reik padeletin ir atliktas treniruotes
+    public deleteWorkout(id: string): Observable<any> { //dar reik padeletin ir atliktas treniruotes
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.delete('http://localhost:5000/api/v1/models/treniruote/'+id, requestOptions);
+        return this.http.delete('http://localhost:5000/api/v1/models/treniruote/' + id, requestOptions);
     }
 
-    public getSelectedWorkoutUsers(id: string): Observable<UsersAddedToWorkout[]>{
+    public getSelectedWorkoutUsers(id: string): Observable<UsersAddedToWorkout[]> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<UsersAddedToWorkout[]>('http://localhost:5000/api/v1/models/vartotojaiWorkout/'+id, requestOptions);
+        return this.http.get<UsersAddedToWorkout[]>('http://localhost:5000/api/v1/models/vartotojaiWorkout/' + id, requestOptions);
     }
     //
 
-    public getUserWorkouts(tid: string, uid: string): Observable<any>{
+    public getUserWorkouts(tid: string, uid: string): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<any[]>('http://localhost:5000/api/v1/models/userTreniruotes/'+tid+'/'+uid, requestOptions);
+        return this.http.get<any[]>('http://localhost:5000/api/v1/models/userTreniruotes/' + tid + '/' + uid, requestOptions);
     }
 
-    public getUserGeneralStatistic(uid: string): Observable<UserGeneralStat>{
+    public getUserGeneralStatistic(uid: string): Observable<UserGeneralStat> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<UserGeneralStat>('http://localhost:5000/api/v1/models/statistika/'+uid, requestOptions);
+        return this.http.get<UserGeneralStat>('http://localhost:5000/api/v1/models/statistika/' + uid, requestOptions);
     }
 
-    public getUserStatisticForTrainer(uid: string): Observable<UserGeneralStat2>{
+    public getUserStatisticForTrainer(uid: string, wid: string): Observable<UserGeneralStat2> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.get<UserGeneralStat2>('http://localhost:5000/api/v1/models/statistikafortrainer/'+uid, requestOptions);
+        return this.http.get<UserGeneralStat2>('http://localhost:5000/api/v1/models/statistikafortrainer/' + uid + '/' + wid, requestOptions);
     }
 
-    
+
 }

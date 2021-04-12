@@ -18,6 +18,7 @@ import { SnackBarService } from '../.Services/SnackBarService';
 export class TrainerTrainingsComponent implements OnInit {
   users: UsersAddedToWorkout[];
   treniruotes: TreniruoteTreneris[];
+  wId: string;
 
   //table
   public chartType: string = 'line';
@@ -46,6 +47,7 @@ export class TrainerTrainingsComponent implements OnInit {
   }
 
   getSelectedWorkoutUsers(workId: string) {
+    this.wId = workId;
     this.backendService.getSelectedWorkoutUsers(workId).subscribe(result => {
       this.users = result;
     }, error => {
@@ -97,8 +99,8 @@ export class TrainerTrainingsComponent implements OnInit {
     })
   }
 
-  getSelectedUserStat(uId: string) {
-    this.backendService.getUserStatisticForTrainer(uId).subscribe(result => {
+  getSelectedUserStat(uId: string) {        
+    this.backendService.getUserStatisticForTrainer(uId, this.wId).subscribe(result => {
       console.log(result);
       this.chartLabels = result.chartLabels;
       this.chartDatasets = result.dataForTable;
