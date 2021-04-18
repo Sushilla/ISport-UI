@@ -2,8 +2,8 @@
     <mat-grid-tile colspan=1>
         <div style="display: flex; flex-direction: column; width: 99%; height: 95%; justify-content: space-around; border: 1px solid black; border-radius: 5px;">
             <div style="display: flex; width: 100%; height: 45%; align-items: center; justify-content: center;">
-                <img class="avatar" src="assets/img/{{trainer[0].image}}" *ngIf="checkIfThereIsImage(trainer[0].image)">
-                <img class="avatar" src="assets/img/empty_person.jpg" *ngIf="!checkIfThereIsImage(trainer[0].image)">
+                <!-- <img class="avatar" src="assets/img/{{trainer[0].image}}" *ngIf="checkIfThereIsImage(trainer[0].image)"> -->
+                <img class="avatar" src="assets/img/empty_person.jpg">
             </div>
             <div style=" width: 100%; height: 45%; display: flex; flex-direction: column; justify-content:space-between; align-items: center;">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50%; width: 100%;">
@@ -19,16 +19,32 @@
     <mat-grid-tile colspan=3>
         <div style="width: 99%; height: 95%;">
             <mat-tab-group style="height: 100%;">
+                <!--  -->
                 <mat-tab label="Change password">
                     <div style="height: 100%;">
-                        asdasd
+                        <form style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;" [formGroup]="changePassFormControl">
+                            <mat-form-field appearance="standard">
+                                <mat-label>Old password</mat-label>
+                                <input matInput formControlName="oldPassword">
+                                <mat-error *ngIf="f.oldPassword.errors" style="color: rgb(255, 0, 0);">{{getErrorMessage(f.oldPassword.errors)}}</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard">
+                                <mat-label>New password</mat-label>
+                                <input matInput formControlName="newPassword">
+                                <mat-error *ngIf="f.newPassword.errors" style="color: rgb(255, 0, 0);">{{getErrorMessage(f.newPassword.errors)}}</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard">
+                                <mat-label>Repeat new password</mat-label>
+                                <input matInput formControlName="newPasswordRepeat">
+                                <mat-error *ngIf="f.newPasswordRepeat.errors" style="color: rgb(255, 0, 0);">{{getErrorMessage(f.newPasswordRepeat.errors)}}</mat-error>
+                            </mat-form-field>
+                            <button mat-flat-button style="background-color: rgb(247, 247, 247);" (click)="changePassword()">Change password</button>
+                        </form>
                     </div>
                 </mat-tab>
-                <!-- <mat-tab label="Second">
-                    <div style="height: 100%;">
-                        asxxxxxxx
-                    </div>
-                </mat-tab> -->
+                <!--  -->
                 <mat-tab label="Become a trainer" *ngIf="checkWithUIServiceRole('User')">
                     <div style="height: 100%;">
                         <div style="height: 20%; display: flex; justify-content: center; align-items: center;">
@@ -55,7 +71,7 @@
                                 </mat-list-item>
                             </mat-list>
                             <br>
-                            <button mat-raised-button color="primary" (click)="sendRequestToAdmin()">Write me in</button>
+                            <button mat-raised-button color="primary" (click)="sendRequestToAdmin()">Sign me in</button>
                         </div>
                     </div>
                 </mat-tab>

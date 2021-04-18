@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
       return 'You must enter a value';
     }
     if (errorMessage.mustMatch) {
-      return errorMessage.mustMatch ? 'Password must be same' : '';
+      return errorMessage.mustMatch ? 'Password must match' : '';
     }
     if (errorMessage.email) {
       return 'Bad email format';

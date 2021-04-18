@@ -277,5 +277,17 @@ export class BackEndService {
         return this.http.get<UserGeneralStat2>('http://localhost:5000/api/v1/models/statistikafortrainer/' + uid + '/' + wid, requestOptions);
     }
 
+    public chengePassword(uid: string, pass: any): Observable<any>{
+        console.log(JSON.stringify(pass));
+        
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.post<any>('http://localhost:5000/api/v1/models/vartotojasPassChange/' + uid, JSON.stringify(pass), requestOptions);
+    }
+
 
 }
