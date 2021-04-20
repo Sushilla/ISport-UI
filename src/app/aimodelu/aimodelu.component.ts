@@ -13,6 +13,7 @@ export class AImodeluComponent implements OnInit {
   idOfTrainer: string;
   idOfExcercise: string;
   exerciseCount: number = 0;
+  isStarted: boolean = false;
 
   constructor() {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
@@ -36,7 +37,9 @@ export class AImodeluComponent implements OnInit {
       let lastPose = "";
       let countas = 0;
 
-      p5.setup = () => {
+      let workStarted = false;
+
+      p5.setup = () => {        
         const canvas = p5.createCanvas(canWidth, canHeight);
         canvas.parent("AIcomponent");
         camVideo = p5.createCapture(p5.VIDEO);
@@ -62,13 +65,12 @@ export class AImodeluComponent implements OnInit {
 
       function brainReady() {
         console.log('pose clasification ready');
-
         classifyPose();
       }
 
       function gotResult(error, results) {
         if (results[0].confidence >= 0.8) {
-          
+
           // console.log(results[0].confidence)
           // poseLabel = results[0].label;
           //tikrint kuris pratimas
@@ -90,7 +92,7 @@ export class AImodeluComponent implements OnInit {
           // distance between shoulders and wrists
           leftYDist = jointDistEvaluate(5, 9, confidenceThreshold);
           rightYDist = jointDistEvaluate(6, 10, confidenceThreshold);
-          
+
           if ((Math.abs(leftYDist) >= downHeightTolerance) || (Math.abs(rightYDist) >= downHeightTolerance)) {
             poseLabel = "DOWN";
           }
@@ -107,9 +109,8 @@ export class AImodeluComponent implements OnInit {
         classifyPose();
       }
 
-      function classifyPose() {
-
-        if (pose) {
+      function classifyPose() {                
+        if (pose && workStarted) {
           let inputs = [];
           for (let i = 0; i < pose.keypoints.length; i++) {
             let x = pose.keypoints[i].position.x;
@@ -118,14 +119,14 @@ export class AImodeluComponent implements OnInit {
             inputs.push(y);
           }
           brain.classify(inputs, gotResult);
-        } else {
+        } else {          
           setTimeout(classifyPose, 100);
         }
       }
 
       function gotPoses(poses) {
         if (poses.length > 0) {
-          pose = poses[0].pose;          
+          pose = poses[0].pose;
           skeleton = poses[0].skeleton;
         }
       }
@@ -162,14 +163,27 @@ export class AImodeluComponent implements OnInit {
 
         p5.text(poseLabel, 20, 400);
         p5.text(countas, 20, 100);
+        this.exerciseCount = countas;
+        workStarted = this.isStarted;
         // if(p5.frameCount >=20){
         //   p5.frameCount=0;
         // }
       }
     };
 
-    new p5(sketch);
+    new p5(sketch, this.isStarted);
 
+  }
+
+  startWorkout() {
+    console.log('workout started');
+    this.isStarted = true;
+
+  }
+
+  endWorkout() {
+    console.log('workout ended');
+    this.isStarted = false;
   }
 
 }
