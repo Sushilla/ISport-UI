@@ -1,6 +1,8 @@
 import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 import { Component, OnInit } from '@angular/core';
 import * as p5 from 'p5';
+import { BackEndService } from '../.Services/BackEnd-service';
+import { UIService } from '../.Services/UIService';
 import MyCircle from "./MyCircle";
 declare let ml5: any;
 
@@ -17,7 +19,7 @@ export class AImodeluComponent implements OnInit {
   time: number = 0;
   display;
   interval;
-  constructor() {
+  constructor(private backendService: BackEndService, private uiService: UIService) {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
     this.idOfTrainer = trainerAndExcercise.split('/')[0];
     this.idOfExcercise = trainerAndExcercise.split('/')[1];
@@ -179,7 +181,6 @@ export class AImodeluComponent implements OnInit {
 
   startWorkout() {
     console.log('workout started');
-    this.isStarted = true;
     this.interval = setInterval(() => {
       if (this.time === 0) {
         this.time++;
@@ -188,13 +189,23 @@ export class AImodeluComponent implements OnInit {
       }
       this.display = this.transform(this.time)
     }, 1000);
+    var temp: createWorkoutUsingUserId = { vartotojoId: this.uiService.getUserIdFromCookie()}
+    this.backendService.startWorkout(temp).subscribe(result=>{
+      console.log(result);
+    }, error =>{
+      console.log(error);
+      
+    })
 
+
+    this.isStarted = true;
   }
 
   endWorkout() {
     console.log('workout ended');
-    this.isStarted = false;
     clearInterval(this.interval);
+    this.backendService.endWorkout();
+    this.isStarted = false;
   }
 
   transform(value: number): string {
@@ -211,6 +222,10 @@ export class AImodeluComponent implements OnInit {
 
 
 
+}
+
+export class createWorkoutUsingUserId {
+  vartotojoId: string;
 }
 
 

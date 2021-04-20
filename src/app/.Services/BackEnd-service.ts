@@ -277,9 +277,7 @@ export class BackEndService {
         return this.http.get<UserGeneralStat2>('http://localhost:5000/api/v1/models/statistikafortrainer/' + uid + '/' + wid, requestOptions);
     }
 
-    public chengePassword(uid: string, pass: any): Observable<any>{
-        console.log(JSON.stringify(pass));
-        
+    public chengePassword(uid: string, pass: any): Observable<any>{        
         const header = {
             'Content-Type': 'application/json'
         }
@@ -288,6 +286,29 @@ export class BackEndService {
         };
         return this.http.post<any>('http://localhost:5000/api/v1/models/vartotojasPassChange/' + uid, JSON.stringify(pass), requestOptions);
     }
+
+    //workout
+
+    public startWorkout(data: any): Observable<any>{                
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.put<any>("http://localhost:5000/api/v1/models/statistika", JSON.stringify(data), requestOptions);
+    }
+
+    public endWorkout(){        
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+    }
+
+    //
 
 
 }
