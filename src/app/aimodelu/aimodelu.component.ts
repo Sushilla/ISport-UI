@@ -2,6 +2,7 @@ import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 import { Component, OnInit } from '@angular/core';
 import * as p5 from 'p5';
 import { BackEndService } from '../.Services/BackEnd-service';
+import { SnackBarService } from '../.Services/SnackBarService';
 import { UIService } from '../.Services/UIService';
 import MyCircle from "./MyCircle";
 declare let ml5: any;
@@ -19,7 +20,8 @@ export class AImodeluComponent implements OnInit {
   time: number = 0;
   display;
   interval;
-  constructor(private backendService: BackEndService, private uiService: UIService) {
+
+  constructor(private backendService: BackEndService, private uiService: UIService, private snackBar: SnackBarService) {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
     this.idOfTrainer = trainerAndExcercise.split('/')[0];
     this.idOfExcercise = trainerAndExcercise.split('/')[1];
@@ -181,30 +183,74 @@ export class AImodeluComponent implements OnInit {
 
   startWorkout() {
     console.log('workout started');
-    this.interval = setInterval(() => {
-      if (this.time === 0) {
-        this.time++;
-      } else {
-        this.time++;
-      }
-      this.display = this.transform(this.time)
-    }, 1000);
-    var temp: createWorkoutUsingUserId = { vartotojoId: this.uiService.getUserIdFromCookie()}
-    this.backendService.startWorkout(temp).subscribe(result=>{
-      console.log(result);
-    }, error =>{
-      console.log(error);
-      
+    var exId;
+    this.backendService.currentWorkoutas.subscribe(res => {
+      exId = res;
     })
+    if (exId == '') {
+      this.interval = setInterval(() => {
+        if (this.time === 0) {
+          this.time++;
+        } else {
+          this.time++;
+        }
+        this.display = this.transform(this.time)
+      }, 1000);
+      var temp: createWorkoutUsingUserId = { vartotojoId: this.uiService.getUserIdFromCookie() }
+      this.backendService.startWorkout(temp).subscribe(result => {
+        this.snackBar.callSuccessSnackBar('Workout started');
+
+        this.backendService.changecurrentWorkoutas(result);
+        this.backendService.currentWorkoutas.subscribe(res => {
+          console.log(res);
+        })
+
+      }, error => {
+        this.snackBar.callErrorSnackBar('Something went wrong');
+      })
 
 
-    this.isStarted = true;
+      this.isStarted = true;
+    } else {
+      this.snackBar.callErrorSnackBar('Cant start, because workout already started')
+    }
+
   }
 
   endWorkout() {
     console.log('workout ended');
     clearInterval(this.interval);
-    this.backendService.endWorkout();
+    this.time = 0;
+
+    // console.log(this.backendService.getcurrentWorkoutas());
+    var exId;
+    this.backendService.currentWorkoutas.subscribe(res => {
+      exId = res;
+    })
+    console.log(exId);   
+
+    var statistData: stat[] = new Array<stat>();
+    var exerciseList: statData[] = new Array<statData>();
+
+    var siun = new stat();
+    var pad = new statData();
+
+    pad.treniruotesId = this.idOfExcercise;
+    pad.statistikosId = exId;
+    pad.atpazyntoPratymoId = '6cbb5ff0-3791-46ba-b439-be96a90ec241';
+    pad.priejimas = 1; //gal paliekam kolkas viena :DD
+    pad.skaicius = 15;  //countas of exercise
+    exerciseList.push(pad);
+
+    siun.statistikaData = exerciseList;
+    statistData.push(siun)    
+
+    this.backendService.endWorkout(exId, statistData[0]).subscribe(result => {
+      this.snackBar.callSuccessSnackBar('Workout ended');
+    }, error => {
+      this.snackBar.callErrorSnackBar('Something went wrong');
+    })
+
     this.isStarted = false;
   }
 
@@ -228,6 +274,18 @@ export class createWorkoutUsingUserId {
   vartotojoId: string;
 }
 
+
+export class statData {
+  treniruotesId: string;
+  statistikosId: string;
+  atpazyntoPratymoId: string;
+  priejimas: number;
+  skaicius: number;
+}
+
+export class stat {
+  statistikaData: statData[];
+}
 
 
 

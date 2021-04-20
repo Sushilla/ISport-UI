@@ -16,6 +16,7 @@ import { WorkoutEditData } from "../models/Workout/WorkoutEditData";
 import { UsersAddedToWorkout } from "../models/UsersAddedToWorkout";
 import { registerData } from "../models/registerData"
 import { UserGeneralStat, UserGeneralStat2 } from "../models/Statistics/UserGeneralStat";
+import { stat, statData } from "../aimodelu/aimodelu.component";
 
 
 
@@ -25,14 +26,20 @@ export class BackEndService {
     private requestNumberSource = new BehaviorSubject(0);
     currentRequestNumber = this.requestNumberSource.asObservable();
 
+    private currentWorkoutasSource = new BehaviorSubject('');
+    currentWorkoutas = this.currentWorkoutasSource.asObservable();
+
     constructor(private http: HttpClient) {
     }
 
     changeRequestNumber(message: number) {
-        // console.log(message);
-
         this.requestNumberSource.next(message)
     }
+
+    changecurrentWorkoutas(message: string) {
+        this.currentWorkoutasSource.next(message)
+    }
+
 
     public getTrainerListForAddingTrainer(): Observable<TrainerListForAdding[]> {
         const header = {
@@ -277,7 +284,7 @@ export class BackEndService {
         return this.http.get<UserGeneralStat2>('http://localhost:5000/api/v1/models/statistikafortrainer/' + uid + '/' + wid, requestOptions);
     }
 
-    public chengePassword(uid: string, pass: any): Observable<any>{        
+    public chengePassword(uid: string, pass: any): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
@@ -289,7 +296,7 @@ export class BackEndService {
 
     //workout
 
-    public startWorkout(data: any): Observable<any>{                
+    public startWorkout(data: any): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
@@ -299,13 +306,14 @@ export class BackEndService {
         return this.http.put<any>("http://localhost:5000/api/v1/models/statistika", JSON.stringify(data), requestOptions);
     }
 
-    public endWorkout(){        
+    public endWorkout(exId: string, data: stat): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
+        return this.http.post<any>("http://localhost:5000/api/v1/models/statistika/"+exId, JSON.stringify(data), requestOptions);
     }
 
     //
