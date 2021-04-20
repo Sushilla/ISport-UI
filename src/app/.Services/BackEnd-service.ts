@@ -313,7 +313,17 @@ export class BackEndService {
         const requestOptions = {
             headers: new HttpHeaders(header),
         };
-        return this.http.post<any>("http://localhost:5000/api/v1/models/statistika/"+exId, JSON.stringify(data), requestOptions);
+        return this.http.post<any>("http://localhost:5000/api/v1/models/statistika/" + exId, JSON.stringify(data), requestOptions);
+    }
+
+    public getWorkoutExercises(workId: string): Observable<any> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<any>("http://localhost:5000/api/v1/models/pratymuSkaicius/" + workId, requestOptions);
     }
 
     //

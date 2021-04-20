@@ -20,11 +20,13 @@ export class AImodeluComponent implements OnInit {
   time: number = 0;
   display;
   interval;
+  needToDoExercides: needTo[] = new Array<needTo>();
 
   constructor(private backendService: BackEndService, private uiService: UIService, private snackBar: SnackBarService) {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
     this.idOfTrainer = trainerAndExcercise.split('/')[0];
     this.idOfExcercise = trainerAndExcercise.split('/')[1];
+    this.getWorkoutData();
 
   }
 
@@ -227,7 +229,7 @@ export class AImodeluComponent implements OnInit {
     this.backendService.currentWorkoutas.subscribe(res => {
       exId = res;
     })
-    console.log(exId);   
+    console.log(exId);
 
     var statistData: stat[] = new Array<stat>();
     var exerciseList: statData[] = new Array<statData>();
@@ -243,7 +245,7 @@ export class AImodeluComponent implements OnInit {
     exerciseList.push(pad);
 
     siun.statistikaData = exerciseList;
-    statistData.push(siun)    
+    statistData.push(siun)
 
     this.backendService.endWorkout(exId, statistData[0]).subscribe(result => {
       this.snackBar.callSuccessSnackBar('Workout ended');
@@ -266,6 +268,16 @@ export class AImodeluComponent implements OnInit {
     return hours + ':' + minutes + ':' + seconds;
   }
 
+  getWorkoutData() {
+    this.backendService.getWorkoutExercises(this.idOfExcercise).subscribe(result => {
+      this.needToDoExercides = result;
+      console.log(this.needToDoExercides);
+      
+    }, error => {
+      console.log(error);
+    })
+  }
+
 
 
 }
@@ -286,6 +298,15 @@ export class statData {
 export class stat {
   statistikaData: statData[];
 }
+
+export class needTo{
+  pavadinimas:string;
+  pratymoId:string;
+  treniruotesId:string;
+  priejimai:number;
+  skaicius:number;
+}
+
 
 
 
