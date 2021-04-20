@@ -21,6 +21,7 @@ export class AImodeluComponent implements OnInit {
   display;
   interval;
   needToDoExercides: needTo[] = new Array<needTo>();
+  displayedColumns: string[] = ['pavadinimas', 'priejimai', 'skaicius', 'padare'];
 
   constructor(private backendService: BackEndService, private uiService: UIService, private snackBar: SnackBarService) {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
@@ -182,6 +183,7 @@ export class AImodeluComponent implements OnInit {
     new p5(sketch, this.isStarted);
 
   }
+  //----------------------------------------------------------------------------------------------------------------------------------------------
 
   startWorkout() {
     console.log('workout started');
@@ -271,14 +273,15 @@ export class AImodeluComponent implements OnInit {
   getWorkoutData() {
     this.backendService.getWorkoutExercises(this.idOfExcercise).subscribe(result => {
       this.needToDoExercides = result;
+      this.needToDoExercides.forEach(element=>{
+        element.done=0;
+      })
       console.log(this.needToDoExercides);
-      
+
     }, error => {
       console.log(error);
     })
   }
-
-
 
 }
 
@@ -299,12 +302,13 @@ export class stat {
   statistikaData: statData[];
 }
 
-export class needTo{
-  pavadinimas:string;
-  pratymoId:string;
-  treniruotesId:string;
-  priejimai:number;
-  skaicius:number;
+export class needTo {
+  pavadinimas: string;
+  pratymoId: string;
+  treniruotesId: string;
+  priejimai: number;
+  skaicius: number;
+  done: number;
 }
 
 
