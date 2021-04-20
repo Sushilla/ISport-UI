@@ -14,7 +14,9 @@ export class AImodeluComponent implements OnInit {
   idOfExcercise: string;
   exerciseCount: number = 0;
   isStarted: boolean = false;
-
+  time: number = 0;
+  display;
+  interval;
   constructor() {
     var trainerAndExcercise = window.location.pathname.split('user/')[1];
     this.idOfTrainer = trainerAndExcercise.split('/')[0];
@@ -39,7 +41,7 @@ export class AImodeluComponent implements OnInit {
 
       let workStarted = false;
 
-      p5.setup = () => {        
+      p5.setup = () => {
         const canvas = p5.createCanvas(canWidth, canHeight);
         canvas.parent("AIcomponent");
         camVideo = p5.createCapture(p5.VIDEO);
@@ -109,7 +111,7 @@ export class AImodeluComponent implements OnInit {
         classifyPose();
       }
 
-      function classifyPose() {                
+      function classifyPose() {
         if (pose && workStarted) {
           let inputs = [];
           for (let i = 0; i < pose.keypoints.length; i++) {
@@ -119,7 +121,7 @@ export class AImodeluComponent implements OnInit {
             inputs.push(y);
           }
           brain.classify(inputs, gotResult);
-        } else {          
+        } else {
           setTimeout(classifyPose, 100);
         }
       }
@@ -178,13 +180,36 @@ export class AImodeluComponent implements OnInit {
   startWorkout() {
     console.log('workout started');
     this.isStarted = true;
+    this.interval = setInterval(() => {
+      if (this.time === 0) {
+        this.time++;
+      } else {
+        this.time++;
+      }
+      this.display = this.transform(this.time)
+    }, 1000);
 
   }
 
   endWorkout() {
     console.log('workout ended');
     this.isStarted = false;
+    clearInterval(this.interval);
   }
+
+  transform(value: number): string {
+    var sec_num = value;
+    var hours = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours < 1) { hours = 0; }
+    if (minutes < 1) { minutes = 0; }
+    if (seconds < 1) { seconds = 0; }
+    return hours + ':' + minutes + ':' + seconds;
+  }
+
+
 
 }
 

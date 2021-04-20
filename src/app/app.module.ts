@@ -68,7 +68,7 @@ import { RegisterComponent } from './register/register.component';
 //instaled
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
+import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
