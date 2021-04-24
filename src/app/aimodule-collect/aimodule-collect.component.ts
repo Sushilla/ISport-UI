@@ -2,6 +2,8 @@ import { compileNgModule } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as p5 from 'p5';
+import { BackEndService } from '../.Services/BackEnd-service';
+import { SnackBarService } from '../.Services/SnackBarService';
 declare let ml5: any;
 
 @Component({
@@ -18,7 +20,7 @@ export class AimoduleCollectComponent implements OnInit {
   pause: boolean = true;
   stateofexercise: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private snakService: SnackBarService, private backendService: BackEndService) {
 
   }
 
@@ -115,6 +117,7 @@ export class AimoduleCollectComponent implements OnInit {
           this.saveDataToFile = !this.saveDataToFile;
           if (!this.startCollectData) { //only if collecting completed
             brain.saveData('exerciseList');
+            this.sendToBack();
           }
         }
 
@@ -161,11 +164,18 @@ export class AimoduleCollectComponent implements OnInit {
 
   }
 
-  startCollecting() {
-    this.startCollectData = true;
-    // this.pause = false;
-    this.pause = !this.pause;
 
+  surinktosTreniruotes: string[] = [];
+
+  startCollecting() {
+    if (this.ExerciseName != undefined && this.ExerciseName != "") {
+      this.surinktosTreniruotes.push(this.ExerciseName);
+      this.startCollectData = true;
+      // this.pause = false;
+      this.pause = !this.pause;
+    } else {
+      this.snakService.callWarningSnackBar("Please type in name of exercise")
+    }
 
   }
 
@@ -188,8 +198,24 @@ export class AimoduleCollectComponent implements OnInit {
   updown() {
     this.stateofexercise = !this.stateofexercise;
   }
-  // redirecToTestModel(){
-  //   this.router.
-  // }
 
+  sendToBack() {
+
+    var send: exPav = new exPav();
+    send.Pavadinimas = this.surinktosTreniruotes;
+    this.surinktosTreniruotes = [];
+
+    this.backendService.sendPratimaiListToDB(send).subscribe(result => {
+      this.snakService.callSuccessSnackBar("Data successfully added to Database");
+    }, error => {
+      this.snakService.callErrorSnackBar("Something went wrong");
+    })
+
+
+  }
+
+}
+
+export class exPav {
+  Pavadinimas: string[];
 }

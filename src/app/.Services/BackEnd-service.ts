@@ -17,6 +17,7 @@ import { UsersAddedToWorkout } from "../models/UsersAddedToWorkout";
 import { registerData } from "../models/registerData"
 import { UserGeneralStat, UserGeneralStat2 } from "../models/Statistics/UserGeneralStat";
 import { stat, statData } from "../aimodelu/aimodelu.component";
+import { exPav } from "../aimodule-collect/aimodule-collect.component";
 
 
 
@@ -327,6 +328,16 @@ export class BackEndService {
     }
 
     //
+
+    sendPratimaiListToDB(list: exPav): Observable<any>{
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.put<any>("http://localhost:5000/api/v1/models/pratymai", JSON.stringify(list), requestOptions);
+    }
 
 
 }

@@ -48,9 +48,9 @@ const routes: Routes = [
     children: [
       { path: 'main', component: TrainerSelectorComponent },
       { path: 'statistics', component: UserStatisticsComponent },
-      { path: 'freemode', component: UserFreemodeComponent },
-      { path: 'training', component: AimoduleTrainingComponent },//remove
-      { path: 'collect', component: AimoduleCollectComponent },//remove
+      // { path: 'freemode', component: UserFreemodeComponent },
+      // { path: 'training', component: AimoduleTrainingComponent },//remove
+      // { path: 'collect', component: AimoduleCollectComponent },//remove
       { path: 'settings', component: TrainerSettingsComponent },
       { path: ':id', component: ExercisesSelectorComponent },
       { path: ':id/:id', component: AImodeluComponent },
@@ -63,8 +63,7 @@ const routes: Routes = [
       children: [
       { path: 'main', component: AdminMainComponent },
       { path: 'settings', component: TrainerSettingsComponent },
-      { path: 'requests', component: TrainerRequestsComponent },
-      { path: 'trainings', component: TrainerTrainingsComponent },
+      { path: 'training', component: AimoduleTrainingComponent },
       { path: 'collect', component: AimoduleCollectComponent },
       { path: '**', redirectTo: '/admin/main' }
     ]

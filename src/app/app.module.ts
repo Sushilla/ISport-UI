@@ -69,6 +69,7 @@ import { RegisterComponent } from './register/register.component';
 import { SlideshowModule } from 'ng-simple-slideshow';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
+import { HeaderAdminComponent } from './header-admin/header-admin.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
     AimoduleTrainingComponent,
     AdminComponent,
     AdminMainComponent,
-    RegisterComponent
+    RegisterComponent,
+    HeaderAdminComponent
   ],
   imports: [
     BrowserModule,
