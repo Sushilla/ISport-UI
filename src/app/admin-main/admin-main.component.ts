@@ -34,7 +34,7 @@ export class AdminMainComponent implements OnInit {
 
   acceptButton(id: any) {    
     this.backEndService.adminApproveUserToBecomeTrainer(id).subscribe(result =>{
-      this.snackService.callSuccessSnackBar('User request for becoming trainer accepted');
+      this.snackService.callSuccessSnackBar('User\'s request for becoming a trainer accepted');
       this.getListOfUsersWhoWnatToBecomeTrainer();
     }, error =>{
       this.snackService.callErrorSnackBar('Something went wrong');
@@ -43,7 +43,7 @@ export class AdminMainComponent implements OnInit {
 
   rejectButton(id: string) {
     this.backEndService.adminRejectUserFromBecomingTrainer(id).subscribe(result => {
-      this.snackService.callErrorSnackBar('User request for becoming trainer rejected');
+      this.snackService.callErrorSnackBar('User\'s request for becoming a trainer rejected');
       this.getListOfUsersWhoWnatToBecomeTrainer();
     }, error => {
       this.snackService.callErrorSnackBar('Something went wrong');

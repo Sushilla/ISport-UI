@@ -77,13 +77,13 @@ export class TrainerSelectorComponent implements OnInit {
       sendRequest.push(req)
       // console.log(sendRequest);
       this.backend.putKvietimasTreneriIDraugus(req).subscribe(result => {
-        this.snackService.callSuccessSnackBar('Request send to trainer')
+        this.snackService.callSuccessSnackBar('Request sent to trainer')
       }, error => {
         this.snackService.callErrorSnackBar('Something went wrong');
         
       })
     }else{
-      this.snackService.callWarningSnackBar('This trainer email not exist');
+      this.snackService.callWarningSnackBar('This trainer\'s email doesn\'t exist');
       
     }
     

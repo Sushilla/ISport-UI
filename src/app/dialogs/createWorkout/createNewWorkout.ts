@@ -55,7 +55,7 @@ export class CreateNewWorkout {
 
 
     constructor(private _formBuilder: FormBuilder, private backendServide: BackEndService, private uiService: UIService, private snackService: SnackBarService) {
-        this.snackService.callWarningSnackBar('Please, don\'t close the window, otherwise changes won\'t save');
+        this.snackService.callWarningSnackBar('Please, don\'t close the window, otherwise changes won\'t be saved');
         this.getExerciseList();
         this.getUserList();
     }

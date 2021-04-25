@@ -13,7 +13,7 @@ import { MustMatch } from '../register/_helper/must-match.validator';
 export class TrainerSettingsComponent implements OnInit {
   public trainer: test[] = [];
   changePassFormControl: FormGroup;
-  minPasswordLenght = 1;
+  minPasswordLenght = 8;
   isLoaded: boolean = false;
 
   constructor(public uiService: UIService, public backEndService: BackEndService, private snackService: SnackBarService, private formBuilder: FormBuilder) {
@@ -62,12 +62,12 @@ export class TrainerSettingsComponent implements OnInit {
       return 'You must enter a value';
     }
     if (errorMessage.mustMatch) {
-      return errorMessage.mustMatch ? 'Password must match' : '';
+      return errorMessage.mustMatch ? 'New passwords must match' : '';
     }
     if (errorMessage.email) {
-      return 'Bad email format';
+      return 'Incorrect email format';
     }
-    return errorMessage.minlength.actualLength == this.minPasswordLenght ? '' : 'Password is to short';
+    return errorMessage.minlength.actualLength == this.minPasswordLenght ? '' : 'Password is too short (min 8 symbols)';
   }
 
 
@@ -79,7 +79,7 @@ export class TrainerSettingsComponent implements OnInit {
       };
       this.backEndService.chengePassword(this.uiService.getUserIdFromCookie(), temp).subscribe(result => {
         if(result){
-          this.snackService.callErrorSnackBar("Bad old password")
+          this.snackService.callErrorSnackBar("Old password is incorrect")
         }else{
           this.snackService.callSuccessSnackBar("Password changed successfully");
         }

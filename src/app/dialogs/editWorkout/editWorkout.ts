@@ -51,7 +51,7 @@ export class EditWorkout {
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
     constructor(private _formBuilder: FormBuilder, private backendService: BackEndService, @Inject(MAT_DIALOG_DATA) public data: any, private uiService: UIService, private snackService: SnackBarService) {
-        this.snackService.callWarningSnackBar('Please, don\'t close the window, otherwise changes won\'t save');
+        this.snackService.callWarningSnackBar('Please, don\'t close the window, otherwise changes won\'t be saved');
         this.getData();
     }
 

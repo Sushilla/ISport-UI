@@ -5,7 +5,7 @@
     </div>
     <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
         <div style="padding-bottom: 20px; display: flex; align-items: center; flex-direction: column;">
-            <p>Give name to exercise</p>
+            <p>Name an exercise</p>
             <mat-form-field>
                 <mat-label>Exercise name</mat-label>
                 <input matInput [(ngModel)]='ExerciseName'>
@@ -13,9 +13,9 @@
             <br>
             <!-- <button mat-raised-button (click)='nextStep()' >Next step</button> -->
             <div style="display: flex;">
-                <button mat-raised-button (click)='startCollecting()'>Start collecting an exercise</button>
-                <button mat-raised-button (click)='pauseCollecting()'>Pause collecting an exercise</button>
-                <button mat-raised-button (click)='stopCollecting()' color='warn'>STOP collecting an exercise</button>
+                <button mat-raised-button (click)='startCollecting()'>Start collecting data</button>
+                <button mat-raised-button (click)='pauseCollecting()'>Pause collecting data</button>
+                <button mat-raised-button (click)='stopCollecting()' color='warn'>STOP collecting data</button>
                 <button mat-raised-button (click)='updown()' color='warn'>Up/Down</button>
             </div>
         </div>

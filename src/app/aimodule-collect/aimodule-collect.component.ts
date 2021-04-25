@@ -174,7 +174,7 @@ export class AimoduleCollectComponent implements OnInit {
       // this.pause = false;
       this.pause = !this.pause;
     } else {
-      this.snakService.callWarningSnackBar("Please type in name of exercise")
+      this.snakService.callWarningSnackBar("Please, insert the name of an exercise")
     }
 
   }

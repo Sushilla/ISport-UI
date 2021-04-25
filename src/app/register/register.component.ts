@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
       return errorMessage.mustMatch ? 'Password must match' : '';
     }
     if (errorMessage.email) {
-      return 'Bad email format';
+      return 'Incorrect email format';
     }
     return errorMessage.minlength.actualLength == this.minPasswordLenght ? '' : 'Password is to short';
   }

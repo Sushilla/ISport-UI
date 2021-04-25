@@ -1,14 +1,14 @@
 <mat-horizontal-stepper linear #stepper labelPosition="bottom">
-    <mat-step [stepControl]="firstFormGroup" [optional]="true">
+    <mat-step [stepControl]="firstFormGroup" [optional]="false">
         <form [formGroup]="firstFormGroup" style="display: flex; flex-direction: column;">
-            <ng-template matStepLabel>Give name</ng-template>
+            <ng-template matStepLabel>Title a workout</ng-template>
             <mat-form-field class="example-full-width">
-                <mat-label>Give title to workout</mat-label>
+                <mat-label>Title a workout</mat-label>
                 <input matInput placeholder="Title" formControlName="titleCtrl" required [(ngModel)]='treniruotesInfo.pavadinimas'>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
-                <mat-label>Give description to workout</mat-label>
+                <mat-label>Give description to a workout</mat-label>
                 <textarea matInput placeholder="Description" formControlName="descCtrl" required [(ngModel)]='treniruotesInfo.aprasymas'></textarea>
             </mat-form-field>
             <div>

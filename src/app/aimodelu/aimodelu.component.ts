@@ -216,7 +216,7 @@ export class AImodeluComponent implements OnInit {
 
       this.isStarted = true;
     } else {
-      this.snackBar.callErrorSnackBar('Cant start, because workout already started')
+      this.snackBar.callErrorSnackBar('Workout is already started')
     }
 
   }
