@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { UIService } from '../.Services/UIService';
 import { WorkoutSelector } from '../header-user/workoutSelector.component'
 @Component({
