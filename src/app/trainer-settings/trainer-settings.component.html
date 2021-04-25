@@ -2,15 +2,13 @@
     <mat-grid-tile colspan=1>
         <div style="display: flex; flex-direction: column; width: 99%; height: 95%; justify-content: space-around; border: 1px solid black; border-radius: 5px;">
             <div style="display: flex; width: 100%; height: 45%; align-items: center; justify-content: center;">
-                <!-- <img class="avatar" src="assets/img/{{trainer[0].image}}" *ngIf="checkIfThereIsImage(trainer[0].image)"> -->
                 <img class="avatar" src="assets/img/empty_person.jpg">
             </div>
             <div style=" width: 100%; height: 45%; display: flex; flex-direction: column; justify-content:space-between; align-items: center;">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50%; width: 100%;">
-                    <span style="padding-bottom: 10px; font-size: 20px; font-weight: 600;">Name: {{trainer[0].name}}
-            {{trainer[0].surname}}</span>
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50%; width: 100%;" *ngIf="isLoaded">
+                    <span style="padding-bottom: 10px; font-size: 20px; font-weight: 600;">Name: {{trainer[0].vardas}}
+            {{trainer[0].pavarde}}</span>
                     <span style="padding-bottom: 10px; font-size: 20px; font-weight: 500;">Email: {{trainer[0].email}}</span>
-                    <span style="font-size: 20px; font-weight: 500;">Register date: {{trainer[0].registerDate}}</span>
                 </div>
                 <button mat-raised-button style="width: 50%; margin-bottom: 20px;">Back</button>
             </div>

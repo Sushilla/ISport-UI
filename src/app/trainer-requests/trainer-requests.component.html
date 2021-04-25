@@ -14,6 +14,8 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
-<div *ngIf='notEmptyReq'>
-    There is no incomping request for you
+<div *ngIf='notEmptyReq' style="height: 100%; width: 100%; display: flex; justify-content: center; align-items: center;">
+    <span style="font-size: 26px;">
+        There is no incoming request for you
+    </span>
 </div>

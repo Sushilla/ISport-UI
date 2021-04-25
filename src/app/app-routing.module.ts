@@ -48,9 +48,6 @@ const routes: Routes = [
     children: [
       { path: 'main', component: TrainerSelectorComponent },
       { path: 'statistics', component: UserStatisticsComponent },
-      // { path: 'freemode', component: UserFreemodeComponent },
-      // { path: 'training', component: AimoduleTrainingComponent },//remove
-      // { path: 'collect', component: AimoduleCollectComponent },//remove
       { path: 'settings', component: TrainerSettingsComponent },
       { path: ':id', component: ExercisesSelectorComponent },
       { path: ':id/:id', component: AImodeluComponent },

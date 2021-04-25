@@ -329,7 +329,7 @@ export class BackEndService {
 
     //
 
-    sendPratimaiListToDB(list: exPav): Observable<any>{
+    sendPratimaiListToDB(list: exPav): Observable<any> {
         const header = {
             'Content-Type': 'application/json'
         }
@@ -337,6 +337,16 @@ export class BackEndService {
             headers: new HttpHeaders(header),
         };
         return this.http.put<any>("http://localhost:5000/api/v1/models/pratymai", JSON.stringify(list), requestOptions);
+    }
+
+    getUserData(id: string): Observable<any> {
+        const header = {
+            'Content-Type': 'application/json'
+        }
+        const requestOptions = {
+            headers: new HttpHeaders(header),
+        };
+        return this.http.get<any>('http://localhost:5000/api/v1/models/vartotojas/' + id, requestOptions);
     }
 
 

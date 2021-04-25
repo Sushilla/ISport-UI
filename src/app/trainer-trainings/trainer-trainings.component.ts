@@ -101,7 +101,7 @@ export class TrainerTrainingsComponent implements OnInit {
 
   getSelectedUserStat(uId: string) {        
     this.backendService.getUserStatisticForTrainer(uId, this.wId).subscribe(result => {
-      console.log(result);
+      // console.log(result);
       this.chartLabels = result.chartLabels;
       this.chartDatasets = result.dataForTable;
       this.chartDatasetsAverage = result.dataForTable2;

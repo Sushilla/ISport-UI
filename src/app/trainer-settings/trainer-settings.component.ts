@@ -11,14 +11,14 @@ import { MustMatch } from '../register/_helper/must-match.validator';
   styleUrls: ['./trainer-settings.component.scss']
 })
 export class TrainerSettingsComponent implements OnInit {
-  public trainer: test[] = [
-    { name: 'vardas', surname: 'pavarde', email: 'asd@asd.asd', registerDate: '2020-02-10' }
-  ]
+  public trainer: test[] = [];
   changePassFormControl: FormGroup;
   minPasswordLenght = 1;
+  isLoaded: boolean = false;
 
   constructor(public uiService: UIService, public backEndService: BackEndService, private snackService: SnackBarService, private formBuilder: FormBuilder) {
     // console.log(this.uiService.checkWhatRole());
+    this.getUData();
     this.changePassFormControl = this.formBuilder.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, Validators.minLength(this.minPasswordLenght)]],
@@ -91,6 +91,16 @@ export class TrainerSettingsComponent implements OnInit {
     }
   }
 
+  getUData(){
+    this.backEndService.getUserData(this.uiService.getUserIdFromCookie()).subscribe(result=>{
+      this.trainer = result;
+      this.isLoaded = true;
+    },error=>{
+      console.log(error);
+      
+    })
+  }
+
 
 }
 
@@ -112,8 +122,7 @@ export class passChange {
 
 
 export class test {
-  public name;
-  public surname;
+  public vardas;
+  public pavarde;
   public email;
-  public registerDate;
 }

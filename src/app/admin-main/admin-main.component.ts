@@ -21,7 +21,7 @@ export class AdminMainComponent implements OnInit {
   getListOfUsersWhoWnatToBecomeTrainer(){    
     this.backEndService.getListForChangingRole().subscribe(result=>{
       this.req = result;
-      console.log(this.req);
+      // console.log(this.req);
       
     }, error =>{
       console.log(error);      
@@ -34,7 +34,7 @@ export class AdminMainComponent implements OnInit {
 
   acceptButton(id: any) {    
     this.backEndService.adminApproveUserToBecomeTrainer(id).subscribe(result =>{
-      this.snackService.callErrorSnackBar('User request for becoming trainer accepted');
+      this.snackService.callSuccessSnackBar('User request for becoming trainer accepted');
       this.getListOfUsersWhoWnatToBecomeTrainer();
     }, error =>{
       this.snackService.callErrorSnackBar('Something went wrong');
