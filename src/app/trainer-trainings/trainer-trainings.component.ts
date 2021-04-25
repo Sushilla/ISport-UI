@@ -71,7 +71,7 @@ export class TrainerTrainingsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.backendService.deleteWorkout(id).subscribe(result => {
-          this.snackService.callSuccessSnackBar('Workout successfully removed');
+          this.snackService.callSuccessSnackBar('Workout removed successfully');
           this.getTreniruotesForShowing();
         }, error => {
           this.snackService.callErrorSnackBar('Something went wrong');

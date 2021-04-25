@@ -65,9 +65,6 @@ const routes: Routes = [
       { path: '**', redirectTo: '/admin/main' }
     ]
   },
-  // {
-  //   path: 'admin', component 
-  // },
   { path: '**', redirectTo: '/home/landing' }
 ];
 

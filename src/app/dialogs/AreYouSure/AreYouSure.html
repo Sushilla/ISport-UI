@@ -1,5 +1,7 @@
 <h2>
-  Are you sure?
+    Are you sure want to remove?
 </h2>
-<button mat-raised-button style="margin-right: 10px;" [mat-dialog-close]='true'>Confirm</button>
-<button mat-raised-button color="warn" [mat-dialog-close]='false'>Cancel</button>
+<div style="width: 100%; display: flex; flex-direction: row; justify-content: center;">
+    <button mat-raised-button color="warn" style="margin-right: 10px;" [mat-dialog-close]='true'>Confirm</button>
+    <button mat-raised-button [mat-dialog-close]='false'>Cancel</button>
+</div>

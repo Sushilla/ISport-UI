@@ -51,6 +51,7 @@ export class EditWorkout {
     @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
     constructor(private _formBuilder: FormBuilder, private backendService: BackEndService, @Inject(MAT_DIALOG_DATA) public data: any, private uiService: UIService, private snackService: SnackBarService) {
+        this.snackService.callWarningSnackBar('Please, don\'t close the window, otherwise changes won\'t save');
         this.getData();
     }
 
@@ -241,7 +242,7 @@ export class EditWorkout {
 
     sendRequest(){
         this.backendService.updateWorkout(this.editData[0]).subscribe(result=>{
-            this.snackService.callSuccessSnackBar('Workout successfully updated');
+            this.snackService.callSuccessSnackBar('Workout updated successfully');
         }, error=>{
             this.snackService.callErrorSnackBar('Something went wrong');            
         })

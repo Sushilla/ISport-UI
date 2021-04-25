@@ -55,7 +55,7 @@ export class CreateNewWorkout {
 
 
     constructor(private _formBuilder: FormBuilder, private backendServide: BackEndService, private uiService: UIService, private snackService: SnackBarService) {
-        this.snackService.callWarningSnackBar('Please, don\'t close window, otherwise data won\'t save');
+        this.snackService.callWarningSnackBar('Please, don\'t close the window, otherwise changes won\'t save');
         this.getExerciseList();
         this.getUserList();
     }
@@ -218,7 +218,7 @@ export class CreateNewWorkout {
         this.treniruotesInfo.vartId = this.usersIDs;        
         this.treniruotesInfo.prat = this.selectedExerciseList;
         this.backendServide.createTreinuorte(this.treniruotesInfo).subscribe(result => {
-            this.snackService.callSuccessSnackBar('Workout successfully created');
+            this.snackService.callSuccessSnackBar('Workout created successfully');
         }, error => {
             this.snackService.callErrorSnackBar('Something went wrong');
         })

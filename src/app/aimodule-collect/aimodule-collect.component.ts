@@ -206,7 +206,7 @@ export class AimoduleCollectComponent implements OnInit {
     this.surinktosTreniruotes = [];
 
     this.backendService.sendPratimaiListToDB(send).subscribe(result => {
-      this.snakService.callSuccessSnackBar("Data successfully added to Database");
+      this.snakService.callSuccessSnackBar("Data added to Database successfully");
     }, error => {
       this.snakService.callErrorSnackBar("Something went wrong");
     })
