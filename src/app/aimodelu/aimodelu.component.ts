@@ -47,6 +47,8 @@ export class AImodeluComponent implements OnInit {
       let countas = 0;
 
       let workStarted = false;
+      let workStat = [];
+      let firstRun = true;
 
       p5.setup = () => {
         const canvas = p5.createCanvas(canWidth, canHeight);
@@ -103,14 +105,19 @@ export class AImodeluComponent implements OnInit {
           rightYDist = jointDistEvaluate(6, 10, confidenceThreshold);
 
           if ((Math.abs(leftYDist) >= downHeightTolerance) || (Math.abs(rightYDist) >= downHeightTolerance)) {
-            poseLabel = "DOWN";
+            poseLabel = "arms_down";
           }
           else if ((Math.abs(leftYDist) <= upHeightTolerance) || (Math.abs(rightYDist) <= upHeightTolerance)) {
-            poseLabel = "UP";
+            poseLabel = "arms_up";
           }
-          if (lastPose == "DOWN" && poseLabel == "UP") {
+          if (lastPose == "arms_up" && poseLabel == "arms_down") {
             // this.exerciseCount++;
             countas++;
+            
+            let ExName = poseLabel.split('_')[0];
+            if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
+              workStat.find(c => c.pavadinimas == ExName).done++; // pridet
+            }
 
           }
           lastPose = poseLabel;
@@ -119,7 +126,7 @@ export class AImodeluComponent implements OnInit {
       }
 
       function classifyPose() {
-        if (pose && workStarted) {
+        if (pose) {// && workStarted tik kai started IMPORTANT
           let inputs = [];
           for (let i = 0; i < pose.keypoints.length; i++) {
             let x = pose.keypoints[i].position.x;
@@ -174,13 +181,20 @@ export class AImodeluComponent implements OnInit {
         p5.text(countas, 20, 100);
         this.exerciseCount = countas;
         workStarted = this.isStarted;
+        if (workStarted) { //started workout
+          if (firstRun) {
+            firstRun = false;
+            workStat = this.needToDoExercides;
+          }
+          this.needToDoExercides = workStat;
+        }
         // if(p5.frameCount >=20){
         //   p5.frameCount=0;
         // }
       }
     };
 
-    new p5(sketch, this.isStarted);
+    new p5(sketch);
 
   }
   //----------------------------------------------------------------------------------------------------------------------------------------------
@@ -188,36 +202,36 @@ export class AImodeluComponent implements OnInit {
   startWorkout() {
     console.log('workout started');
     var exId;
-    this.backendService.currentWorkoutas.subscribe(res => {
-      exId = res;
-    })
-    if (exId == '') {
-      this.interval = setInterval(() => {
-        if (this.time === 0) {
-          this.time++;
-        } else {
-          this.time++;
-        }
-        this.display = this.transform(this.time)
-      }, 1000);
-      var temp: createWorkoutUsingUserId = { vartotojoId: this.uiService.getUserIdFromCookie() }
-      this.backendService.startWorkout(temp).subscribe(result => {
-        this.snackBar.callSuccessSnackBar('Workout started');
+    // this.backendService.currentWorkoutas.subscribe(res => {
+    //   exId = res;
+    // })
+    // if (exId == '') {
+    //   this.interval = setInterval(() => {
+    //     if (this.time === 0) {
+    //       this.time++;
+    //     } else {
+    //       this.time++;
+    //     }
+    //     this.display = this.transform(this.time)
+    //   }, 1000);
+    //   var temp: createWorkoutUsingUserId = { vartotojoId: this.uiService.getUserIdFromCookie() }
+    //   this.backendService.startWorkout(temp).subscribe(result => {
+    //     this.snackBar.callSuccessSnackBar('Workout started');
 
-        this.backendService.changecurrentWorkoutas(result);
-        this.backendService.currentWorkoutas.subscribe(res => {
-          console.log(res);
-        })
+    //     this.backendService.changecurrentWorkoutas(result);
+    //     this.backendService.currentWorkoutas.subscribe(res => {
+    //       console.log(res);
+    //     })
 
-      }, error => {
-        this.snackBar.callErrorSnackBar('Something went wrong');
-      })
+    //   }, error => {
+    //     this.snackBar.callErrorSnackBar('Something went wrong');
+    //   })
 
 
-      this.isStarted = true;
-    } else {
-      this.snackBar.callErrorSnackBar('Workout is already started')
-    }
+    this.isStarted = true;
+    // } else {
+    //   this.snackBar.callErrorSnackBar('Workout is already started')
+    // }
 
   }
 
@@ -236,24 +250,22 @@ export class AImodeluComponent implements OnInit {
     var statistData: stat[] = new Array<stat>();
     var exerciseList: statData[] = new Array<statData>();
 
-    
-    this.needToDoExercides.forEach(element=>{
+
+    this.needToDoExercides.forEach(element => {
       console.log(element);
       var siun = new stat();
       var pad = new statData();
-  
+
       pad.treniruotesId = this.idOfExcercise;
       pad.statistikosId = exId;
       pad.atpazyntoPratymoId = element.pratymoId;
       pad.priejimas = 1; //gal paliekam kolkas viena :DD
       pad.skaicius = element.done;
       exerciseList.push(pad);
-  
+
       siun.statistikaData = exerciseList;
       statistData.push(siun)
     })
-    console.log(statistData[0]);
-    
 
     this.backendService.endWorkout(exId, statistData[0]).subscribe(result => {
       this.snackBar.callSuccessSnackBar('Workout ended');
@@ -279,10 +291,10 @@ export class AImodeluComponent implements OnInit {
   getWorkoutData() {
     this.backendService.getWorkoutExercises(this.idOfExcercise).subscribe(result => {
       this.needToDoExercides = result;
-      this.needToDoExercides.forEach(element=>{
-        element.done=0;
+      this.needToDoExercides.forEach(element => {
+        element.done = 0;
       })
-      console.log(this.needToDoExercides);
+      // console.log(this.needToDoExercides);
 
     }, error => {
       console.log(error);
