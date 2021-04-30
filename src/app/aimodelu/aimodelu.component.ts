@@ -15,7 +15,6 @@ declare let ml5: any;
 export class AImodeluComponent implements OnInit {
   idOfTrainer: string;
   idOfExcercise: string;
-  exerciseCount: number = 0;
   isStarted: boolean = false;
   time: number = 0;
   display;
@@ -111,7 +110,6 @@ export class AImodeluComponent implements OnInit {
             poseLabel = "arms_up";
           }
           if (lastPose == "arms_up" && poseLabel == "arms_down") {
-            // this.exerciseCount++;
             countas++;
             
             let ExName = poseLabel.split('_')[0];
@@ -179,7 +177,6 @@ export class AImodeluComponent implements OnInit {
 
         p5.text(poseLabel, 20, 400);
         p5.text(countas, 20, 100);
-        this.exerciseCount = countas;
         workStarted = this.isStarted;
         if (workStarted) { //started workout
           if (firstRun) {

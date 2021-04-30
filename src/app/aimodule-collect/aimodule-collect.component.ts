@@ -264,11 +264,11 @@ export class AimoduleCollectComponent implements OnInit {
     send.Pavadinimas = this.surinktosTreniruotes;
     this.surinktosTreniruotes = [];
 
-    // this.backendService.sendPratimaiListToDB(send).subscribe(result => {
-    //   this.snakService.callSuccessSnackBar("Data added to Database successfully");
-    // }, error => {
-    //   this.snakService.callErrorSnackBar("Something went wrong");
-    // })
+    this.backendService.sendPratimaiListToDB(send).subscribe(result => {
+      this.snakService.callSuccessSnackBar("Data added to Database successfully");
+    }, error => {
+      this.snakService.callErrorSnackBar("Something went wrong");
+    })
 
 
   }
