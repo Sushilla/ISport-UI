@@ -67,7 +67,7 @@ export class AimoduleCollectComponent implements OnInit {
           pose = poses[0].pose;
           skeleton = poses[0].skeleton;
           if (state == 'collecting') {
-            console.log('collecting DATA of YOU')
+            // console.log('collecting DATA of YOU')
             let inputs = [];
             for (let i = 0; i < pose.keypoints.length; i++) {
               let x = pose.keypoints[i].position.x;
@@ -86,11 +86,12 @@ export class AimoduleCollectComponent implements OnInit {
       }
 
       function startCollectingData(nameOfExercise, a) {
-        if (a) {
-          targetLabel = nameOfExercise + "_up";
-        } else {
-          targetLabel = nameOfExercise + "_down";
-        }
+        // if (a) {
+        //   targetLabel = nameOfExercise + "_up";
+        // } else {
+        //   targetLabel = nameOfExercise + "_down";
+        // }
+        targetLabel = nameOfExercise;
         state = 'collecting';
       }
       //model TRAIN ------------------------------------------------------------------------------------------------
@@ -100,23 +101,23 @@ export class AimoduleCollectComponent implements OnInit {
           inputs: 34,
           outputs: 4,
           task: 'classification',
-          debug: true,
-          layers: [ //gal nereik :D
-            {
-              type: 'dense',
-              units: 32,
-              activation: 'relu'
-            },
-            {
-              type: 'dense',
-              units: 16,
-              activation: 'relu'
-            },
-            {
-              type: 'dense',
-              activation: 'sigmoid'
-            }
-          ] //
+          debug: true
+          // layers: [ //gal nereik :D
+          //   {
+          //     type: 'dense',
+          //     units: 32,
+          //     activation: 'relu'
+          //   },
+          //   {
+          //     type: 'dense',
+          //     units: 16,
+          //     activation: 'relu'
+          //   },
+          //   {
+          //     type: 'dense',
+          //     activation: 'sigmoid'
+          //   }
+          // ] //
         }
         brainForTrain = ml5.neuralNetwork(optionsTrain);
         brainForTrain.loadData('assets/training/exerciseList.json', dataReadyTrain)

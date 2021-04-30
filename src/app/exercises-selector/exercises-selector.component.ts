@@ -14,13 +14,6 @@ export class ExercisesSelectorComponent implements OnInit {
   idOfTrainer: string;
   constructor(private router: Router, private backendService: BackEndService, private uiService: UIService) {
     this.idOfTrainer = window.location.pathname.split('user/')[1];
-    console.log(this.idOfTrainer)
-
-    // this.excercises.push(new ExcerciseSelectorModel('id3', 'Treniruotes krutinems', 10));
-    // this.excercises.push(new ExcerciseSelectorModel('id1', 'Treniruote nugarai', 42));
-    // this.excercises.push(new ExcerciseSelectorModel('id2', 'Treniruotes kojoms', 73));
-    // this.excercises.push(new ExcerciseSelectorModel('id3', 'Treniruotes krutinems', 99));
-    // this.excercises.push(new ExcerciseSelectorModel('id3', 'Treniruotes krutinems', 100));
   }
 
   ngOnInit(): void {

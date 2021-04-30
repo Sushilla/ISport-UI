@@ -82,43 +82,48 @@ export class AImodeluComponent implements OnInit {
         if (results[0].confidence >= 0.8) {
 
           // console.log(results[0].confidence)
-          // poseLabel = results[0].label;
+          poseLabel = results[0].label;
           //tikrint kuris pratimas
+          
+          if (results[0].label == "arms_up" || results[0].label == "arms_down") {
 
-          let confidenceThreshold = 0.4;
-          let downHeightTolerance = 150;
-          let upHeightTolerance = 70;
-          let leftYDist;
-          let rightYDist;
+            let confidenceThreshold = 0.8;
+            let downHeightTolerance = 150;
+            let upHeightTolerance = 70;
+            let leftYDist;
+            let rightYDist;
 
-          function jointDistEvaluate(joint1, joint2, confidenceThreshold) {
-            let jointDist = null;
-            if (pose.keypoints[joint1].score >= confidenceThreshold && pose.keypoints[joint2].score >= confidenceThreshold) {
-              jointDist = pose.keypoints[joint1].position.y - pose.keypoints[joint2].position.y;;
+            function jointDistEvaluate(joint1, joint2, confidenceThreshold) {
+              let jointDist = null;
+              if (pose.keypoints[joint1].score >= confidenceThreshold && pose.keypoints[joint2].score >= confidenceThreshold) {
+                jointDist = pose.keypoints[joint1].position.y - pose.keypoints[joint2].position.y;;
+              }
+              return jointDist;
             }
-            return jointDist;
-          }
 
-          // distance between shoulders and wrists
-          leftYDist = jointDistEvaluate(5, 9, confidenceThreshold);
-          rightYDist = jointDistEvaluate(6, 10, confidenceThreshold);
+            // distance between shoulders and wrists
+            leftYDist = jointDistEvaluate(5, 9, confidenceThreshold);
+            rightYDist = jointDistEvaluate(6, 10, confidenceThreshold);
 
-          if ((Math.abs(leftYDist) >= downHeightTolerance) || (Math.abs(rightYDist) >= downHeightTolerance)) {
-            poseLabel = "arms_down";
-          }
-          else if ((Math.abs(leftYDist) <= upHeightTolerance) || (Math.abs(rightYDist) <= upHeightTolerance)) {
-            poseLabel = "arms_up";
-          }
-          if (lastPose == "arms_up" && poseLabel == "arms_down") {
-            countas++;
+            if ((Math.abs(leftYDist) >= downHeightTolerance) || (Math.abs(rightYDist) >= downHeightTolerance)) {
+              poseLabel = "arms_down";
+            }
+            else if ((Math.abs(leftYDist) <= upHeightTolerance) || (Math.abs(rightYDist) <= upHeightTolerance)) {
+              poseLabel = "arms_up";
+            }
+            if (lastPose == "arms_up" && poseLabel == "arms_down") {
+              countas++;
+              let ExName = poseLabel.split('_')[0];
+              if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
+                workStat.find(c => c.pavadinimas == ExName).done++; // pridet
+              }
+
+            }
+
+            lastPose = poseLabel;
+          }else{
             
-            let ExName = poseLabel.split('_')[0];
-            if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
-              workStat.find(c => c.pavadinimas == ExName).done++; // pridet
-            }
-
           }
-          lastPose = poseLabel;
         }
         classifyPose();
       }
