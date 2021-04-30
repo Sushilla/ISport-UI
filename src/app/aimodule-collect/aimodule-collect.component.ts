@@ -19,6 +19,7 @@ export class AimoduleCollectComponent implements OnInit {
   stopCollectData: boolean = false;
   pause: boolean = true;
   stateofexercise: boolean = false;
+  trainModel: boolean = false;
 
   constructor(private router: Router, private snakService: SnackBarService, private backendService: BackEndService) {
 
@@ -33,11 +34,14 @@ export class AimoduleCollectComponent implements OnInit {
       let skeleton;
 
       let brain;
+      let brainForTrain;
       let state = 'waiting';
       let targetLabel;
 
       const canHeight = 480;
       const canWidth = 640;
+
+      let trModel = false;
 
       p5.setup = () => {
         const canvas = p5.createCanvas(canWidth, canHeight);
@@ -89,9 +93,53 @@ export class AimoduleCollectComponent implements OnInit {
         }
         state = 'collecting';
       }
+      //model TRAIN ------------------------------------------------------------------------------------------------
+      function ModelTrain() {
+        console.log(true);
+        let optionsTrain = {
+          inputs: 34,
+          outputs: 4,
+          task: 'classification',
+          debug: true,
+          layers: [ //gal nereik :D
+            {
+              type: 'dense',
+              units: 32,
+              activation: 'relu'
+            },
+            {
+              type: 'dense',
+              units: 16,
+              activation: 'relu'
+            },
+            {
+              type: 'dense',
+              activation: 'sigmoid'
+            }
+          ] //
+        }
+        brainForTrain = ml5.neuralNetwork(optionsTrain);
+        brainForTrain.loadData('assets/training/exerciseList.json', dataReadyTrain)
+      }
 
+      function dataReadyTrain() {
+        brainForTrain.normalizeData();
+        let epochsCount = 60;
+        brainForTrain.train({ epochs: epochsCount }, finishedTrain);
+      }
+
+      function finishedTrain() {
+        console.log('model trained');
+        brainForTrain.save();
+      }
+      //------------------------------------------------------------------------------------------------------------
 
       p5.draw = () => {
+        trModel = this.trainModel;
+        if (trModel) {
+          this.trainModel = false;
+          ModelTrain();
+        }
 
 
         if (this.startCollectData) { //data colecting
@@ -147,15 +195,18 @@ export class AimoduleCollectComponent implements OnInit {
         let a = '';
         if (!this.pause) {
           p5.fill('rgb(0,255,0)')
-          a = 'collect'
+          a = 'collecting'
         } else {
           p5.fill('red')
-          a = 'not'
+          a = 'not collecting'
         }
 
 
-        p5.textSize(100);
+        p5.textSize(80);
         p5.text(a, 20, 400);
+        p5.textSize(50);
+        p5.text(targetLabel, 20, 50); //gal nereiks
+
 
       }
     };
@@ -171,8 +222,8 @@ export class AimoduleCollectComponent implements OnInit {
     if (this.ExerciseName != undefined && this.ExerciseName != "") {
       this.surinktosTreniruotes.push(this.ExerciseName);
       this.startCollectData = true;
-      // this.pause = false;
-      this.pause = !this.pause;
+      this.pause = false;
+      // this.pause = !this.pause; jei reikia ant start clickint kad sustopint
     } else {
       this.snakService.callWarningSnackBar("Please, insert the name of an exercise")
     }
@@ -199,17 +250,25 @@ export class AimoduleCollectComponent implements OnInit {
     this.stateofexercise = !this.stateofexercise;
   }
 
+  trainModelFromData() {
+    if (this.pause) {
+      this.trainModel = true;
+    } else {
+      this.snakService.callErrorSnackBar("You can't train model, while collecting data");
+    }
+  }
+
   sendToBack() {
 
     var send: exPav = new exPav();
     send.Pavadinimas = this.surinktosTreniruotes;
     this.surinktosTreniruotes = [];
 
-    this.backendService.sendPratimaiListToDB(send).subscribe(result => {
-      this.snakService.callSuccessSnackBar("Data added to Database successfully");
-    }, error => {
-      this.snakService.callErrorSnackBar("Something went wrong");
-    })
+    // this.backendService.sendPratimaiListToDB(send).subscribe(result => {
+    //   this.snakService.callSuccessSnackBar("Data added to Database successfully");
+    // }, error => {
+    //   this.snakService.callErrorSnackBar("Something went wrong");
+    // })
 
 
   }

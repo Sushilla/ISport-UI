@@ -60,7 +60,7 @@ const routes: Routes = [
       children: [
       { path: 'main', component: AdminMainComponent },
       { path: 'settings', component: TrainerSettingsComponent },
-      { path: 'training', component: AimoduleTrainingComponent },
+      // { path: 'training', component: AimoduleTrainingComponent },
       { path: 'collect', component: AimoduleCollectComponent },
       { path: '**', redirectTo: '/admin/main' }
     ]

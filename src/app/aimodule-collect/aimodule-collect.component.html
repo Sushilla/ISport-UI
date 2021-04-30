@@ -1,6 +1,6 @@
 <div style="height: 100%; display: flex; flex-direction: column;">
     <div class="tttt" style="width: 100%; height: 480px; display: flex; justify-content: center;">
-        <div id="AIcomponent" style="background: cadetblue; width: 50%;height: 100%;">
+        <div id="AIcomponent" style="width: 50%;height: 100%;">
         </div>
     </div>
     <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
@@ -11,7 +11,6 @@
                 <input matInput [(ngModel)]='ExerciseName'>
             </mat-form-field>
             <br>
-            <!-- <button mat-raised-button (click)='nextStep()' >Next step</button> -->
             <div style="display: flex;">
                 <button mat-raised-button (click)='startCollecting()'>Start collecting data</button>
                 <button mat-raised-button (click)='pauseCollecting()'>Pause collecting data</button>
@@ -20,7 +19,7 @@
             </div>
         </div>
         <button mat-raised-button (click)='saveCollectedDataToFile()' style="background:#2ecc71; color: white; margin-bottom: 20px;">Save To File</button>
-        <button mat-raised-button style="background:#2ecc71; color: white;"><a href="/admin/training">Train model</a></button>
-        <button mat-raised-button style="background:#2ecc71; color: white;" (click)="sendToBack()">TEST</button>
+        <!-- <button mat-raised-button style="background:#2ecc71; color: white;"><a href="/admin/training">Train model</a></button> -->
+        <button mat-raised-button style="background:#2ecc71; color: white;" (click)='trainModelFromData()'>Train model</button>
     </div>
 </div>
