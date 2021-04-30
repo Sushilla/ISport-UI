@@ -236,18 +236,24 @@ export class AImodeluComponent implements OnInit {
     var statistData: stat[] = new Array<stat>();
     var exerciseList: statData[] = new Array<statData>();
 
-    var siun = new stat();
-    var pad = new statData();
-
-    pad.treniruotesId = this.idOfExcercise;
-    pad.statistikosId = exId;
-    pad.atpazyntoPratymoId = '6cbb5ff0-3791-46ba-b439-be96a90ec241';
-    pad.priejimas = 1; //gal paliekam kolkas viena :DD
-    pad.skaicius = 15;  //countas of exercise
-    exerciseList.push(pad);
-
-    siun.statistikaData = exerciseList;
-    statistData.push(siun)
+    
+    this.needToDoExercides.forEach(element=>{
+      console.log(element);
+      var siun = new stat();
+      var pad = new statData();
+  
+      pad.treniruotesId = this.idOfExcercise;
+      pad.statistikosId = exId;
+      pad.atpazyntoPratymoId = element.pratymoId;
+      pad.priejimas = 1; //gal paliekam kolkas viena :DD
+      pad.skaicius = element.done;
+      exerciseList.push(pad);
+  
+      siun.statistikaData = exerciseList;
+      statistData.push(siun)
+    })
+    console.log(statistData[0]);
+    
 
     this.backendService.endWorkout(exId, statistData[0]).subscribe(result => {
       this.snackBar.callSuccessSnackBar('Workout ended');
@@ -282,7 +288,6 @@ export class AImodeluComponent implements OnInit {
       console.log(error);
     })
   }
-
 }
 
 export class createWorkoutUsingUserId {
