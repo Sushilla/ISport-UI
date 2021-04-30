@@ -27,13 +27,13 @@ export class TrainerTrainingsComponent implements OnInit {
   public chartLabels: Array<any>;
   public chartColors: Array<any> = [
     {
-      backgroundColor: 'rgba(105, 0, 132, .2)',
-      borderColor: 'rgba(200, 99, 132, .7)',
+      backgroundColor: 'rgba(148, 0, 186, .2)',
+      borderColor: 'rgba(222, 82, 128, .7)',
       borderWidth: 2,
     },
     {
-      backgroundColor: 'rgba(0, 137, 132, .2)',
-      borderColor: 'rgba(0, 10, 130, .7)',
+      backgroundColor: 'rgba(119, 255, 0, .2)',
+      borderColor: 'rgba(0, 199, 27, .7)',
       borderWidth: 2,
     }
   ];
