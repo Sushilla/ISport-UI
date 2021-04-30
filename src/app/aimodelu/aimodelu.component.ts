@@ -79,7 +79,7 @@ export class AImodeluComponent implements OnInit {
       }
 
       function gotResult(error, results) {
-        if (results[0].confidence >= 0.8) {
+        if (results[0].confidence >= 0.9) {
 
           // console.log(results[0].confidence)
           poseLabel = results[0].label;

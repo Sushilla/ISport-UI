@@ -125,7 +125,7 @@ export class AimoduleCollectComponent implements OnInit {
 
       function dataReadyTrain() {
         brainForTrain.normalizeData();
-        let epochsCount = 60;
+        let epochsCount = 15;
         brainForTrain.train({ epochs: epochsCount }, finishedTrain);
       }
 
@@ -265,11 +265,11 @@ export class AimoduleCollectComponent implements OnInit {
     send.Pavadinimas = this.surinktosTreniruotes;
     this.surinktosTreniruotes = [];
 
-    this.backendService.sendPratimaiListToDB(send).subscribe(result => {
-      this.snakService.callSuccessSnackBar("Data added to Database successfully");
-    }, error => {
-      this.snakService.callErrorSnackBar("Something went wrong");
-    })
+    // this.backendService.sendPratimaiListToDB(send).subscribe(result => {
+    //   this.snakService.callSuccessSnackBar("Data added to Database successfully");
+    // }, error => {
+    //   this.snakService.callErrorSnackBar("Something went wrong");
+    // })
 
 
   }
