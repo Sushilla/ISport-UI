@@ -43,6 +43,7 @@ export class AImodeluComponent implements OnInit {
       const canWidth = 640;
 
       let lastPose = "";
+      let lastPoseSide = "";
       let countas = 0;
 
       let workStarted = false;
@@ -87,32 +88,32 @@ export class AImodeluComponent implements OnInit {
 
           if (results[0].label == "Armsup_up" || results[0].label == "Armsup_down") { //armsup exercice
 
-            let confidenceThreshold = 0.8;
-            let downHeightTolerance = 150;
-            let upHeightTolerance = 70;
-            let leftYDist;
-            let rightYDist;
+            // let confidenceThreshold = 0.8;
+            // let downHeightTolerance = 150;
+            // let upHeightTolerance = 70;
+            // let leftYDist;
+            // let rightYDist;
 
-            function jointDistEvaluateShoulderWrist(joint1, joint2, confidenceThreshold) {
-              let jointDist = null;
-              if (pose.keypoints[joint1].score >= confidenceThreshold && pose.keypoints[joint2].score >= confidenceThreshold) {
-                jointDist = pose.keypoints[joint1].position.y - pose.keypoints[joint2].position.y;
-              }
-              return jointDist;
-            }
+            // function jointDistEvaluateShoulderWrist(joint1, joint2, confidenceThreshold) {
+            //   let jointDist = null;
+            //   if (pose.keypoints[joint1].score >= confidenceThreshold && pose.keypoints[joint2].score >= confidenceThreshold) {
+            //     jointDist = pose.keypoints[joint1].position.y - pose.keypoints[joint2].position.y;
+            //   }
+            //   return jointDist;
+            // }
 
-            // distance between shoulders and wrists
-            leftYDist = jointDistEvaluateShoulderWrist(5, 9, confidenceThreshold);
-            rightYDist = jointDistEvaluateShoulderWrist(6, 10, confidenceThreshold);
+            // // distance between shoulders and wrists
+            // leftYDist = jointDistEvaluateShoulderWrist(5, 9, confidenceThreshold);
+            // rightYDist = jointDistEvaluateShoulderWrist(6, 10, confidenceThreshold);
 
-            if ((Math.abs(leftYDist) >= downHeightTolerance) || (Math.abs(rightYDist) >= downHeightTolerance)) {
-              poseLabel = "Armsup_down";
-            }
-            else if ((Math.abs(leftYDist) <= upHeightTolerance) || (Math.abs(rightYDist) <= upHeightTolerance)) {
-              poseLabel = "Armsup_up";
-            }
+            // if ((Math.abs(leftYDist) >= downHeightTolerance) || (Math.abs(rightYDist) >= downHeightTolerance)) {
+            //   poseLabel = "Armsup_down";
+            // }
+            // else if ((Math.abs(leftYDist) <= upHeightTolerance) || (Math.abs(rightYDist) <= upHeightTolerance)) {
+            //   poseLabel = "Armsup_up";
+            // }
             if (lastPose == "Armsup_up" && poseLabel == "Armsup_down") {
-              // countas++;
+              lastPoseSide = "";
               let ExName = poseLabel.split('_')[0];
               if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
                 workStat.find(c => c.pavadinimas == ExName).done++; // pridet
@@ -138,14 +139,15 @@ export class AImodeluComponent implements OnInit {
             //   return jointDist;
             // }
             // YDist = jointDistEvaluateAnkleHip(15, 11, confidenceThreshold);
-            
+
             // if ((Math.abs(YDist) >= downHeightTolerance)) {
             //   poseLabel = "Squat_up";
             // }
             // else {
             //   poseLabel = "Squat_down";
             // }
-            if ((lastPose == "Squat_up" && poseLabel == "Squat_down")) {
+            if (lastPose == "Squat_up" && poseLabel == "Squat_down") {
+              lastPoseSide = "";
               let ExName = poseLabel.split('_')[0];
               if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
                 workStat.find(c => c.pavadinimas == ExName).done++; // pridet
@@ -156,11 +158,25 @@ export class AImodeluComponent implements OnInit {
 
 
 
-          if (results[0].label == "Squat_up" || results[0].label == "Squat_down") {
-
+          if (results[0].label == "Sidebend_left" || results[0].label == "Sidebend_right") {
+            lastPose="";
+            if ((lastPoseSide == "Sidebend_left" && poseLabel == "Sidebend_right") || (lastPoseSide == "Sidebend_right" && poseLabel == "Sidebend_left")) {
+              let ExName = "Sidebend";
+              if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
+                workStat.find(c => c.pavadinimas == ExName).done++; // pridet
+              }
+            }
+            lastPoseSide = poseLabel;
           }
-          if (results[0].label == "Jumping jacks_up" || results[0].label == "Jumping jacks_down") {
-
+          if (results[0].label == "Jumping jacks_up" || results[0].label == "Jumping jacks_down" || (lastPoseSide == "Jumping jacks_up" && poseLabel == "Armsup_down")) {
+            if ((lastPoseSide == "Jumping jacks_up" && poseLabel == "Jumping jacks_down") || (lastPoseSide == "Jumping jacks_up" && poseLabel == "Armsup_down")) {
+              lastPose = "";
+              let ExName = "Jumping jacks";
+              if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
+                workStat.find(c => c.pavadinimas == ExName).done++; // pridet
+              }
+            }
+            lastPoseSide = poseLabel;
           }
         }
         classifyPose();
@@ -219,10 +235,10 @@ export class AImodeluComponent implements OnInit {
         p5.text(poseLabel, 20, 400);
         p5.textSize(90);
 
-        if (kaka){
+        if (kaka) {
           p5.fill('rgb(0,255,0)')
         }
-        p5.text(lastPose, 20, 200);
+        p5.text(lastPoseSide, 20, 200);
         p5.text(countas, 20, 100);
         workStarted = this.isStarted;
         if (workStarted) { //started workout
