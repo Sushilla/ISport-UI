@@ -48,6 +48,7 @@ export class AImodeluComponent implements OnInit {
       let workStarted = false;
       let workStat = [];
       let firstRun = true;
+      let kaka = false;
 
       p5.setup = () => {
         const canvas = p5.createCanvas(canWidth, canHeight);
@@ -80,12 +81,11 @@ export class AImodeluComponent implements OnInit {
 
       function gotResult(error, results) {
         if (results[0].confidence >= 0.9) {
-
           // console.log(results[0].confidence)
           poseLabel = results[0].label;
           //tikrint kuris pratimas
-          
-          if (results[0].label == "arms_up" || results[0].label == "arms_down") {
+
+          if (results[0].label == "Armsup_up" || results[0].label == "Armsup_down") { //armsup exercice
 
             let confidenceThreshold = 0.8;
             let downHeightTolerance = 150;
@@ -93,26 +93,26 @@ export class AImodeluComponent implements OnInit {
             let leftYDist;
             let rightYDist;
 
-            function jointDistEvaluate(joint1, joint2, confidenceThreshold) {
+            function jointDistEvaluateShoulderWrist(joint1, joint2, confidenceThreshold) {
               let jointDist = null;
               if (pose.keypoints[joint1].score >= confidenceThreshold && pose.keypoints[joint2].score >= confidenceThreshold) {
-                jointDist = pose.keypoints[joint1].position.y - pose.keypoints[joint2].position.y;;
+                jointDist = pose.keypoints[joint1].position.y - pose.keypoints[joint2].position.y;
               }
               return jointDist;
             }
 
             // distance between shoulders and wrists
-            leftYDist = jointDistEvaluate(5, 9, confidenceThreshold);
-            rightYDist = jointDistEvaluate(6, 10, confidenceThreshold);
+            leftYDist = jointDistEvaluateShoulderWrist(5, 9, confidenceThreshold);
+            rightYDist = jointDistEvaluateShoulderWrist(6, 10, confidenceThreshold);
 
             if ((Math.abs(leftYDist) >= downHeightTolerance) || (Math.abs(rightYDist) >= downHeightTolerance)) {
-              poseLabel = "arms_down";
+              poseLabel = "Armsup_down";
             }
             else if ((Math.abs(leftYDist) <= upHeightTolerance) || (Math.abs(rightYDist) <= upHeightTolerance)) {
-              poseLabel = "arms_up";
+              poseLabel = "Armsup_up";
             }
-            if (lastPose == "arms_up" && poseLabel == "arms_down") {
-              countas++;
+            if (lastPose == "Armsup_up" && poseLabel == "Armsup_down") {
+              // countas++;
               let ExName = poseLabel.split('_')[0];
               if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
                 workStat.find(c => c.pavadinimas == ExName).done++; // pridet
@@ -121,8 +121,46 @@ export class AImodeluComponent implements OnInit {
             }
 
             lastPose = poseLabel;
-          }else{
+          }
+
+
+
+          if (results[0].label == "Squat_up" || results[0].label == "Squat_down") {
+            // let confidenceThreshold = 0.8;
+            // let downHeightTolerance = 70;
+            // let YDist;
+            //dist ankle and hip
+            // function jointDistEvaluateAnkleHip(joint1, joint2, confidenceThreshold) {
+            //   let jointDist = null;
+            //   if (pose.keypoints[joint1].score >= confidenceThreshold && pose.keypoints[joint2].score >= confidenceThreshold) {
+            //     jointDist = pose.keypoints[joint1].position.y - pose.keypoints[joint2].position.y;
+            //   }
+            //   return jointDist;
+            // }
+            // YDist = jointDistEvaluateAnkleHip(15, 11, confidenceThreshold);
             
+            // if ((Math.abs(YDist) >= downHeightTolerance)) {
+            //   poseLabel = "Squat_up";
+            // }
+            // else {
+            //   poseLabel = "Squat_down";
+            // }
+            if ((lastPose == "Squat_up" && poseLabel == "Squat_down")) {
+              let ExName = poseLabel.split('_')[0];
+              if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
+                workStat.find(c => c.pavadinimas == ExName).done++; // pridet
+              }
+            }
+            lastPose = poseLabel;
+          }
+
+
+
+          if (results[0].label == "Squat_up" || results[0].label == "Squat_down") {
+
+          }
+          if (results[0].label == "Jumping jacks_up" || results[0].label == "Jumping jacks_down") {
+
           }
         }
         classifyPose();
@@ -179,8 +217,12 @@ export class AImodeluComponent implements OnInit {
         p5.pop();
         p5.textSize(70);
         p5.text(poseLabel, 20, 400);
+        p5.textSize(90);
 
-        p5.text(poseLabel, 20, 400);
+        if (kaka){
+          p5.fill('rgb(0,255,0)')
+        }
+        p5.text(lastPose, 20, 200);
         p5.text(countas, 20, 100);
         workStarted = this.isStarted;
         if (workStarted) { //started workout
