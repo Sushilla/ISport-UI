@@ -49,7 +49,6 @@ export class AImodeluComponent implements OnInit {
       let workStarted = false;
       let workStat = [];
       let firstRun = true;
-      let kaka = false;
 
       p5.setup = () => {
         const canvas = p5.createCanvas(canWidth, canHeight);
@@ -231,15 +230,12 @@ export class AImodeluComponent implements OnInit {
           }
         }
         p5.pop();
-        p5.textSize(70);
-        p5.text(poseLabel, 20, 400);
-        p5.textSize(90);
+        // p5.textSize(70);
+        // p5.text(poseLabel, 20, 400);
+        // p5.textSize(90);
 
-        if (kaka) {
-          p5.fill('rgb(0,255,0)')
-        }
-        p5.text(lastPoseSide, 20, 200);
-        p5.text(countas, 20, 100);
+        // p5.text(lastPoseSide, 20, 200);
+        // p5.text(countas, 20, 100);
         workStarted = this.isStarted;
         if (workStarted) { //started workout
           if (firstRun) {
@@ -262,36 +258,36 @@ export class AImodeluComponent implements OnInit {
   startWorkout() {
     console.log('workout started');
     var exId;
-    // this.backendService.currentWorkoutas.subscribe(res => {
-    //   exId = res;
-    // })
-    // if (exId == '') {
-    //   this.interval = setInterval(() => {
-    //     if (this.time === 0) {
-    //       this.time++;
-    //     } else {
-    //       this.time++;
-    //     }
-    //     this.display = this.transform(this.time)
-    //   }, 1000);
-    //   var temp: createWorkoutUsingUserId = { vartotojoId: this.uiService.getUserIdFromCookie() }
-    //   this.backendService.startWorkout(temp).subscribe(result => {
-    //     this.snackBar.callSuccessSnackBar('Workout started');
+    this.backendService.currentWorkoutas.subscribe(res => {
+      exId = res;
+    })
+    if (exId == '') {
+      this.interval = setInterval(() => {
+        if (this.time === 0) {
+          this.time++;
+        } else {
+          this.time++;
+        }
+        this.display = this.transform(this.time)
+      }, 1000);
+      var temp: createWorkoutUsingUserId = { vartotojoId: this.uiService.getUserIdFromCookie() }
+      this.backendService.startWorkout(temp).subscribe(result => {
+        this.snackBar.callSuccessSnackBar('Workout started');
 
-    //     this.backendService.changecurrentWorkoutas(result);
-    //     this.backendService.currentWorkoutas.subscribe(res => {
-    //       console.log(res);
-    //     })
+        this.backendService.changecurrentWorkoutas(result);
+        this.backendService.currentWorkoutas.subscribe(res => {
+          console.log(res);
+        })
 
-    //   }, error => {
-    //     this.snackBar.callErrorSnackBar('Something went wrong');
-    //   })
+      }, error => {
+        this.snackBar.callErrorSnackBar('Something went wrong');
+      })
 
 
     this.isStarted = true;
-    // } else {
-    //   this.snackBar.callErrorSnackBar('Workout is already started')
-    // }
+    } else {
+      this.snackBar.callErrorSnackBar('Workout is already started')
+    }
 
   }
 
