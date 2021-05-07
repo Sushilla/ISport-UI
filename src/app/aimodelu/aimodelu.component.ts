@@ -230,7 +230,7 @@ export class AImodeluComponent implements OnInit {
           }
         }
         p5.pop();
-        // p5.textSize(70);
+        p5.textSize(70);
         // p5.text(poseLabel, 20, 400);
         // p5.textSize(90);
 
