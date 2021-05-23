@@ -52,15 +52,15 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.registreFormControl.valid) {
-      console.log(true);
       let regData = new registerData();
-      console.log(this.registreFormControl.value)
       regData.email = this.registreFormControl.value.email;
       regData.password = this.registreFormControl.value.password;
       regData.vardas = this.registreFormControl.value.vardas;
       regData.pavarde = this.registreFormControl.value.pavarde;
-
+      
       this.backEndSercice.registerUser(regData).subscribe(result => {
+        console.log(result);
+        
         if(result.length != 0){ //created
           this.cookieService.set("UserCookie", JSON.stringify(result), {expires: 7, path: "/"});
           this.uiService.checkIfUserLoggedIn();      

@@ -158,7 +158,7 @@ export class AImodeluComponent implements OnInit {
 
 
           if (results[0].label == "Sidebend_left" || results[0].label == "Sidebend_right") {
-            lastPose="";
+            lastPose = "";
             if ((lastPoseSide == "Sidebend_left" && poseLabel == "Sidebend_right") || (lastPoseSide == "Sidebend_right" && poseLabel == "Sidebend_left")) {
               let ExName = "Sidebend";
               if (workStat.findIndex(c => c.pavadinimas == ExName) != -1) { //patikrint ar yra toks pratymas
@@ -284,7 +284,7 @@ export class AImodeluComponent implements OnInit {
       })
 
 
-    this.isStarted = true;
+      this.isStarted = true;
     } else {
       this.snackBar.callErrorSnackBar('Workout is already started')
     }
@@ -347,6 +347,8 @@ export class AImodeluComponent implements OnInit {
   getWorkoutData() {
     this.backendService.getWorkoutExercises(this.idOfExcercise).subscribe(result => {
       this.needToDoExercides = result;
+      // console.log(result);
+
       this.needToDoExercides.forEach(element => {
         element.done = 0;
       })
@@ -356,6 +358,12 @@ export class AImodeluComponent implements OnInit {
       console.log(error);
     })
   }
+
+  checkIfDone(need: number, done: number) {
+    if (done >= need)
+      return 'doneExercises';
+  }
+
 }
 
 export class createWorkoutUsingUserId {
